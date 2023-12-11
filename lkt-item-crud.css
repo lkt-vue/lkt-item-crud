@@ -1,0 +1,11 @@
+.lkt-item-crud {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.lkt-item-crud_content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
