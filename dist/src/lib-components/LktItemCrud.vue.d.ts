@@ -11,6 +11,9 @@ declare const _default: {
             readonly modelValue: Record<string, any>;
             readonly readResource: string;
             readonly readData: Record<string, any>;
+            readonly createResource?: string | undefined;
+            readonly updateResource?: string | undefined;
+            readonly deleteResource?: string | undefined;
             "onUpdate:modelValue"?: ((...args: any[]) => any) | undefined;
             onRead?: ((...args: any[]) => any) | undefined;
             onSave?: ((...args: any[]) => any) | undefined;
@@ -29,6 +32,18 @@ declare const _default: {
                 type: ObjectConstructor;
                 required: false;
                 default: () => {};
+            };
+            createResource: {
+                type: StringConstructor;
+                required: false;
+            };
+            updateResource: {
+                type: StringConstructor;
+                required: false;
+            };
+            deleteResource: {
+                type: StringConstructor;
+                required: false;
             };
             title: {
                 type: StringConstructor;
@@ -68,6 +83,18 @@ declare const _default: {
                 required: false;
                 default: () => {};
             };
+            createResource: {
+                type: StringConstructor;
+                required: false;
+            };
+            updateResource: {
+                type: StringConstructor;
+                required: false;
+            };
+            deleteResource: {
+                type: StringConstructor;
+                required: false;
+            };
             title: {
                 type: StringConstructor;
                 default: string;
@@ -79,6 +106,9 @@ declare const _default: {
             onPerms?: ((...args: any[]) => any) | undefined;
         }, {
             fetchItem: () => Promise<void>;
+            create: (data: LktObject) => Promise<void>;
+            update: (data: LktObject) => Promise<void>;
+            refresh: () => Promise<void>;
         }, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("update:modelValue" | "read" | "save" | "perms")[], string, {
             title: string;
             modelValue: Record<string, any>;
@@ -118,6 +148,18 @@ declare const _default: {
             required: false;
             default: () => {};
         };
+        createResource: {
+            type: StringConstructor;
+            required: false;
+        };
+        updateResource: {
+            type: StringConstructor;
+            required: false;
+        };
+        deleteResource: {
+            type: StringConstructor;
+            required: false;
+        };
         title: {
             type: StringConstructor;
             default: string;
@@ -129,6 +171,9 @@ declare const _default: {
         onPerms?: ((...args: any[]) => any) | undefined;
     } & import("vue").ShallowUnwrapRef<{
         fetchItem: () => Promise<void>;
+        create: (data: LktObject) => Promise<void>;
+        update: (data: LktObject) => Promise<void>;
+        refresh: () => Promise<void>;
     }> & {} & import("vue").ComponentCustomProperties & {};
     __isFragment?: undefined;
     __isTeleport?: undefined;
@@ -148,6 +193,18 @@ declare const _default: {
         required: false;
         default: () => {};
     };
+    createResource: {
+        type: StringConstructor;
+        required: false;
+    };
+    updateResource: {
+        type: StringConstructor;
+        required: false;
+    };
+    deleteResource: {
+        type: StringConstructor;
+        required: false;
+    };
     title: {
         type: StringConstructor;
         default: string;
@@ -159,6 +216,9 @@ declare const _default: {
     onPerms?: ((...args: any[]) => any) | undefined;
 }, {
     fetchItem: () => Promise<void>;
+    create: (data: LktObject) => Promise<void>;
+    update: (data: LktObject) => Promise<void>;
+    refresh: () => Promise<void>;
 }, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("update:modelValue" | "read" | "save" | "perms")[], "update:modelValue" | "read" | "save" | "perms", {
     title: string;
     modelValue: Record<string, any>;

@@ -3,15 +3,20 @@ export default {name: "LktItemCrud", inheritAttrs: false}
 </script>
 
 <script setup lang="ts">
-import {ref, watch} from "vue";
+import {ref, watch, useSlots, computed} from "vue";
 import {httpCall} from "lkt-http-client";
 
 const props = defineProps({
     modelValue: {type: Object, required: false, default: () => ({})},
     readResource: {type: String, required: true},
     readData: {type: Object, required: false, default: () => ({})},
+    createResource: {type: String, required: false},
+    updateResource: {type: String, required: false},
+    deleteResource: {type: String, required: false},
     title: {type: String, default: ''},
 });
+
+const slots = useSlots();
 
 const emit = defineEmits(['update:modelValue', 'read', 'save', 'perms']);
 
@@ -20,6 +25,7 @@ const loading = ref(true),
     perms = ref([]);
 
 const fetchItem = async () => {
+    loading.value = true;
     return await httpCall(props.readResource, props.readData).then(r => {
         loading.value = false;
         item.value = r.data;
@@ -28,31 +34,50 @@ const fetchItem = async () => {
     });
 }
 
+const displayHeader = computed(() => {
+    if (loading.value) return false;
+
+    return props.title || !!slots['post-title'];
+})
+
 watch(() => props.modelValue, v => item.value = v);
 watch(item, () => emit('update:modelValue', item.value));
 watch(perms, () => emit('perms', perms.value));
 
-// const save = async (data: LktObject) => {
-//     const resource = props.id > 0 ? props.update : props.create;
-//
-//     return await httpCall(resource, {id: props.id, ...data}).then(r => {
-//         loading.value = false;
-//         emit('save', r);
-//     });
-// }
+const create = async (data: LktObject) => {
+    const resource = props.createResource;
+
+    loading.value = true;
+    return await httpCall(resource, {...data}).then(r => {
+        loading.value = false;
+        emit('save', r);
+    });
+}
+
+const update = async (data: LktObject) => {
+    const resource = props.updateResource;
+
+    loading.value = true;
+    return await httpCall(resource, {...data}).then(r => {
+        loading.value = false;
+        emit('save', r);
+    });
+}
 
 // Fetch item
 if (props.readResource) fetchItem();
 
 defineExpose({
     fetchItem,
-    // save,
+    create,
+    update,
+    refresh: fetchItem
 });
 </script>
 
 <template>
     <article class="lkt-item-crud">
-        <header class="lkt-item-crud_header" v-if="!loading">
+        <header class="lkt-item-crud_header" v-if="displayHeader">
             <h1 class="lkt-item-crud_header-title">{{ title }}</h1>
             <div class="lkt-item-crud_header-slot">
                 <slot name="post-title" v-bind:item="item"></slot>

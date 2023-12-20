@@ -1,61 +1,79 @@
-import { defineComponent as y, ref as c, watch as u, resolveComponent as V, openBlock as o, createElementBlock as n, createElementVNode as f, toDisplayString as C, renderSlot as k, createCommentVNode as m, createBlock as q } from "vue";
-import { httpCall as g } from "lkt-http-client";
-const I = { class: "lkt-item-crud" }, S = {
+import { defineComponent as C, useSlots as w, ref as m, computed as I, watch as p, resolveComponent as B, openBlock as c, createElementBlock as f, createElementVNode as k, toDisplayString as D, renderSlot as y, createCommentVNode as v, createBlock as L } from "vue";
+import { httpCall as _ } from "lkt-http-client";
+const O = { class: "lkt-item-crud" }, b = {
   key: 0,
   class: "lkt-item-crud_header"
-}, w = { class: "lkt-item-crud_header-title" }, B = { class: "lkt-item-crud_header-slot" }, D = {
+}, j = { class: "lkt-item-crud_header-title" }, x = { class: "lkt-item-crud_header-slot" }, E = {
   key: 1,
   class: "lkt-item-crud_content"
-}, L = { name: "LktItemCrud", inheritAttrs: !1 }, O = /* @__PURE__ */ y({
-  ...L,
+}, N = { name: "LktItemCrud", inheritAttrs: !1 }, $ = /* @__PURE__ */ C({
+  ...N,
   props: {
     modelValue: { type: Object, required: !1, default: () => ({}) },
     readResource: { type: String, required: !0 },
     readData: { type: Object, required: !1, default: () => ({}) },
+    createResource: { type: String, required: !1 },
+    updateResource: { type: String, required: !1 },
+    deleteResource: { type: String, required: !1 },
     title: { type: String, default: "" }
   },
   emits: ["update:modelValue", "read", "save", "perms"],
-  setup(t, { expose: p, emit: h }) {
-    const r = t, d = h, l = c(!0), a = c(r.modelValue), i = c([]), _ = async () => await g(r.readResource, r.readData).then((e) => {
-      l.value = !1, a.value = e.data, i.value = e.perms, d("read", e);
-    });
-    return u(() => r.modelValue, (e) => a.value = e), u(a, () => d("update:modelValue", a.value)), u(i, () => d("perms", i.value)), r.readResource && _(), p({
-      fetchItem: _
-    }), (e, R) => {
-      const v = V("lkt-loader");
-      return o(), n("article", I, [
-        l.value ? m("", !0) : (o(), n("header", S, [
-          f("h1", w, C(t.title), 1),
-          f("div", B, [
-            k(e.$slots, "post-title", { item: a.value })
+  setup(a, { expose: h, emit: V }) {
+    const r = a, q = w(), l = V, t = m(!0), s = m(r.modelValue), n = m([]), i = async () => (t.value = !0, await _(r.readResource, r.readData).then((e) => {
+      t.value = !1, s.value = e.data, n.value = e.perms, l("read", e);
+    })), R = I(() => t.value ? !1 : r.title || !!q["post-title"]);
+    p(() => r.modelValue, (e) => s.value = e), p(s, () => l("update:modelValue", s.value)), p(n, () => l("perms", n.value));
+    const S = async (e) => {
+      const u = r.createResource;
+      return t.value = !0, await _(u, { ...e }).then((o) => {
+        t.value = !1, l("save", o);
+      });
+    }, g = async (e) => {
+      const u = r.updateResource;
+      return t.value = !0, await _(u, { ...e }).then((o) => {
+        t.value = !1, l("save", o);
+      });
+    };
+    return r.readResource && i(), h({
+      fetchItem: i,
+      create: S,
+      update: g,
+      refresh: i
+    }), (e, u) => {
+      const o = B("lkt-loader");
+      return c(), f("article", O, [
+        R.value ? (c(), f("header", b, [
+          k("h1", j, D(a.title), 1),
+          k("div", x, [
+            y(e.$slots, "post-title", { item: s.value })
           ])
+        ])) : v("", !0),
+        t.value ? v("", !0) : (c(), f("div", E, [
+          y(e.$slots, "item", { item: s.value })
         ])),
-        l.value ? m("", !0) : (o(), n("div", D, [
-          k(e.$slots, "item", { item: a.value })
-        ])),
-        l.value ? (o(), q(v, { key: 2 })) : m("", !0)
+        t.value ? (c(), L(o, { key: 2 })) : v("", !0)
       ]);
     };
   }
-}), s = {
+}), d = {
   detail: 0,
   form: 1,
   quick: 2,
   card: 3,
-  isValid(t) {
+  isValid(a) {
     return [
-      s.detail,
-      s.form,
-      s.quick,
-      s.card
-    ].indexOf(t) !== -1;
+      d.detail,
+      d.form,
+      d.quick,
+      d.card
+    ].indexOf(a) !== -1;
   }
-}, x = {
-  install: (t, p = {}) => {
-    t.component("LktItemCrud", O);
+}, M = {
+  install: (a, h = {}) => {
+    a.component("LktItemCrud", $);
   }
 };
 export {
-  s as ViewMode,
-  x as default
+  d as ViewMode,
+  M as default
 };
