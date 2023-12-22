@@ -24,7 +24,7 @@ declare namespace _default {
                     suneditor: string;
                     katex: string;
                     'lkt-tools': string;
-                    'lkt-http': string;
+                    'lkt-http-client': string;
                     'lkt-string-tools': string;
                     'lkt-vue-tools': string;
                     'lkt-events': string;

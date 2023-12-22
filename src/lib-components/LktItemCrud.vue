@@ -5,6 +5,7 @@ export default {name: "LktItemCrud", inheritAttrs: false}
 <script setup lang="ts">
 import {ref, watch, useSlots, computed} from "vue";
 import {httpCall} from "lkt-http-client";
+import {LktObject} from "lkt-ts-interfaces";
 
 const props = defineProps({
     modelValue: {type: Object, required: false, default: () => ({})},
@@ -12,13 +13,13 @@ const props = defineProps({
     readData: {type: Object, required: false, default: () => ({})},
     createResource: {type: String, required: false},
     updateResource: {type: String, required: false},
-    deleteResource: {type: String, required: false},
+    dropResource: {type: String, required: false},
     title: {type: String, default: ''},
 });
 
 const slots = useSlots();
 
-const emit = defineEmits(['update:modelValue', 'read', 'save', 'perms']);
+const emit = defineEmits(['update:modelValue', 'read', 'create', 'update', 'drop', 'perms']);
 
 const loading = ref(true),
     item = ref(props.modelValue),
@@ -50,7 +51,7 @@ const create = async (data: LktObject) => {
     loading.value = true;
     return await httpCall(resource, {...data}).then(r => {
         loading.value = false;
-        emit('save', r);
+        emit('create', r);
     });
 }
 
@@ -60,7 +61,17 @@ const update = async (data: LktObject) => {
     loading.value = true;
     return await httpCall(resource, {...data}).then(r => {
         loading.value = false;
-        emit('save', r);
+        emit('update', r);
+    });
+}
+
+const drop = async (data: LktObject) => {
+    const resource = props.dropResource;
+
+    loading.value = true;
+    return await httpCall(resource, {...data}).then(r => {
+        loading.value = false;
+        emit('drop', r);
     });
 }
 
@@ -71,6 +82,7 @@ defineExpose({
     fetchItem,
     create,
     update,
+    drop,
     refresh: fetchItem
 });
 </script>
