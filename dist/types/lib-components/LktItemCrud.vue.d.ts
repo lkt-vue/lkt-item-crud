@@ -197,9 +197,11 @@ declare const _default: {
     $slots: {
         'post-title': (_: {
             item: Record<string, any>;
+            loading: boolean;
         }) => any;
         item: (_: {
             item: Record<string, any>;
+            loading: false;
         }) => any;
     };
 });

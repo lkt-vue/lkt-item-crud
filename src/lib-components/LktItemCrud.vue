@@ -92,11 +92,11 @@ defineExpose({
         <header class="lkt-item-crud_header" v-if="displayHeader">
             <h1 class="lkt-item-crud_header-title">{{ title }}</h1>
             <div class="lkt-item-crud_header-slot">
-                <slot name="post-title" v-bind:item="item"></slot>
+                <slot name="post-title" v-bind:item="item" v-bind:loading="loading"></slot>
             </div>
         </header>
         <div class="lkt-item-crud_content" v-if="!loading">
-            <slot name="item" v-bind:item="item"></slot>
+            <slot name="item" v-bind:item="item" v-bind:loading="loading"></slot>
         </div>
         <lkt-loader v-if="loading"></lkt-loader>
     </article>

@@ -19,43 +19,49 @@ const b = { class: "lkt-item-crud" }, j = {
   },
   emits: ["update:modelValue", "read", "create", "update", "drop", "perms"],
   setup(u, { expose: _, emit: y }) {
-    const r = u, R = w(), s = y, t = p(!0), o = p(r.modelValue), n = p([]), i = async () => (t.value = !0, await d(r.readResource, r.readData).then((e) => {
-      t.value = !1, o.value = e.data, n.value = e.perms, s("read", e);
-    })), S = I(() => t.value ? !1 : r.title || !!R["post-title"]);
-    m(() => r.modelValue, (e) => o.value = e), m(o, () => s("update:modelValue", o.value)), m(n, () => s("perms", n.value));
-    const g = async (e) => {
-      const l = r.createResource;
-      return t.value = !0, await d(l, { ...e }).then((a) => {
+    const r = u, g = w(), s = y, t = p(!0), l = p(r.modelValue), n = p([]), i = async () => (t.value = !0, await d(r.readResource, r.readData).then((e) => {
+      t.value = !1, l.value = e.data, n.value = e.perms, s("read", e);
+    })), R = I(() => t.value ? !1 : r.title || !!g["post-title"]);
+    m(() => r.modelValue, (e) => l.value = e), m(l, () => s("update:modelValue", l.value)), m(n, () => s("perms", n.value));
+    const S = async (e) => {
+      const o = r.createResource;
+      return t.value = !0, await d(o, { ...e }).then((a) => {
         t.value = !1, s("create", a);
       });
     }, C = async (e) => {
-      const l = r.updateResource;
-      return t.value = !0, await d(l, { ...e }).then((a) => {
+      const o = r.updateResource;
+      return t.value = !0, await d(o, { ...e }).then((a) => {
         t.value = !1, s("update", a);
       });
     }, V = async (e) => {
-      const l = r.dropResource;
-      return t.value = !0, await d(l, { ...e }).then((a) => {
+      const o = r.dropResource;
+      return t.value = !0, await d(o, { ...e }).then((a) => {
         t.value = !1, s("drop", a);
       });
     };
     return r.readResource && i(), _({
       fetchItem: i,
-      create: g,
+      create: S,
       update: C,
       drop: V,
       refresh: i
-    }), (e, l) => {
+    }), (e, o) => {
       const a = B("lkt-loader");
       return c(), f("article", b, [
-        S.value ? (c(), f("header", j, [
+        R.value ? (c(), f("header", j, [
           h("h1", E, D(u.title), 1),
           h("div", N, [
-            k(e.$slots, "post-title", { item: o.value })
+            k(e.$slots, "post-title", {
+              item: l.value,
+              loading: t.value
+            })
           ])
         ])) : v("", !0),
         t.value ? v("", !0) : (c(), f("div", O, [
-          k(e.$slots, "item", { item: o.value })
+          k(e.$slots, "item", {
+            item: l.value,
+            loading: t.value
+          })
         ])),
         t.value ? (c(), L(a, { key: 2 })) : v("", !0)
       ]);
