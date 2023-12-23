@@ -32,6 +32,7 @@ declare const _default: {
             default: string;
         };
     }>> & {
+        onError?: ((...args: any[]) => any) | undefined;
         onDrop?: ((...args: any[]) => any) | undefined;
         onUpdate?: ((...args: any[]) => any) | undefined;
         "onUpdate:modelValue"?: ((...args: any[]) => any) | undefined;
@@ -44,7 +45,7 @@ declare const _default: {
         update: (data: LktObject) => Promise<void>;
         drop: (data: LktObject) => Promise<void>;
         refresh: () => Promise<void>;
-    }, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("drop" | "update" | "update:modelValue" | "read" | "create" | "perms")[], import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps & Readonly<import("vue").ExtractPropTypes<{
+    }, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("error" | "drop" | "update" | "update:modelValue" | "read" | "create" | "perms")[], import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps & Readonly<import("vue").ExtractPropTypes<{
         modelValue: {
             type: ObjectConstructor;
             required: false;
@@ -76,6 +77,7 @@ declare const _default: {
             default: string;
         };
     }>> & {
+        onError?: ((...args: any[]) => any) | undefined;
         onDrop?: ((...args: any[]) => any) | undefined;
         onUpdate?: ((...args: any[]) => any) | undefined;
         "onUpdate:modelValue"?: ((...args: any[]) => any) | undefined;
@@ -125,6 +127,7 @@ declare const _default: {
             default: string;
         };
     }>> & {
+        onError?: ((...args: any[]) => any) | undefined;
         onDrop?: ((...args: any[]) => any) | undefined;
         onUpdate?: ((...args: any[]) => any) | undefined;
         "onUpdate:modelValue"?: ((...args: any[]) => any) | undefined;
@@ -177,6 +180,7 @@ declare const _default: {
         default: string;
     };
 }>> & {
+    onError?: ((...args: any[]) => any) | undefined;
     onDrop?: ((...args: any[]) => any) | undefined;
     onUpdate?: ((...args: any[]) => any) | undefined;
     "onUpdate:modelValue"?: ((...args: any[]) => any) | undefined;
@@ -189,7 +193,7 @@ declare const _default: {
     update: (data: LktObject) => Promise<void>;
     drop: (data: LktObject) => Promise<void>;
     refresh: () => Promise<void>;
-}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("drop" | "update" | "update:modelValue" | "read" | "create" | "perms")[], "drop" | "update" | "update:modelValue" | "read" | "create" | "perms", {
+}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("error" | "drop" | "update" | "update:modelValue" | "read" | "create" | "perms")[], "error" | "drop" | "update" | "update:modelValue" | "read" | "create" | "perms", {
     title: string;
     modelValue: Record<string, any>;
     readData: Record<string, any>;

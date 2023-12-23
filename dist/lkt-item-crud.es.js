@@ -1,13 +1,13 @@
-import { defineComponent as q, useSlots as w, ref as p, computed as I, watch as m, resolveComponent as B, openBlock as c, createElementBlock as f, createElementVNode as h, toDisplayString as D, renderSlot as k, createCommentVNode as v, createBlock as L } from "vue";
-import { httpCall as d } from "lkt-http-client";
-const b = { class: "lkt-item-crud" }, j = {
+import { defineComponent as I, useSlots as b, ref as i, computed as B, watch as h, resolveComponent as D, openBlock as l, createElementBlock as c, createElementVNode as k, toDisplayString as L, renderSlot as y, createCommentVNode as d, createBlock as j } from "vue";
+import { httpCall as p } from "lkt-http-client";
+const A = { class: "lkt-item-crud" }, E = {
   key: 0,
   class: "lkt-item-crud_header"
-}, E = { class: "lkt-item-crud_header-title" }, N = { class: "lkt-item-crud_header-slot" }, O = {
+}, N = { class: "lkt-item-crud_header-title" }, O = { class: "lkt-item-crud_header-slot" }, $ = {
   key: 1,
   class: "lkt-item-crud_content"
-}, $ = { name: "LktItemCrud", inheritAttrs: !1 }, x = /* @__PURE__ */ q({
-  ...$,
+}, x = { key: 0 }, H = { key: 1 }, P = { name: "LktItemCrud", inheritAttrs: !1 }, z = /* @__PURE__ */ I({
+  ...P,
   props: {
     modelValue: { type: Object, required: !1, default: () => ({}) },
     readResource: { type: String, required: !0 },
@@ -17,61 +17,70 @@ const b = { class: "lkt-item-crud" }, j = {
     dropResource: { type: String, required: !1 },
     title: { type: String, default: "" }
   },
-  emits: ["update:modelValue", "read", "create", "update", "drop", "perms"],
-  setup(u, { expose: _, emit: y }) {
-    const r = u, g = w(), s = y, t = p(!0), l = p(r.modelValue), n = p([]), i = async () => (t.value = !0, await d(r.readResource, r.readData).then((e) => {
-      t.value = !1, l.value = e.data, n.value = e.perms, s("read", e);
-    })), R = I(() => t.value ? !1 : r.title || !!g["post-title"]);
-    m(() => r.modelValue, (e) => l.value = e), m(l, () => s("update:modelValue", l.value)), m(n, () => s("perms", n.value));
-    const S = async (e) => {
-      const o = r.createResource;
-      return t.value = !0, await d(o, { ...e }).then((a) => {
-        t.value = !1, s("create", a);
+  emits: ["update:modelValue", "read", "create", "update", "drop", "perms", "error"],
+  setup(n, { expose: _, emit: S }) {
+    const r = n, g = b(), a = S;
+    let R = [];
+    const t = i(!0), o = i(r.modelValue), m = i(R), v = i(200), f = async () => (t.value = !0, await p(r.readResource, r.readData).then((e) => {
+      if (t.value = !1, !e.success) {
+        v.value = e.httpStatus, a("error", e.httpStatus);
+        return;
+      }
+      o.value = e.data, m.value = e.perms, a("read", e);
+    })), C = B(() => t.value ? !1 : r.title || !!g["post-title"]);
+    h(() => r.modelValue, (e) => o.value = e), h(o, () => a("update:modelValue", o.value)), h(m, () => a("perms", m.value));
+    const V = async (e) => {
+      const u = r.createResource;
+      return t.value = !0, await p(u, { ...e }).then((s) => {
+        t.value = !1, a("create", s);
       });
-    }, C = async (e) => {
-      const o = r.updateResource;
-      return t.value = !0, await d(o, { ...e }).then((a) => {
-        t.value = !1, s("update", a);
+    }, q = async (e) => {
+      const u = r.updateResource;
+      return t.value = !0, await p(u, { ...e }).then((s) => {
+        t.value = !1, a("update", s);
       });
-    }, V = async (e) => {
-      const o = r.dropResource;
-      return t.value = !0, await d(o, { ...e }).then((a) => {
-        t.value = !1, s("drop", a);
+    }, w = async (e) => {
+      const u = r.dropResource;
+      return t.value = !0, await p(u, { ...e }).then((s) => {
+        t.value = !1, a("drop", s);
       });
     };
-    return r.readResource && i(), _({
-      fetchItem: i,
-      create: S,
-      update: C,
-      drop: V,
-      refresh: i
-    }), (e, o) => {
-      const a = B("lkt-loader");
-      return c(), f("article", b, [
-        R.value ? (c(), f("header", j, [
-          h("h1", E, D(u.title), 1),
-          h("div", N, [
-            k(e.$slots, "post-title", {
-              item: l.value,
+    return r.readResource && f(), _({
+      fetchItem: f,
+      create: V,
+      update: q,
+      drop: w,
+      refresh: f
+    }), (e, u) => {
+      const s = D("lkt-loader");
+      return l(), c("article", A, [
+        C.value ? (l(), c("header", E, [
+          k("h1", N, L(n.title), 1),
+          k("div", O, [
+            y(e.$slots, "post-title", {
+              item: o.value,
               loading: t.value
             })
           ])
-        ])) : v("", !0),
-        t.value ? v("", !0) : (c(), f("div", O, [
-          k(e.$slots, "item", {
-            item: l.value,
-            loading: t.value
-          })
+        ])) : d("", !0),
+        t.value ? d("", !0) : (l(), c("div", $, [
+          v.value === 200 ? (l(), c("div", x, [
+            y(e.$slots, "item", {
+              item: o.value,
+              loading: t.value
+            })
+          ])) : d("", !0),
+          v.value !== 200 ? (l(), c("div", H, " An error occurred! ")) : d("", !0)
         ])),
-        t.value ? (c(), L(a, { key: 2 })) : v("", !0)
+        t.value ? (l(), j(s, { key: 2 })) : d("", !0)
       ]);
     };
   }
-}), z = {
-  install: (u, _ = {}) => {
-    u.component("LktItemCrud", x);
+}), J = {
+  install: (n, _ = {}) => {
+    n.component("LktItemCrud", z);
   }
 };
 export {
-  z as default
+  J as default
 };

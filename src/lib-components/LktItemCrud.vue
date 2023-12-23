@@ -19,16 +19,24 @@ const props = defineProps({
 
 const slots = useSlots();
 
-const emit = defineEmits(['update:modelValue', 'read', 'create', 'update', 'drop', 'perms']);
+const emit = defineEmits(['update:modelValue', 'read', 'create', 'update', 'drop', 'perms', 'error']);
+
+let basePerms: string[] = [];
 
 const loading = ref(true),
     item = ref(props.modelValue),
-    perms = ref([]);
+    perms = ref(basePerms),
+    httpStatus = ref(200);
 
 const fetchItem = async () => {
     loading.value = true;
-    return await httpCall(props.readResource, props.readData).then(r => {
+    return await httpCall(props.readResource, props.readData).then((r) => {
         loading.value = false;
+        if (!r.success) {
+            httpStatus.value = r.httpStatus;
+            emit('error', r.httpStatus);
+            return;
+        }
         item.value = r.data;
         perms.value = r.perms;
         emit('read', r);
@@ -96,7 +104,12 @@ defineExpose({
             </div>
         </header>
         <div class="lkt-item-crud_content" v-if="!loading">
-            <slot name="item" v-bind:item="item" v-bind:loading="loading"></slot>
+            <div v-if="httpStatus === 200">
+                <slot name="item" v-bind:item="item" v-bind:loading="loading"></slot>
+            </div>
+            <div v-if="httpStatus !== 200">
+                An error occurred!
+            </div>
         </div>
         <lkt-loader v-if="loading"></lkt-loader>
     </article>
