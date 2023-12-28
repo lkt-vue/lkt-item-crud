@@ -1,4 +1,3 @@
-import { LktObject } from "lkt-ts-interfaces";
 declare const _default: {
     new (...args: any[]): import("vue").CreateComponentPublicInstance<Readonly<import("vue").ExtractPropTypes<{
         modelValue: {
@@ -6,14 +5,25 @@ declare const _default: {
             required: false;
             default: () => {};
         };
+        title: {
+            type: StringConstructor;
+            default: string;
+        };
+        editModeText: {
+            type: StringConstructor;
+            default: string;
+        };
+        saveText: {
+            type: StringConstructor;
+            default: string;
+        };
+        dropText: {
+            type: StringConstructor;
+            default: string;
+        };
         readResource: {
             type: StringConstructor;
             required: true;
-        };
-        readData: {
-            type: ObjectConstructor;
-            required: false;
-            default: () => {};
         };
         createResource: {
             type: StringConstructor;
@@ -27,9 +37,53 @@ declare const _default: {
             type: StringConstructor;
             required: false;
         };
-        title: {
+        readData: {
+            type: ObjectConstructor;
+            required: false;
+            default: () => {};
+        };
+        createData: {
+            type: ObjectConstructor;
+            required: false;
+            default: () => {};
+        };
+        updateData: {
+            type: ObjectConstructor;
+            required: false;
+            default: () => {};
+        };
+        dropData: {
+            type: ObjectConstructor;
+            required: false;
+            default: () => {};
+        };
+        saveIsCreate: {
+            type: BooleanConstructor;
+            default: boolean;
+        };
+        createConfirm: {
             type: StringConstructor;
             default: string;
+        };
+        updateConfirm: {
+            type: StringConstructor;
+            default: string;
+        };
+        dropConfirm: {
+            type: StringConstructor;
+            default: string;
+        };
+        createDisabled: {
+            type: BooleanConstructor;
+            default: boolean;
+        };
+        updateDisabled: {
+            type: BooleanConstructor;
+            default: boolean;
+        };
+        dropDisabled: {
+            type: BooleanConstructor;
+            default: boolean;
         };
     }>> & {
         onError?: ((...args: any[]) => any) | undefined;
@@ -40,25 +94,34 @@ declare const _default: {
         onCreate?: ((...args: any[]) => any) | undefined;
         onPerms?: ((...args: any[]) => any) | undefined;
     }, {
-        fetchItem: () => Promise<void>;
-        create: (data: LktObject) => Promise<void>;
-        update: (data: LktObject) => Promise<void>;
-        drop: (data: LktObject) => Promise<void>;
-        refresh: () => Promise<void>;
+        doDrop: () => void;
+        doRefresh: () => Promise<void>;
+        doSave: () => void;
     }, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("error" | "drop" | "update" | "update:modelValue" | "read" | "create" | "perms")[], import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps & Readonly<import("vue").ExtractPropTypes<{
         modelValue: {
             type: ObjectConstructor;
             required: false;
             default: () => {};
         };
+        title: {
+            type: StringConstructor;
+            default: string;
+        };
+        editModeText: {
+            type: StringConstructor;
+            default: string;
+        };
+        saveText: {
+            type: StringConstructor;
+            default: string;
+        };
+        dropText: {
+            type: StringConstructor;
+            default: string;
+        };
         readResource: {
             type: StringConstructor;
             required: true;
-        };
-        readData: {
-            type: ObjectConstructor;
-            required: false;
-            default: () => {};
         };
         createResource: {
             type: StringConstructor;
@@ -72,9 +135,53 @@ declare const _default: {
             type: StringConstructor;
             required: false;
         };
-        title: {
+        readData: {
+            type: ObjectConstructor;
+            required: false;
+            default: () => {};
+        };
+        createData: {
+            type: ObjectConstructor;
+            required: false;
+            default: () => {};
+        };
+        updateData: {
+            type: ObjectConstructor;
+            required: false;
+            default: () => {};
+        };
+        dropData: {
+            type: ObjectConstructor;
+            required: false;
+            default: () => {};
+        };
+        saveIsCreate: {
+            type: BooleanConstructor;
+            default: boolean;
+        };
+        createConfirm: {
             type: StringConstructor;
             default: string;
+        };
+        updateConfirm: {
+            type: StringConstructor;
+            default: string;
+        };
+        dropConfirm: {
+            type: StringConstructor;
+            default: string;
+        };
+        createDisabled: {
+            type: BooleanConstructor;
+            default: boolean;
+        };
+        updateDisabled: {
+            type: BooleanConstructor;
+            default: boolean;
+        };
+        dropDisabled: {
+            type: BooleanConstructor;
+            default: boolean;
         };
     }>> & {
         onError?: ((...args: any[]) => any) | undefined;
@@ -87,7 +194,20 @@ declare const _default: {
     }, {
         title: string;
         modelValue: Record<string, any>;
+        editModeText: string;
+        saveText: string;
+        dropText: string;
         readData: Record<string, any>;
+        createData: Record<string, any>;
+        updateData: Record<string, any>;
+        dropData: Record<string, any>;
+        saveIsCreate: boolean;
+        createConfirm: string;
+        updateConfirm: string;
+        dropConfirm: string;
+        createDisabled: boolean;
+        updateDisabled: boolean;
+        dropDisabled: boolean;
     }, true, {}, {}, {
         P: {};
         B: {};
@@ -101,14 +221,25 @@ declare const _default: {
             required: false;
             default: () => {};
         };
+        title: {
+            type: StringConstructor;
+            default: string;
+        };
+        editModeText: {
+            type: StringConstructor;
+            default: string;
+        };
+        saveText: {
+            type: StringConstructor;
+            default: string;
+        };
+        dropText: {
+            type: StringConstructor;
+            default: string;
+        };
         readResource: {
             type: StringConstructor;
             required: true;
-        };
-        readData: {
-            type: ObjectConstructor;
-            required: false;
-            default: () => {};
         };
         createResource: {
             type: StringConstructor;
@@ -122,9 +253,53 @@ declare const _default: {
             type: StringConstructor;
             required: false;
         };
-        title: {
+        readData: {
+            type: ObjectConstructor;
+            required: false;
+            default: () => {};
+        };
+        createData: {
+            type: ObjectConstructor;
+            required: false;
+            default: () => {};
+        };
+        updateData: {
+            type: ObjectConstructor;
+            required: false;
+            default: () => {};
+        };
+        dropData: {
+            type: ObjectConstructor;
+            required: false;
+            default: () => {};
+        };
+        saveIsCreate: {
+            type: BooleanConstructor;
+            default: boolean;
+        };
+        createConfirm: {
             type: StringConstructor;
             default: string;
+        };
+        updateConfirm: {
+            type: StringConstructor;
+            default: string;
+        };
+        dropConfirm: {
+            type: StringConstructor;
+            default: string;
+        };
+        createDisabled: {
+            type: BooleanConstructor;
+            default: boolean;
+        };
+        updateDisabled: {
+            type: BooleanConstructor;
+            default: boolean;
+        };
+        dropDisabled: {
+            type: BooleanConstructor;
+            default: boolean;
         };
     }>> & {
         onError?: ((...args: any[]) => any) | undefined;
@@ -135,15 +310,26 @@ declare const _default: {
         onCreate?: ((...args: any[]) => any) | undefined;
         onPerms?: ((...args: any[]) => any) | undefined;
     }, {
-        fetchItem: () => Promise<void>;
-        create: (data: LktObject) => Promise<void>;
-        update: (data: LktObject) => Promise<void>;
-        drop: (data: LktObject) => Promise<void>;
-        refresh: () => Promise<void>;
+        doDrop: () => void;
+        doRefresh: () => Promise<void>;
+        doSave: () => void;
     }, {}, {}, {}, {
         title: string;
         modelValue: Record<string, any>;
+        editModeText: string;
+        saveText: string;
+        dropText: string;
         readData: Record<string, any>;
+        createData: Record<string, any>;
+        updateData: Record<string, any>;
+        dropData: Record<string, any>;
+        saveIsCreate: boolean;
+        createConfirm: string;
+        updateConfirm: string;
+        dropConfirm: string;
+        createDisabled: boolean;
+        updateDisabled: boolean;
+        dropDisabled: boolean;
     }>;
     __isFragment?: undefined;
     __isTeleport?: undefined;
@@ -154,14 +340,25 @@ declare const _default: {
         required: false;
         default: () => {};
     };
+    title: {
+        type: StringConstructor;
+        default: string;
+    };
+    editModeText: {
+        type: StringConstructor;
+        default: string;
+    };
+    saveText: {
+        type: StringConstructor;
+        default: string;
+    };
+    dropText: {
+        type: StringConstructor;
+        default: string;
+    };
     readResource: {
         type: StringConstructor;
         required: true;
-    };
-    readData: {
-        type: ObjectConstructor;
-        required: false;
-        default: () => {};
     };
     createResource: {
         type: StringConstructor;
@@ -175,9 +372,53 @@ declare const _default: {
         type: StringConstructor;
         required: false;
     };
-    title: {
+    readData: {
+        type: ObjectConstructor;
+        required: false;
+        default: () => {};
+    };
+    createData: {
+        type: ObjectConstructor;
+        required: false;
+        default: () => {};
+    };
+    updateData: {
+        type: ObjectConstructor;
+        required: false;
+        default: () => {};
+    };
+    dropData: {
+        type: ObjectConstructor;
+        required: false;
+        default: () => {};
+    };
+    saveIsCreate: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
+    createConfirm: {
         type: StringConstructor;
         default: string;
+    };
+    updateConfirm: {
+        type: StringConstructor;
+        default: string;
+    };
+    dropConfirm: {
+        type: StringConstructor;
+        default: string;
+    };
+    createDisabled: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
+    updateDisabled: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
+    dropDisabled: {
+        type: BooleanConstructor;
+        default: boolean;
     };
 }>> & {
     onError?: ((...args: any[]) => any) | undefined;
@@ -188,24 +429,44 @@ declare const _default: {
     onCreate?: ((...args: any[]) => any) | undefined;
     onPerms?: ((...args: any[]) => any) | undefined;
 }, {
-    fetchItem: () => Promise<void>;
-    create: (data: LktObject) => Promise<void>;
-    update: (data: LktObject) => Promise<void>;
-    drop: (data: LktObject) => Promise<void>;
-    refresh: () => Promise<void>;
+    doDrop: () => void;
+    doRefresh: () => Promise<void>;
+    doSave: () => void;
 }, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("error" | "drop" | "update" | "update:modelValue" | "read" | "create" | "perms")[], "error" | "drop" | "update" | "update:modelValue" | "read" | "create" | "perms", {
     title: string;
     modelValue: Record<string, any>;
+    editModeText: string;
+    saveText: string;
+    dropText: string;
     readData: Record<string, any>;
+    createData: Record<string, any>;
+    updateData: Record<string, any>;
+    dropData: Record<string, any>;
+    saveIsCreate: boolean;
+    createConfirm: string;
+    updateConfirm: string;
+    dropConfirm: string;
+    createDisabled: boolean;
+    updateDisabled: boolean;
+    dropDisabled: boolean;
 }, {}, string, {}> & import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps & (new () => {
     $slots: {
         'post-title': (_: {
             item: Record<string, any>;
             loading: boolean;
         }) => any;
+        'button-drop': (_: {
+            item: Record<string, any>;
+            editMode: boolean;
+        }) => any;
+        'button-save': (_: {
+            item: Record<string, any>;
+            editMode: boolean;
+        }) => any;
         item: (_: {
             item: Record<string, any>;
             loading: false;
+            editMode: boolean;
         }) => any;
     };
 });
