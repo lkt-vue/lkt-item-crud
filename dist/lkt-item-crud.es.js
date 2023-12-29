@@ -1,4 +1,4 @@
-import { defineComponent as Q, useSlots as W, ref as u, computed as f, watch as _, resolveComponent as h, openBlock as r, createElementBlock as p, createElementVNode as R, toDisplayString as B, renderSlot as S, createCommentVNode as b, withDirectives as V, createVNode as q, withCtx as j, unref as O, vShow as I, createBlock as L } from "vue";
+import { defineComponent as Q, useSlots as W, ref as u, computed as m, watch as B, resolveComponent as S, openBlock as r, createElementBlock as f, createElementVNode as V, toDisplayString as q, renderSlot as b, createCommentVNode as C, withDirectives as g, createVNode as I, withCtx as j, unref as O, vShow as D, createBlock as L } from "vue";
 import { httpCall as X } from "lkt-http-client";
 const Y = { class: "lkt-item-crud" }, Z = {
   key: 0,
@@ -35,30 +35,30 @@ const Y = { class: "lkt-item-crud" }, Z = {
   },
   emits: ["update:modelValue", "read", "create", "update", "drop", "perms", "error"],
   setup(o, { expose: w, emit: E }) {
-    const e = o, C = W(), s = E;
+    const e = o, _ = W(), s = E;
     let N = [];
-    const a = u(!0), d = u(e.modelValue), g = u(N), i = u(!1), D = u(!1), c = u(!1), n = u(200), m = u(null), k = u(null), A = f(() => e.saveIsCreate ? e.createConfirm : e.updateConfirm), H = f(() => e.saveIsCreate ? e.createResource : e.updateResource), P = f(() => e.saveIsCreate ? e.createData : e.updateData), U = f(() => e.saveIsCreate ? e.createDisabled : e.updateDisabled), M = async () => (a.value = !0, n.value = -1, await X(e.readResource, e.readData).then((t) => {
+    const a = u(!0), d = u(e.modelValue), R = u(N), i = u(!1), c = u(!1), v = u(!1), n = u(200), k = u(null), y = u(null), A = m(() => e.saveIsCreate ? e.createConfirm : e.updateConfirm), H = m(() => e.saveIsCreate ? e.createResource : e.updateResource), P = m(() => e.saveIsCreate ? e.createData : e.updateData), U = m(() => e.saveIsCreate ? e.createDisabled : e.updateDisabled), M = async () => (a.value = !0, n.value = -1, await X(e.readResource, e.readData).then((t) => {
       if (a.value = !1, !t.success) {
-        D.value = !1, n.value = t.httpStatus, s("error", t.httpStatus);
+        c.value = !1, n.value = t.httpStatus, s("error", t.httpStatus);
         return;
       }
-      D.value = !0, d.value = t.data, g.value = t.perms, s("read", t);
-    })), z = f(() => a.value ? !1 : e.title || !!C["post-title"]);
-    _(() => e.modelValue, (t) => d.value = t), _(d, () => s("update:modelValue", d.value)), _(g, () => s("perms", g.value)), e.readResource && M();
+      c.value = !0, d.value = t.data, R.value = t.perms, s("read", t);
+    })), z = m(() => a.value ? !1 : e.title || !!_["post-title"]);
+    B(() => e.modelValue, (t) => d.value = t), B(d, () => s("update:modelValue", d.value)), B(R, () => s("perms", R.value)), e.readResource && M();
     const F = (t, l) => {
       if (a.value = !1, n.value = l.httpStatus, !l.success) {
-        c.value = !0, s("error", l.httpStatus);
+        v.value = !0, s("error", l.httpStatus);
         return;
       }
-      c.value = !0, s("drop", l);
+      v.value = !0, s("drop", l);
     }, G = (t, l) => {
       if (a.value = !1, n.value = l.httpStatus, !l.success) {
-        c.value = !0, s("error", l.httpStatus);
+        v.value = !0, s("error", l.httpStatus);
         return;
       }
-      c.value = !0;
-      let y = e.saveIsCreate ? "create" : "update";
-      s(y, l);
+      v.value = !0;
+      let h = e.saveIsCreate ? "create" : "update";
+      s(h, l);
     }, $ = () => {
       a.value = !0, n.value = -1;
     }, x = () => {
@@ -66,27 +66,27 @@ const Y = { class: "lkt-item-crud" }, Z = {
     };
     return w({
       doDrop: () => {
-        k.value && typeof k.value.click == "function" && k.value.click();
+        y.value && typeof y.value.click == "function" && y.value.click();
       },
       doRefresh: M,
       doSave: () => {
-        m.value && typeof m.value.click == "function" && m.value.click();
+        k.value && typeof k.value.click == "function" && k.value.click();
       }
     }), (t, l) => {
-      const y = h("lkt-button"), J = h("lkt-field-switch"), T = h("lkt-http-info"), K = h("lkt-loader");
-      return r(), p("article", Y, [
-        z.value ? (r(), p("header", Z, [
-          R("h1", ee, B(o.title), 1),
-          R("div", te, [
-            S(t.$slots, "post-title", {
+      const h = S("lkt-button"), J = S("lkt-field-switch"), T = S("lkt-http-info"), K = S("lkt-loader");
+      return r(), f("article", Y, [
+        z.value ? (r(), f("header", Z, [
+          V("h1", ee, q(o.title), 1),
+          V("div", te, [
+            b(t.$slots, "post-title", {
               item: d.value,
               loading: a.value
             })
           ])
-        ])) : b("", !0),
-        R("div", ae, [
-          V(q(y, {
-            ref: (v) => k.value = v,
+        ])) : C("", !0),
+        g(V("div", ae, [
+          g(I(h, {
+            ref: (p) => y.value = p,
             palette: "danger",
             disabled: o.dropDisabled,
             "confirm-modal": o.dropConfirm,
@@ -97,18 +97,18 @@ const Y = { class: "lkt-item-crud" }, Z = {
             onClick: F
           }, {
             default: j(() => [
-              O(C)["button-drop"] ? S(t.$slots, "button-drop", {
+              O(_)["button-drop"] ? b(t.$slots, "button-drop", {
                 key: 0,
                 item: d.value,
                 editMode: i.value
-              }) : (r(), p("span", le, B(o.dropText), 1))
+              }) : (r(), f("span", le, q(o.dropText), 1))
             ]),
             _: 3
           }, 8, ["disabled", "confirm-modal", "resource", "resource-data"]), [
-            [I, !a.value && i.value]
+            [D, !a.value && i.value && c.value]
           ]),
-          V(q(y, {
-            ref: (v) => m.value = v,
+          g(I(h, {
+            ref: (p) => k.value = p,
             palette: "success",
             disabled: U.value,
             "confirm-modal": A.value,
@@ -119,35 +119,37 @@ const Y = { class: "lkt-item-crud" }, Z = {
             onClick: G
           }, {
             default: j(() => [
-              O(C)["button-save"] ? S(t.$slots, "button-save", {
+              O(_)["button-save"] ? b(t.$slots, "button-save", {
                 key: 0,
                 item: d.value,
                 editMode: i.value
-              }) : (r(), p("span", oe, B(o.saveText), 1))
+              }) : (r(), f("span", oe, q(o.saveText), 1))
             ]),
             _: 3
           }, 8, ["disabled", "confirm-modal", "resource", "resource-data"]), [
-            [I, !a.value && i.value]
+            [D, !a.value && i.value && c.value]
           ]),
-          V(q(J, {
+          g(I(J, {
             modelValue: i.value,
-            "onUpdate:modelValue": l[0] || (l[0] = (v) => i.value = v),
+            "onUpdate:modelValue": l[0] || (l[0] = (p) => i.value = p),
             label: o.editModeText
           }, null, 8, ["modelValue", "label"]), [
-            [I, !a.value]
+            [D, !a.value && c.value]
           ])
+        ], 512), [
+          [D, c.value]
         ]),
-        a.value ? b("", !0) : (r(), p("div", ue, [
-          D.value ? (r(), p("div", re, [
-            c.value ? (r(), L(T, {
+        a.value ? C("", !0) : (r(), f("div", ue, [
+          c.value ? (r(), f("div", re, [
+            v.value ? (r(), L(T, {
               key: 0,
               code: n.value,
               quick: "",
               palette: n.value === 200 ? "success" : "danger",
               "can-close": "",
-              onClose: l[1] || (l[1] = (v) => c.value = !1)
-            }, null, 8, ["code", "palette"])) : b("", !0),
-            S(t.$slots, "item", {
+              onClose: l[1] || (l[1] = (p) => v.value = !1)
+            }, null, 8, ["code", "palette"])) : C("", !0),
+            b(t.$slots, "item", {
               item: d.value,
               loading: a.value,
               editMode: i.value
@@ -157,7 +159,7 @@ const Y = { class: "lkt-item-crud" }, Z = {
             code: n.value
           }, null, 8, ["code"]))
         ])),
-        a.value ? (r(), L(K, { key: 2 })) : b("", !0)
+        a.value ? (r(), L(K, { key: 2 })) : C("", !0)
       ]);
     };
   }

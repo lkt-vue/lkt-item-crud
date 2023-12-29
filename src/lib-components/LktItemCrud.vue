@@ -159,10 +159,10 @@ defineExpose({
                 <slot name="post-title" v-bind:item="item" v-bind:loading="isLoading"></slot>
             </div>
         </header>
-        <div class="lkt-item-crud-buttons">
+        <div class="lkt-item-crud-buttons" v-show="httpSuccessRead">
             <lkt-button
                 :ref="(el:any) => dropButton = el"
-                v-show="!isLoading && editMode"
+                v-show="!isLoading && editMode && httpSuccessRead"
                 palette="danger"
                 v-bind:disabled="dropDisabled"
                 v-bind:confirm-modal="dropConfirm"
@@ -178,7 +178,7 @@ defineExpose({
 
             <lkt-button
                 :ref="(el:any) => saveButton = el"
-                v-show="!isLoading && editMode"
+                v-show="!isLoading && editMode && httpSuccessRead"
                 palette="success"
                 v-bind:disabled="saveDisabled"
                 v-bind:confirm-modal="saveConfirm"
@@ -193,7 +193,7 @@ defineExpose({
             </lkt-button>
 
             <lkt-field-switch
-                v-show="!isLoading" v-model="editMode" :label="editModeText"></lkt-field-switch>
+                v-show="!isLoading && httpSuccessRead" v-model="editMode" :label="editModeText"></lkt-field-switch>
         </div>
         <div class="lkt-item-crud_content" v-if="!isLoading">
             <div v-if="httpSuccessRead" class="lkt-grid-1">
