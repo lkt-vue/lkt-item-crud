@@ -35,6 +35,7 @@ export default {
                 'lkt-string-tools',
                 'lkt-vue-tools',
                 'lkt-control-tools',
+                'lkt-data-state',
                 'lkt-events'
             ],
             output: {

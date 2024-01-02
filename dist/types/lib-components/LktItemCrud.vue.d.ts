@@ -93,11 +93,12 @@ declare const _default: {
         onRead?: ((...args: any[]) => any) | undefined;
         onCreate?: ((...args: any[]) => any) | undefined;
         onPerms?: ((...args: any[]) => any) | undefined;
+        "onModified-data"?: ((...args: any[]) => any) | undefined;
     }, {
         doDrop: () => void;
         doRefresh: () => Promise<void>;
         doSave: () => void;
-    }, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("error" | "drop" | "update" | "update:modelValue" | "read" | "create" | "perms")[], import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps & Readonly<import("vue").ExtractPropTypes<{
+    }, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("error" | "drop" | "update" | "update:modelValue" | "read" | "create" | "perms" | "modified-data")[], import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps & Readonly<import("vue").ExtractPropTypes<{
         modelValue: {
             type: ObjectConstructor;
             required: false;
@@ -191,6 +192,7 @@ declare const _default: {
         onRead?: ((...args: any[]) => any) | undefined;
         onCreate?: ((...args: any[]) => any) | undefined;
         onPerms?: ((...args: any[]) => any) | undefined;
+        "onModified-data"?: ((...args: any[]) => any) | undefined;
     }, {
         title: string;
         modelValue: Record<string, any>;
@@ -309,6 +311,7 @@ declare const _default: {
         onRead?: ((...args: any[]) => any) | undefined;
         onCreate?: ((...args: any[]) => any) | undefined;
         onPerms?: ((...args: any[]) => any) | undefined;
+        "onModified-data"?: ((...args: any[]) => any) | undefined;
     }, {
         doDrop: () => void;
         doRefresh: () => Promise<void>;
@@ -428,11 +431,12 @@ declare const _default: {
     onRead?: ((...args: any[]) => any) | undefined;
     onCreate?: ((...args: any[]) => any) | undefined;
     onPerms?: ((...args: any[]) => any) | undefined;
+    "onModified-data"?: ((...args: any[]) => any) | undefined;
 }, {
     doDrop: () => void;
     doRefresh: () => Promise<void>;
     doSave: () => void;
-}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("error" | "drop" | "update" | "update:modelValue" | "read" | "create" | "perms")[], "error" | "drop" | "update" | "update:modelValue" | "read" | "create" | "perms", {
+}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("error" | "drop" | "update" | "update:modelValue" | "read" | "create" | "perms" | "modified-data")[], "error" | "drop" | "update" | "update:modelValue" | "read" | "create" | "perms" | "modified-data", {
     title: string;
     modelValue: Record<string, any>;
     editModeText: string;

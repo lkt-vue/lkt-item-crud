@@ -1,16 +1,17 @@
-import { defineComponent as Q, useSlots as W, ref as u, computed as m, watch as B, resolveComponent as S, openBlock as r, createElementBlock as f, createElementVNode as V, toDisplayString as q, renderSlot as b, createCommentVNode as C, withDirectives as g, createVNode as I, withCtx as j, unref as O, vShow as D, createBlock as L } from "vue";
-import { httpCall as X } from "lkt-http-client";
-const Y = { class: "lkt-item-crud" }, Z = {
+import { defineComponent as Y, useSlots as Z, ref as r, computed as p, watch as b, resolveComponent as g, openBlock as d, createElementBlock as m, createElementVNode as I, toDisplayString as N, renderSlot as C, createCommentVNode as D, withDirectives as _, createVNode as V, withCtx as x, unref as j, vShow as O, createBlock as q } from "vue";
+import { httpCall as ee } from "lkt-http-client";
+import { DataState as E } from "lkt-data-state";
+const te = { class: "lkt-item-crud" }, ae = {
   key: 0,
   class: "lkt-item-crud_header"
-}, ee = { class: "lkt-item-crud_header-title" }, te = { class: "lkt-item-crud_header-slot" }, ae = { class: "lkt-item-crud-buttons" }, le = { key: 1 }, oe = { key: 1 }, ue = {
+}, le = { class: "lkt-item-crud_header-title" }, ue = { class: "lkt-item-crud_header-slot" }, oe = { class: "lkt-item-crud-buttons" }, re = { key: 1 }, se = { key: 1 }, de = {
   key: 1,
   class: "lkt-item-crud_content"
-}, re = {
+}, ne = {
   key: 0,
   class: "lkt-grid-1"
-}, se = { name: "LktItemCrud", inheritAttrs: !1 }, de = /* @__PURE__ */ Q({
-  ...se,
+}, ie = { name: "LktItemCrud", inheritAttrs: !1 }, ce = /* @__PURE__ */ Y({
+  ...ie,
   props: {
     modelValue: { type: Object, required: !1, default: () => ({}) },
     title: { type: String, default: "" },
@@ -33,141 +34,148 @@ const Y = { class: "lkt-item-crud" }, Z = {
     updateDisabled: { type: Boolean, default: !1 },
     dropDisabled: { type: Boolean, default: !1 }
   },
-  emits: ["update:modelValue", "read", "create", "update", "drop", "perms", "error"],
-  setup(o, { expose: w, emit: E }) {
-    const e = o, _ = W(), s = E;
-    let N = [];
-    const a = u(!0), d = u(e.modelValue), R = u(N), i = u(!1), c = u(!1), v = u(!1), n = u(200), k = u(null), y = u(null), A = m(() => e.saveIsCreate ? e.createConfirm : e.updateConfirm), H = m(() => e.saveIsCreate ? e.createResource : e.updateResource), P = m(() => e.saveIsCreate ? e.createData : e.updateData), U = m(() => e.saveIsCreate ? e.createDisabled : e.updateDisabled), M = async () => (a.value = !0, n.value = -1, await X(e.readResource, e.readData).then((t) => {
-      if (a.value = !1, !t.success) {
-        c.value = !1, n.value = t.httpStatus, s("error", t.httpStatus);
+  emits: ["update:modelValue", "read", "create", "update", "drop", "perms", "error", "modified-data"],
+  setup(u, { expose: w, emit: A }) {
+    const t = u, R = Z(), s = A;
+    let H = [];
+    const a = r(!0), o = r(t.modelValue), B = r(H), i = r(!1), c = r(!1), v = r(!1), n = r(200), k = r(null), y = r(null), S = r(new E(JSON.parse(JSON.stringify(o.value)))), P = p(() => t.saveIsCreate ? t.createConfirm : t.updateConfirm), U = p(() => t.saveIsCreate ? t.createResource : t.updateResource), z = p(() => t.saveIsCreate ? t.createData : t.updateData), F = p(() => t.saveIsCreate ? t.createDisabled : t.updateDisabled), L = async () => (a.value = !0, n.value = -1, await ee(t.readResource, t.readData).then((e) => {
+      if (a.value = !1, !e.success) {
+        c.value = !1, n.value = e.httpStatus, s("error", e.httpStatus);
         return;
       }
-      c.value = !0, d.value = t.data, R.value = t.perms, s("read", t);
-    })), z = m(() => a.value ? !1 : e.title || !!_["post-title"]);
-    B(() => e.modelValue, (t) => d.value = t), B(d, () => s("update:modelValue", d.value)), B(R, () => s("perms", R.value)), e.readResource && M();
-    const F = (t, l) => {
+      c.value = !0, o.value = e.data, B.value = e.perms, S.value = new E(JSON.parse(JSON.stringify(o.value))), s("read", e);
+    })), G = p(() => a.value ? !1 : t.title || !!R["post-title"]);
+    b(() => t.modelValue, (e) => {
+      o.value = e, S.value.increment(JSON.parse(JSON.stringify(e)));
+    }, { deep: !0 }), b(o, (e) => {
+      s("update:modelValue", o.value), S.value.increment(JSON.parse(JSON.stringify(e)));
+    }, { deep: !0 }), b(B, () => s("perms", B.value));
+    const J = p(() => F.value ? !1 : S.value.changed());
+    b(J, (e) => s("modified-data", e)), t.readResource && L();
+    const K = (e, l) => {
       if (a.value = !1, n.value = l.httpStatus, !l.success) {
         v.value = !0, s("error", l.httpStatus);
         return;
       }
       v.value = !0, s("drop", l);
-    }, G = (t, l) => {
+    }, Q = (e, l) => {
       if (a.value = !1, n.value = l.httpStatus, !l.success) {
         v.value = !0, s("error", l.httpStatus);
         return;
       }
       v.value = !0;
-      let h = e.saveIsCreate ? "create" : "update";
+      let h = t.saveIsCreate ? "create" : "update";
       s(h, l);
-    }, $ = () => {
+    }, M = () => {
       a.value = !0, n.value = -1;
-    }, x = () => {
+    }, T = () => {
       a.value = !1;
     };
     return w({
       doDrop: () => {
         y.value && typeof y.value.click == "function" && y.value.click();
       },
-      doRefresh: M,
+      doRefresh: L,
       doSave: () => {
         k.value && typeof k.value.click == "function" && k.value.click();
       }
-    }), (t, l) => {
-      const h = S("lkt-button"), J = S("lkt-field-switch"), T = S("lkt-http-info"), K = S("lkt-loader");
-      return r(), f("article", Y, [
-        z.value ? (r(), f("header", Z, [
-          V("h1", ee, q(o.title), 1),
-          V("div", te, [
-            b(t.$slots, "post-title", {
-              item: d.value,
+    }), (e, l) => {
+      const h = g("lkt-button"), W = g("lkt-field-switch"), $ = g("lkt-http-info"), X = g("lkt-loader");
+      return d(), m("article", te, [
+        G.value ? (d(), m("header", ae, [
+          I("h1", le, N(u.title), 1),
+          I("div", ue, [
+            C(e.$slots, "post-title", {
+              item: o.value,
               loading: a.value
             })
           ])
-        ])) : C("", !0),
-        g(V("div", ae, [
-          g(I(h, {
-            ref: (p) => y.value = p,
+        ])) : D("", !0),
+        _(I("div", oe, [
+          _(V(h, {
+            ref: (f) => y.value = f,
             palette: "danger",
-            disabled: o.dropDisabled,
-            "confirm-modal": o.dropConfirm,
-            resource: o.dropResource,
-            "resource-data": o.dropData,
-            onLoading: $,
-            onLoaded: x,
-            onClick: F
+            disabled: u.dropDisabled,
+            "confirm-modal": u.dropConfirm,
+            resource: u.dropResource,
+            "resource-data": u.dropData,
+            onLoading: M,
+            onLoaded: T,
+            onClick: K
           }, {
-            default: j(() => [
-              O(_)["button-drop"] ? b(t.$slots, "button-drop", {
+            default: x(() => [
+              j(R)["button-drop"] ? C(e.$slots, "button-drop", {
                 key: 0,
-                item: d.value,
+                item: o.value,
                 editMode: i.value
-              }) : (r(), f("span", le, q(o.dropText), 1))
+              }) : (d(), m("span", re, N(u.dropText), 1))
             ]),
             _: 3
           }, 8, ["disabled", "confirm-modal", "resource", "resource-data"]), [
-            [D, !a.value && i.value && c.value]
+            [O, !a.value && i.value && c.value]
           ]),
-          g(I(h, {
-            ref: (p) => k.value = p,
+          _(V(h, {
+            ref: (f) => k.value = f,
             palette: "success",
-            disabled: U.value,
-            "confirm-modal": A.value,
-            resource: H.value,
-            "resource-data": P.value,
-            onLoading: $,
-            onLoaded: x,
-            onClick: G
+            disabled: !J.value,
+            "confirm-modal": P.value,
+            resource: U.value,
+            "resource-data": z.value,
+            onLoading: M,
+            onLoaded: T,
+            onClick: Q
           }, {
-            default: j(() => [
-              O(_)["button-save"] ? b(t.$slots, "button-save", {
+            default: x(() => [
+              j(R)["button-save"] ? C(e.$slots, "button-save", {
                 key: 0,
-                item: d.value,
+                item: o.value,
                 editMode: i.value
-              }) : (r(), f("span", oe, q(o.saveText), 1))
+              }) : (d(), m("span", se, N(u.saveText), 1))
             ]),
             _: 3
           }, 8, ["disabled", "confirm-modal", "resource", "resource-data"]), [
-            [D, !a.value && i.value && c.value]
+            [O, !a.value && i.value && c.value]
           ]),
-          g(I(J, {
+          _(V(W, {
             modelValue: i.value,
-            "onUpdate:modelValue": l[0] || (l[0] = (p) => i.value = p),
-            label: o.editModeText
+            "onUpdate:modelValue": l[0] || (l[0] = (f) => i.value = f),
+            label: u.editModeText
           }, null, 8, ["modelValue", "label"]), [
-            [D, !a.value && c.value]
+            [O, !a.value && c.value]
           ])
         ], 512), [
-          [D, c.value]
+          [O, c.value]
         ]),
-        a.value ? C("", !0) : (r(), f("div", ue, [
-          c.value ? (r(), f("div", re, [
-            v.value ? (r(), L(T, {
+        a.value ? D("", !0) : (d(), m("div", de, [
+          c.value ? (d(), m("div", ne, [
+            v.value ? (d(), q($, {
               key: 0,
               code: n.value,
               quick: "",
               palette: n.value === 200 ? "success" : "danger",
               "can-close": "",
-              onClose: l[1] || (l[1] = (p) => v.value = !1)
-            }, null, 8, ["code", "palette"])) : C("", !0),
-            b(t.$slots, "item", {
-              item: d.value,
+              onClose: l[1] || (l[1] = (f) => v.value = !1)
+            }, null, 8, ["code", "palette"])) : D("", !0),
+            C(e.$slots, "item", {
+              item: o.value,
               loading: a.value,
               editMode: i.value
             })
-          ])) : (r(), L(T, {
+          ])) : (d(), q($, {
             key: 1,
             code: n.value
           }, null, 8, ["code"]))
         ])),
-        a.value ? (r(), L(K, { key: 2 })) : C("", !0)
+        a.value ? (d(), q(X, { key: 2 })) : D("", !0)
       ]);
     };
   }
-}), pe = {
-  install: (o, w = {}) => {
-    o.component("LktItemCrud", de);
+});
+const ye = {
+  install: (u, w = {}) => {
+    u.component("LktItemCrud", ce);
   }
 };
 export {
-  pe as default
+  ye as default
 };

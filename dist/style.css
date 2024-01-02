@@ -1,0 +1,1 @@
+.lkt-item-crud,.lkt-item-crud_content{display:flex;flex-direction:column;gap:15px}.lkt-item-crud-buttons{position:sticky;top:0;display:flex;align-items:center;gap:var(--gap)}.lkt-item-crud-buttons>:last-child{margin-left:auto}

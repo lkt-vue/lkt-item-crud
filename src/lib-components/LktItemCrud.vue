@@ -5,6 +5,7 @@ export default {name: "LktItemCrud", inheritAttrs: false}
 <script setup lang="ts">
 import {ref, watch, useSlots, computed} from "vue";
 import {httpCall, HTTPResponse} from "lkt-http-client";
+import {DataState} from "lkt-data-state";
 
 const props = defineProps({
     modelValue: {type: Object, required: false, default: () => ({})},
@@ -36,7 +37,7 @@ const props = defineProps({
 
 const slots = useSlots();
 
-const emit = defineEmits(['update:modelValue', 'read', 'create', 'update', 'drop', 'perms', 'error']);
+const emit = defineEmits(['update:modelValue', 'read', 'create', 'update', 'drop', 'perms', 'error', 'modified-data']);
 
 let basePerms: string[] = [];
 
@@ -50,6 +51,7 @@ const isLoading = ref(true),
     saveButton = ref(null),
     dropButton = ref(null);
 
+const dataState = ref(new DataState(JSON.parse(JSON.stringify(item.value))));
 
 const saveConfirm = computed(() => {
         return props.saveIsCreate
@@ -86,6 +88,7 @@ const fetchItem = async () => {
         httpSuccessRead.value = true;
         item.value = r.data;
         perms.value = r.perms;
+        dataState.value = new DataState(JSON.parse(JSON.stringify(item.value)));
         emit('read', r);
     });
 }
@@ -96,9 +99,22 @@ const displayHeader = computed(() => {
     return props.title || !!slots['post-title'];
 })
 
-watch(() => props.modelValue, v => item.value = v);
-watch(item, () => emit('update:modelValue', item.value));
+watch(() => props.modelValue, v => {
+    item.value = v;
+    dataState.value.increment(JSON.parse(JSON.stringify(v)));
+}, {deep: true});
+watch(item, (v) => {
+    emit('update:modelValue', item.value);
+    dataState.value.increment(JSON.parse(JSON.stringify(v)));
+}, {deep: true});
 watch(perms, () => emit('perms', perms.value));
+
+const ableToSave = computed(() => {
+    if (saveDisabled.value) return false;
+
+    return dataState.value.changed();
+})
+watch(ableToSave, (v) => emit('modified-data', v));
 
 // Fetch item
 if (props.readResource) fetchItem();
@@ -180,7 +196,7 @@ defineExpose({
                 :ref="(el:any) => saveButton = el"
                 v-show="!isLoading && editMode && httpSuccessRead"
                 palette="success"
-                v-bind:disabled="saveDisabled"
+                v-bind:disabled="!ableToSave"
                 v-bind:confirm-modal="saveConfirm"
                 v-bind:resource="saveResource"
                 v-bind:resource-data="saveData"
@@ -198,7 +214,8 @@ defineExpose({
         <div class="lkt-item-crud_content" v-if="!isLoading">
             <div v-if="httpSuccessRead" class="lkt-grid-1">
                 <lkt-http-info :code="httpStatus" v-if="showStoreMessage" quick
-                               :palette="httpStatus === 200 ? 'success' : 'danger'" can-close v-on:close="showStoreMessage = false"></lkt-http-info>
+                               :palette="httpStatus === 200 ? 'success' : 'danger'" can-close
+                               v-on:close="showStoreMessage = false"></lkt-http-info>
                 <slot name="item" v-bind:item="item" v-bind:loading="isLoading" v-bind:edit-mode="editMode"></slot>
             </div>
             <lkt-http-info :code="httpStatus" v-else></lkt-http-info>
