@@ -12,10 +12,14 @@
 
 .lkt-item-crud-buttons {
     position: sticky;
-    top: 0;
+    top: calc(-1 * var(--gap));
     display: flex;
     align-items: center;
     gap: var(--gap);
+    transition: all linear .150s;
+    background: #ffffff;
+    z-index: 2;
+    padding: var(--gap) 0;
 }
 
 .lkt-item-crud-buttons > :last-child {

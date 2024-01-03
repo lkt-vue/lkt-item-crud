@@ -46,6 +46,7 @@ export default {
                     'suneditor': 'suneditor',
                     'katex': 'katex',
                     'lkt-tools': 'LktTools',
+                    'lkt-data-state': 'LktDataState',
                     'lkt-http-client': 'LktHttpClient',
                     'lkt-string-tools': 'LktStringTools',
                     'lkt-vue-tools': 'LktVueTools',

@@ -57,7 +57,7 @@ declare const _default: {
             required: false;
             default: () => {};
         };
-        saveIsCreate: {
+        isCreate: {
             type: BooleanConstructor;
             default: boolean;
         };
@@ -84,6 +84,11 @@ declare const _default: {
         dropDisabled: {
             type: BooleanConstructor;
             default: boolean;
+        };
+        saveValidator: {
+            type: FunctionConstructor;
+            required: false;
+            default: () => boolean;
         };
     }>> & {
         onError?: ((...args: any[]) => any) | undefined;
@@ -156,7 +161,7 @@ declare const _default: {
             required: false;
             default: () => {};
         };
-        saveIsCreate: {
+        isCreate: {
             type: BooleanConstructor;
             default: boolean;
         };
@@ -184,6 +189,11 @@ declare const _default: {
             type: BooleanConstructor;
             default: boolean;
         };
+        saveValidator: {
+            type: FunctionConstructor;
+            required: false;
+            default: () => boolean;
+        };
     }>> & {
         onError?: ((...args: any[]) => any) | undefined;
         onDrop?: ((...args: any[]) => any) | undefined;
@@ -203,13 +213,14 @@ declare const _default: {
         createData: Record<string, any>;
         updateData: Record<string, any>;
         dropData: Record<string, any>;
-        saveIsCreate: boolean;
+        isCreate: boolean;
         createConfirm: string;
         updateConfirm: string;
         dropConfirm: string;
         createDisabled: boolean;
         updateDisabled: boolean;
         dropDisabled: boolean;
+        saveValidator: Function;
     }, true, {}, {}, {
         P: {};
         B: {};
@@ -275,7 +286,7 @@ declare const _default: {
             required: false;
             default: () => {};
         };
-        saveIsCreate: {
+        isCreate: {
             type: BooleanConstructor;
             default: boolean;
         };
@@ -303,6 +314,11 @@ declare const _default: {
             type: BooleanConstructor;
             default: boolean;
         };
+        saveValidator: {
+            type: FunctionConstructor;
+            required: false;
+            default: () => boolean;
+        };
     }>> & {
         onError?: ((...args: any[]) => any) | undefined;
         onDrop?: ((...args: any[]) => any) | undefined;
@@ -326,13 +342,14 @@ declare const _default: {
         createData: Record<string, any>;
         updateData: Record<string, any>;
         dropData: Record<string, any>;
-        saveIsCreate: boolean;
+        isCreate: boolean;
         createConfirm: string;
         updateConfirm: string;
         dropConfirm: string;
         createDisabled: boolean;
         updateDisabled: boolean;
         dropDisabled: boolean;
+        saveValidator: Function;
     }>;
     __isFragment?: undefined;
     __isTeleport?: undefined;
@@ -395,7 +412,7 @@ declare const _default: {
         required: false;
         default: () => {};
     };
-    saveIsCreate: {
+    isCreate: {
         type: BooleanConstructor;
         default: boolean;
     };
@@ -423,6 +440,11 @@ declare const _default: {
         type: BooleanConstructor;
         default: boolean;
     };
+    saveValidator: {
+        type: FunctionConstructor;
+        required: false;
+        default: () => boolean;
+    };
 }>> & {
     onError?: ((...args: any[]) => any) | undefined;
     onDrop?: ((...args: any[]) => any) | undefined;
@@ -446,13 +468,14 @@ declare const _default: {
     createData: Record<string, any>;
     updateData: Record<string, any>;
     dropData: Record<string, any>;
-    saveIsCreate: boolean;
+    isCreate: boolean;
     createConfirm: string;
     updateConfirm: string;
     dropConfirm: string;
     createDisabled: boolean;
     updateDisabled: boolean;
     dropDisabled: boolean;
+    saveValidator: Function;
 }, {}, string, {}> & import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps & (new () => {
     $slots: {
         'post-title': (_: {

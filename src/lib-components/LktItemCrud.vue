@@ -25,7 +25,7 @@ const props = defineProps({
     updateData: {type: Object, required: false, default: () => ({})},
     dropData: {type: Object, required: false, default: () => ({})},
 
-    saveIsCreate: {type: Boolean, default: false},
+    isCreate: {type: Boolean, default: false},
     createConfirm: {type: String, default: ''},
     updateConfirm: {type: String, default: ''},
     dropConfirm: {type: String, default: ''},
@@ -33,6 +33,8 @@ const props = defineProps({
     createDisabled: {type: Boolean, default: false},
     updateDisabled: {type: Boolean, default: false},
     dropDisabled: {type: Boolean, default: false},
+
+    saveValidator: {type: Function, required: false, default: () => true},
 });
 
 const slots = useSlots();
@@ -49,27 +51,26 @@ const isLoading = ref(true),
     showStoreMessage = ref(false),
     httpStatus = ref(200),
     saveButton = ref(null),
-    dropButton = ref(null);
-
-const dataState = ref(new DataState(JSON.parse(JSON.stringify(item.value))));
+    dropButton = ref(null),
+    dataState = ref(new DataState(item.value));
 
 const saveConfirm = computed(() => {
-        return props.saveIsCreate
+        return props.isCreate
             ? props.createConfirm
             : props.updateConfirm;
     }),
     saveResource = computed(() => {
-        return props.saveIsCreate
+        return props.isCreate
             ? props.createResource
             : props.updateResource;
     }),
     saveData = computed(() => {
-        return props.saveIsCreate
+        return props.isCreate
             ? props.createData
             : props.updateData;
     }),
     saveDisabled = computed(() => {
-        return props.saveIsCreate
+        return props.isCreate
             ? props.createDisabled
             : props.updateDisabled;
     })
@@ -77,7 +78,8 @@ const saveConfirm = computed(() => {
 const fetchItem = async () => {
     isLoading.value = true;
     httpStatus.value = -1;
-    return await httpCall(props.readResource, props.readData).then((r) => {
+    try {
+        const r = await httpCall(props.readResource, props.readData);
         isLoading.value = false;
         if (!r.success) {
             httpSuccessRead.value = false;
@@ -88,9 +90,15 @@ const fetchItem = async () => {
         httpSuccessRead.value = true;
         item.value = r.data;
         perms.value = r.perms;
-        dataState.value = new DataState(JSON.parse(JSON.stringify(item.value)));
+        dataState.value.increment(item.value).turnStoredIntoOriginal();
         emit('read', r);
-    });
+    } catch (e) {
+        isLoading.value = false;
+        httpSuccessRead.value = false;
+        httpStatus.value = 404;
+        emit('error', 404);
+        return;
+    }
 }
 
 const displayHeader = computed(() => {
@@ -101,23 +109,32 @@ const displayHeader = computed(() => {
 
 watch(() => props.modelValue, v => {
     item.value = v;
-    dataState.value.increment(JSON.parse(JSON.stringify(v)));
+    dataState.value.increment(v);
 }, {deep: true});
+
 watch(item, (v) => {
     emit('update:modelValue', item.value);
-    dataState.value.increment(JSON.parse(JSON.stringify(v)));
+    dataState.value.increment(v);
 }, {deep: true});
+
 watch(perms, () => emit('perms', perms.value));
 
 const ableToSave = computed(() => {
     if (saveDisabled.value) return false;
 
+    if (typeof props.saveValidator === 'function' && !props.saveValidator(item.value)) return false;
+
     return dataState.value.changed();
-})
+});
 watch(ableToSave, (v) => emit('modified-data', v));
 
 // Fetch item
-if (props.readResource) fetchItem();
+if (props.readResource && !props.isCreate) fetchItem();
+else if (props.isCreate) {
+    httpSuccessRead.value = true;
+    editMode.value = true;
+    isLoading.value = false;
+}
 
 const onDrop = ($event: PointerEvent, r: HTTPResponse) => {
         isLoading.value = false;
@@ -140,7 +157,10 @@ const onDrop = ($event: PointerEvent, r: HTTPResponse) => {
             return;
         }
         showStoreMessage.value = true;
-        let emits: 'create' | 'update' = props.saveIsCreate ? 'create' : 'update';
+        let emits: 'create' | 'update' = props.isCreate ? 'create' : 'update';
+        if (!props.isCreate) {
+            dataState.value.turnStoredIntoOriginal();
+        }
         emit(emits, r)
 
     },
@@ -179,6 +199,7 @@ defineExpose({
             <lkt-button
                 :ref="(el:any) => dropButton = el"
                 v-show="!isLoading && editMode && httpSuccessRead"
+                v-if="!isCreate"
                 palette="danger"
                 v-bind:disabled="dropDisabled"
                 v-bind:confirm-modal="dropConfirm"
@@ -209,7 +230,8 @@ defineExpose({
             </lkt-button>
 
             <lkt-field-switch
-                v-show="!isLoading && httpSuccessRead" v-model="editMode" :label="editModeText"></lkt-field-switch>
+                v-show="!isLoading && httpSuccessRead && !isCreate" v-model="editMode"
+                :label="editModeText"></lkt-field-switch>
         </div>
         <div class="lkt-item-crud_content" v-if="!isLoading">
             <div v-if="httpSuccessRead" class="lkt-grid-1">
