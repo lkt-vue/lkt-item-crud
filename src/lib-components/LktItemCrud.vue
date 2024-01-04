@@ -65,9 +65,10 @@ const saveConfirm = computed(() => {
             : props.updateResource;
     }),
     saveData = computed(() => {
-        return props.isCreate
-            ? props.createData
-            : props.updateData;
+        if (props.isCreate) {
+            return {...props.createData, ...JSON.parse(JSON.stringify(item.value))};
+        }
+        return {...props.updateData, ...JSON.parse(JSON.stringify(item.value))};
     }),
     saveDisabled = computed(() => {
         return props.isCreate
@@ -78,9 +79,11 @@ const saveConfirm = computed(() => {
 const fetchItem = async () => {
     isLoading.value = true;
     httpStatus.value = -1;
+    showStoreMessage.value = false;
     try {
         const r = await httpCall(props.readResource, props.readData);
         isLoading.value = false;
+        httpStatus.value = r.httpStatus;
         if (!r.success) {
             httpSuccessRead.value = false;
             httpStatus.value = r.httpStatus;
@@ -160,6 +163,11 @@ const onDrop = ($event: PointerEvent, r: HTTPResponse) => {
         let emits: 'create' | 'update' = props.isCreate ? 'create' : 'update';
         if (!props.isCreate) {
             dataState.value.turnStoredIntoOriginal();
+        }
+
+        if (r.autoReloadId) {
+            props.readData['id'] = r.autoReloadId;
+            fetchItem();
         }
         emit(emits, r)
 
