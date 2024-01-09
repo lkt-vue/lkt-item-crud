@@ -74,7 +74,9 @@ const saveConfirm = computed(() => {
         return props.isCreate
             ? props.createDisabled
             : props.updateDisabled;
-    })
+    }),
+    canUpdate = computed(() => !props.isCreate && perms.value.includes('update')),
+    canDrop = computed(() => !props.isCreate && perms.value.includes('drop'));
 
 const fetchItem = async () => {
     isLoading.value = true;
@@ -124,6 +126,7 @@ watch(perms, () => emit('perms', perms.value));
 
 const ableToSave = computed(() => {
     if (saveDisabled.value) return false;
+    if (!props.isCreate && !canUpdate.value) return false;
 
     if (typeof props.saveValidator === 'function' && !props.saveValidator(item.value)) return false;
 
@@ -209,7 +212,7 @@ defineExpose({
                 v-show="!isLoading && editMode && httpSuccessRead"
                 v-if="!isCreate"
                 palette="danger"
-                v-bind:disabled="dropDisabled"
+                v-bind:disabled="dropDisabled || !canDrop"
                 v-bind:confirm-modal="dropConfirm"
                 v-bind:resource="dropResource"
                 v-bind:resource-data="dropData"
@@ -217,7 +220,10 @@ defineExpose({
                 v-on:loaded="onButtonLoaded"
                 v-on:click="onDrop">
                 <slot v-if="!!slots['button-drop']" name="button-drop" v-bind:item="item"
-                      v-bind:edit-mode="editMode"></slot>
+                      v-bind:edit-mode="editMode"
+                    v-bind:is-create="isCreate"
+                    v-bind:can-update="canUpdate"
+                    v-bind:can-drop="canDrop"></slot>
                 <span v-else>{{ dropText }}</span>
             </lkt-button>
 
@@ -233,7 +239,10 @@ defineExpose({
                 v-on:loaded="onButtonLoaded"
                 v-on:click="onSave">
                 <slot v-if="!!slots['button-save']" name="button-save" v-bind:item="item"
-                      v-bind:edit-mode="editMode"></slot>
+                      v-bind:edit-mode="editMode"
+                    v-bind:is-create="isCreate"
+                    v-bind:can-update="canUpdate"
+                    v-bind:can-drop="canDrop"></slot>
                 <span v-else>{{ saveText }}</span>
             </lkt-button>
 
@@ -246,7 +255,10 @@ defineExpose({
                 <lkt-http-info :code="httpStatus" v-if="showStoreMessage" quick
                                :palette="httpStatus === 200 ? 'success' : 'danger'" can-close
                                v-on:close="showStoreMessage = false"></lkt-http-info>
-                <slot name="item" v-bind:item="item" v-bind:loading="isLoading" v-bind:edit-mode="editMode"></slot>
+                <slot name="item" v-bind:item="item" v-bind:loading="isLoading" v-bind:edit-mode="editMode"
+                    v-bind:is-create="isCreate"
+                    v-bind:can-update="canUpdate"
+                    v-bind:can-drop="canDrop"></slot>
             </div>
             <lkt-http-info :code="httpStatus" v-else></lkt-http-info>
         </div>

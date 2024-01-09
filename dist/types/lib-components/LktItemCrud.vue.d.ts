@@ -485,15 +485,24 @@ declare const _default: {
         'button-drop': (_: {
             item: Record<string, any>;
             editMode: boolean;
+            isCreate: false;
+            canUpdate: boolean;
+            canDrop: boolean;
         }) => any;
         'button-save': (_: {
             item: Record<string, any>;
             editMode: boolean;
+            isCreate: boolean;
+            canUpdate: boolean;
+            canDrop: boolean;
         }) => any;
         item: (_: {
             item: Record<string, any>;
             loading: false;
             editMode: boolean;
+            isCreate: boolean;
+            canUpdate: boolean;
+            canDrop: boolean;
         }) => any;
     };
 });
