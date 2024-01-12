@@ -23,7 +23,7 @@ declare const _default: {
         };
         readResource: {
             type: StringConstructor;
-            required: true;
+            required: false;
         };
         createResource: {
             type: StringConstructor;
@@ -127,7 +127,7 @@ declare const _default: {
         };
         readResource: {
             type: StringConstructor;
-            required: true;
+            required: false;
         };
         createResource: {
             type: StringConstructor;
@@ -252,7 +252,7 @@ declare const _default: {
         };
         readResource: {
             type: StringConstructor;
-            required: true;
+            required: false;
         };
         createResource: {
             type: StringConstructor;
@@ -378,7 +378,7 @@ declare const _default: {
     };
     readResource: {
         type: StringConstructor;
-        required: true;
+        required: false;
     };
     createResource: {
         type: StringConstructor;

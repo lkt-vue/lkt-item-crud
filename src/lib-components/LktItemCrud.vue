@@ -15,7 +15,7 @@ const props = defineProps({
     saveText: {type: String, default: 'Save'},
     dropText: {type: String, default: 'Delete'},
 
-    readResource: {type: String, required: true},
+    readResource: {type: String, required: false},
     createResource: {type: String, required: false},
     updateResource: {type: String, required: false},
     dropResource: {type: String, required: false},
@@ -155,14 +155,16 @@ const onDrop = ($event: PointerEvent, r: HTTPResponse) => {
 
     },
     onSave = ($event: PointerEvent, r: HTTPResponse) => {
-        isLoading.value = false;
-        httpStatus.value = r.httpStatus;
-        if (!r.success) {
+        if (saveResource.value) {
+            isLoading.value = false;
+            httpStatus.value = r.httpStatus;
+            if (!r.success) {
+                showStoreMessage.value = true;
+                emit('error', r.httpStatus);
+                return;
+            }
             showStoreMessage.value = true;
-            emit('error', r.httpStatus);
-            return;
         }
-        showStoreMessage.value = true;
         let emits: 'create' | 'update' = props.isCreate ? 'create' : 'update';
         if (!props.isCreate) {
             dataState.value.turnStoredIntoOriginal();
