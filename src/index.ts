@@ -9,7 +9,7 @@ import LktLoader from "lkt-loader";
 const LktItemCrud = {
     install: (app: App, options = {}) => {
         // Register plugin components
-        if (app.component('lkt-item-crud') === undefined) app.component('lkt-item-crud', LktItemCrud);
+        if (app.component('lkt-item-crud') === undefined) app.component('lkt-item-crud', itemCrud);
 
         // Register additional components
         if (app.component('lkt-button') === undefined)  app.use(LktButton);
