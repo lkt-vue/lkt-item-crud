@@ -21,6 +21,18 @@ declare const _default: {
             type: StringConstructor;
             default: string;
         };
+        hiddenSave: {
+            type: BooleanConstructor;
+            default: boolean;
+        };
+        hiddenDrop: {
+            type: BooleanConstructor;
+            default: boolean;
+        };
+        hiddenButtons: {
+            type: BooleanConstructor;
+            default: boolean;
+        };
         readResource: {
             type: StringConstructor;
             required: false;
@@ -125,6 +137,18 @@ declare const _default: {
             type: StringConstructor;
             default: string;
         };
+        hiddenSave: {
+            type: BooleanConstructor;
+            default: boolean;
+        };
+        hiddenDrop: {
+            type: BooleanConstructor;
+            default: boolean;
+        };
+        hiddenButtons: {
+            type: BooleanConstructor;
+            default: boolean;
+        };
         readResource: {
             type: StringConstructor;
             required: false;
@@ -209,6 +233,9 @@ declare const _default: {
         editModeText: string;
         saveText: string;
         dropText: string;
+        hiddenSave: boolean;
+        hiddenDrop: boolean;
+        hiddenButtons: boolean;
         readData: Record<string, any>;
         createData: Record<string, any>;
         updateData: Record<string, any>;
@@ -249,6 +276,18 @@ declare const _default: {
         dropText: {
             type: StringConstructor;
             default: string;
+        };
+        hiddenSave: {
+            type: BooleanConstructor;
+            default: boolean;
+        };
+        hiddenDrop: {
+            type: BooleanConstructor;
+            default: boolean;
+        };
+        hiddenButtons: {
+            type: BooleanConstructor;
+            default: boolean;
         };
         readResource: {
             type: StringConstructor;
@@ -338,6 +377,9 @@ declare const _default: {
         editModeText: string;
         saveText: string;
         dropText: string;
+        hiddenSave: boolean;
+        hiddenDrop: boolean;
+        hiddenButtons: boolean;
         readData: Record<string, any>;
         createData: Record<string, any>;
         updateData: Record<string, any>;
@@ -375,6 +417,18 @@ declare const _default: {
     dropText: {
         type: StringConstructor;
         default: string;
+    };
+    hiddenSave: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
+    hiddenDrop: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
+    hiddenButtons: {
+        type: BooleanConstructor;
+        default: boolean;
     };
     readResource: {
         type: StringConstructor;
@@ -464,6 +518,9 @@ declare const _default: {
     editModeText: string;
     saveText: string;
     dropText: string;
+    hiddenSave: boolean;
+    hiddenDrop: boolean;
+    hiddenButtons: boolean;
     readData: Record<string, any>;
     createData: Record<string, any>;
     updateData: Record<string, any>;
