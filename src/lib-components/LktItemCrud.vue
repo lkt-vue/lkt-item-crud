@@ -232,7 +232,7 @@ const showDropButton = computed(() => {
                 <slot name="post-title" v-bind:item="item" v-bind:loading="isLoading"></slot>
             </div>
         </header>
-        <div class="lkt-item-crud-buttons" v-if="showButtons">
+        <div class="lkt-item-crud-buttons" v-show="showButtons">
             <lkt-button
                 :ref="(el:any) => dropButton = el"
                 v-show="showDropButton"
