@@ -209,8 +209,11 @@ const showDropButton = computed(() => {
             && httpSuccessRead.value;
     }),
     showSaveButton = computed(() => {
+        if (isLoading.value) return false;
+
+        if (props.isCreate) return true;
+
         return !props.hiddenSave
-            && !isLoading.value
             && editMode.value
             && httpSuccessRead.value;
     }),
