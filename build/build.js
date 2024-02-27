@@ -1,20 +1,17 @@
-import { defineComponent as le, useSlots as ue, ref as n, computed as o, watch as B, resolveComponent as w, openBlock as i, createElementBlock as m, createElementVNode as I, toDisplayString as M, renderSlot as R, createCommentVNode as y, withDirectives as V, createBlock as _, withCtx as A, unref as F, vShow as L, createVNode as P } from "vue";
+import { defineComponent as le, useSlots as ue, ref as n, computed as o, watch as B, resolveComponent as w, openBlock as i, createElementBlock as m, createElementVNode as M, toDisplayString as I, renderSlot as R, createCommentVNode as S, withDirectives as V, createBlock as _, withCtx as F, unref as H, vShow as q, createVNode as P } from "vue";
 import { httpCall as re } from "lkt-http-client";
 import { DataState as oe } from "lkt-data-state";
-import se from "lkt-button";
-import de from "lkt-http-info";
-import ne from "lkt-loader";
-const ie = { class: "lkt-item-crud" }, ce = {
+const se = { class: "lkt-item-crud" }, de = {
   key: 0,
   class: "lkt-item-crud_header"
-}, ve = { class: "lkt-item-crud_header-title" }, fe = { class: "lkt-item-crud_header-slot" }, pe = { class: "lkt-item-crud-buttons" }, me = { key: 1 }, he = { key: 1 }, ke = {
+}, ne = { class: "lkt-item-crud_header-title" }, ie = { class: "lkt-item-crud_header-slot" }, ce = { class: "lkt-item-crud-buttons" }, ve = { key: 1 }, fe = { key: 1 }, pe = {
   key: 1,
   class: "lkt-item-crud_content"
-}, ye = {
+}, me = {
   key: 0,
   class: "lkt-grid-1"
-}, Se = { name: "LktItemCrud", inheritAttrs: !1 }, Ce = /* @__PURE__ */ le({
-  ...Se,
+}, he = { name: "LktItemCrud", inheritAttrs: !1 }, ye = /* @__PURE__ */ le({
+  ...he,
   props: {
     modelValue: { type: Object, required: !1, default: () => ({}) },
     title: { type: String, default: "" },
@@ -42,37 +39,37 @@ const ie = { class: "lkt-item-crud" }, ce = {
     saveValidator: { type: Function, required: !1, default: () => !0 }
   },
   emits: ["update:modelValue", "read", "create", "update", "drop", "perms", "error", "modified-data"],
-  setup(t, { expose: N, emit: z }) {
-    const e = t, q = ue(), s = z;
+  setup(a, { expose: N, emit: z }) {
+    const e = a, O = ue(), s = z;
     let G = [];
-    const l = n(!0), r = n(e.modelValue), h = n(G), c = n(!1), v = n(!1), f = n(!1), d = n(200), S = n(null), C = n(null), k = n(new oe(r.value)), K = o(() => e.isCreate ? e.createConfirm : e.updateConfirm), T = o(() => e.isCreate ? e.createResource : e.updateResource), Q = o(() => e.isCreate ? { ...e.createData, ...JSON.parse(JSON.stringify(r.value)) } : { ...e.updateData, ...JSON.parse(JSON.stringify(r.value)) }), W = o(() => e.isCreate ? e.createDisabled : e.updateDisabled), D = o(() => !e.isCreate && h.value.includes("update")), b = o(() => !e.isCreate && h.value.includes("drop")), O = async () => {
+    const l = n(!0), r = n(e.modelValue), h = n(G), c = n(!1), v = n(!1), f = n(!1), d = n(200), k = n(null), C = n(null), y = n(new oe(r.value)), K = o(() => e.isCreate ? e.createConfirm : e.updateConfirm), T = o(() => e.isCreate ? e.createResource : e.updateResource), Q = o(() => e.isCreate ? { ...e.createData, ...JSON.parse(JSON.stringify(r.value)) } : { ...e.updateData, ...JSON.parse(JSON.stringify(r.value)) }), W = o(() => e.isCreate ? e.createDisabled : e.updateDisabled), D = o(() => !e.isCreate && h.value.includes("update")), b = o(() => !e.isCreate && h.value.includes("drop")), L = async () => {
       l.value = !0, d.value = -1, f.value = !1;
       try {
-        const a = await re(e.readResource, e.readData);
-        if (l.value = !1, d.value = a.httpStatus, !a.success) {
-          v.value = !1, d.value = a.httpStatus, s("error", a.httpStatus);
+        const t = await re(e.readResource, e.readData);
+        if (l.value = !1, d.value = t.httpStatus, !t.success) {
+          v.value = !1, d.value = t.httpStatus, s("error", t.httpStatus);
           return;
         }
-        v.value = !0, r.value = a.data, h.value = a.perms, k.value.increment(r.value).turnStoredIntoOriginal(), s("read", a);
+        v.value = !0, r.value = t.data, h.value = t.perms, y.value.increment(r.value).turnStoredIntoOriginal(), s("read", t);
       } catch {
         l.value = !1, v.value = !1, d.value = 404, s("error", 404);
         return;
       }
-    }, X = o(() => l.value ? !1 : e.title || !!q["post-title"]);
-    B(() => e.modelValue, (a) => {
-      r.value = a, k.value.increment(a);
-    }, { deep: !0 }), B(r, (a) => {
-      s("update:modelValue", r.value), k.value.increment(a);
+    }, X = o(() => l.value ? !1 : e.title || !!O["post-title"]);
+    B(() => e.modelValue, (t) => {
+      r.value = t, y.value.increment(t);
+    }, { deep: !0 }), B(r, (t) => {
+      s("update:modelValue", r.value), y.value.increment(t);
     }, { deep: !0 }), B(h, () => s("perms", h.value));
-    const $ = o(() => W.value || !e.isCreate && !D.value || typeof e.saveValidator == "function" && !e.saveValidator(r.value) ? !1 : k.value.changed());
-    B($, (a) => s("modified-data", a)), e.readResource && !e.isCreate ? O() : e.isCreate && (v.value = !0, c.value = !0, l.value = !1);
-    const Y = (a, u) => {
+    const $ = o(() => W.value || !e.isCreate && !D.value || typeof e.saveValidator == "function" && !e.saveValidator(r.value) ? !1 : y.value.changed());
+    B($, (t) => s("modified-data", t)), e.readResource && !e.isCreate ? L() : e.isCreate && (v.value = !0, c.value = !0, l.value = !1);
+    const Y = (t, u) => {
       if (l.value = !1, d.value = u.httpStatus, !u.success) {
         f.value = !0, s("error", u.httpStatus);
         return;
       }
       f.value = !0, s("drop", u);
-    }, Z = (a, u) => {
+    }, Z = (t, u) => {
       if (T.value) {
         if (l.value = !1, d.value = u.httpStatus, !u.success) {
           f.value = !0, s("error", u.httpStatus);
@@ -81,7 +78,7 @@ const ie = { class: "lkt-item-crud" }, ce = {
         f.value = !0;
       }
       let g = e.isCreate ? "create" : "update";
-      e.isCreate || k.value.turnStoredIntoOriginal(), u.autoReloadId && (e.readData.id = u.autoReloadId, O()), s(g, u);
+      e.isCreate || y.value.turnStoredIntoOriginal(), u.autoReloadId && (e.readData.id = u.autoReloadId, L()), s(g, u);
     }, x = () => {
       l.value = !0, d.value = -1;
     }, j = () => {
@@ -91,53 +88,53 @@ const ie = { class: "lkt-item-crud" }, ce = {
       doDrop: () => {
         C.value && typeof C.value.click == "function" && C.value.click();
       },
-      doRefresh: O,
+      doRefresh: L,
       doSave: () => {
-        S.value && typeof S.value.click == "function" && S.value.click();
+        k.value && typeof k.value.click == "function" && k.value.click();
       }
     });
     const U = o(() => !e.hiddenDrop && !l.value && c.value && v.value), J = o(() => l.value ? !1 : e.isCreate ? !0 : !e.hiddenSave && c.value && v.value), E = o(() => !l.value && !e.isCreate && v.value), ee = o(() => !e.hiddenButtons && (J.value || U.value || E.value));
-    return (a, u) => {
-      const g = w("lkt-button"), te = w("lkt-field-switch"), H = w("lkt-http-info"), ae = w("lkt-loader");
-      return i(), m("article", ie, [
-        X.value ? (i(), m("header", ce, [
-          I("h1", ve, M(t.title), 1),
-          I("div", fe, [
-            R(a.$slots, "post-title", {
+    return (t, u) => {
+      const g = w("lkt-button"), te = w("lkt-field-switch"), A = w("lkt-http-info"), ae = w("lkt-loader");
+      return i(), m("article", se, [
+        X.value ? (i(), m("header", de, [
+          M("h1", ne, I(a.title), 1),
+          M("div", ie, [
+            R(t.$slots, "post-title", {
               item: r.value,
               loading: l.value
             })
           ])
-        ])) : y("", !0),
-        V(I("div", pe, [
-          t.isCreate ? y("", !0) : V((i(), _(g, {
+        ])) : S("", !0),
+        V(M("div", ce, [
+          a.isCreate ? S("", !0) : V((i(), _(g, {
             key: 0,
             ref: (p) => C.value = p,
             palette: "danger",
-            disabled: t.dropDisabled || !b.value,
-            "confirm-modal": t.dropConfirm,
-            resource: t.dropResource,
-            "resource-data": t.dropData,
+            disabled: a.dropDisabled || !b.value,
+            "confirm-modal": a.dropConfirm,
+            resource: a.dropResource,
+            "resource-data": a.dropData,
             onLoading: x,
             onLoaded: j,
             onClick: Y
           }, {
-            default: A(() => [
-              F(q)["button-drop"] ? R(a.$slots, "button-drop", {
+            default: F(() => [
+              H(O)["button-drop"] ? R(t.$slots, "button-drop", {
                 key: 0,
                 item: r.value,
                 editMode: c.value,
-                isCreate: t.isCreate,
+                isCreate: a.isCreate,
                 canUpdate: D.value,
                 canDrop: b.value
-              }) : (i(), m("span", me, M(t.dropText), 1))
+              }) : (i(), m("span", ve, I(a.dropText), 1))
             ]),
             _: 3
           }, 8, ["disabled", "confirm-modal", "resource", "resource-data"])), [
-            [L, U.value]
+            [q, U.value]
           ]),
           V(P(g, {
-            ref: (p) => S.value = p,
+            ref: (p) => k.value = p,
             palette: "success",
             disabled: !$.value,
             "confirm-modal": K.value,
@@ -147,63 +144,62 @@ const ie = { class: "lkt-item-crud" }, ce = {
             onLoaded: j,
             onClick: Z
           }, {
-            default: A(() => [
-              F(q)["button-save"] ? R(a.$slots, "button-save", {
+            default: F(() => [
+              H(O)["button-save"] ? R(t.$slots, "button-save", {
                 key: 0,
                 item: r.value,
                 editMode: c.value,
-                isCreate: t.isCreate,
+                isCreate: a.isCreate,
                 canUpdate: D.value,
                 canDrop: b.value
-              }) : (i(), m("span", he, M(t.saveText), 1))
+              }) : (i(), m("span", fe, I(a.saveText), 1))
             ]),
             _: 3
           }, 8, ["disabled", "confirm-modal", "resource", "resource-data"]), [
-            [L, J.value]
+            [q, J.value]
           ]),
           V(P(te, {
             modelValue: c.value,
             "onUpdate:modelValue": u[0] || (u[0] = (p) => c.value = p),
-            label: t.editModeText
+            label: a.editModeText
           }, null, 8, ["modelValue", "label"]), [
-            [L, E.value]
+            [q, E.value]
           ])
         ], 512), [
-          [L, ee.value]
+          [q, ee.value]
         ]),
-        l.value ? y("", !0) : (i(), m("div", ke, [
-          v.value ? (i(), m("div", ye, [
-            f.value ? (i(), _(H, {
+        l.value ? S("", !0) : (i(), m("div", pe, [
+          v.value ? (i(), m("div", me, [
+            f.value ? (i(), _(A, {
               key: 0,
               code: d.value,
               quick: "",
               palette: d.value === 200 ? "success" : "danger",
               "can-close": "",
               onClose: u[1] || (u[1] = (p) => f.value = !1)
-            }, null, 8, ["code", "palette"])) : y("", !0),
-            R(a.$slots, "item", {
+            }, null, 8, ["code", "palette"])) : S("", !0),
+            R(t.$slots, "item", {
               item: r.value,
               loading: l.value,
               editMode: c.value,
-              isCreate: t.isCreate,
+              isCreate: a.isCreate,
               canUpdate: D.value,
               canDrop: b.value
             })
-          ])) : (i(), _(H, {
+          ])) : (i(), _(A, {
             key: 1,
             code: d.value
           }, null, 8, ["code"]))
         ])),
-        l.value ? (i(), _(ae, { key: 2 })) : y("", !0)
+        l.value ? (i(), _(ae, { key: 2 })) : S("", !0)
       ]);
     };
   }
-});
-const Le = {
-  install: (t, N = {}) => {
-    t.component("lkt-item-crud") === void 0 && t.component("lkt-item-crud", Ce), t.component("lkt-button") === void 0 && t.use(se), t.component("lkt-http-info") === void 0 && t.use(de), t.component("lkt-loader") === void 0 && t.use(ne);
+}), ge = {
+  install: (a, N = {}) => {
+    a.component("lkt-item-crud") === void 0 && a.component("lkt-item-crud", ye);
   }
 };
 export {
-  Le as default
+  ge as default
 };
