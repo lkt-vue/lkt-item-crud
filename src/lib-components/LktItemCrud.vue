@@ -33,6 +33,10 @@ const props = defineProps({
     updateConfirm: {type: String, default: ''},
     dropConfirm: {type: String, default: ''},
 
+    createConfirmData: {type: String, default: ''},
+    updateConfirmData: {type: String, default: ''},
+    dropConfirmData: {type: String, default: ''},
+
     createDisabled: {type: Boolean, default: false},
     updateDisabled: {type: Boolean, default: false},
     dropDisabled: {type: Boolean, default: false},
@@ -61,6 +65,11 @@ const saveConfirm = computed(() => {
         return props.isCreate
             ? props.createConfirm
             : props.updateConfirm;
+    }),
+    confirmData = computed(() => {
+        return props.isCreate
+            ? props.createConfirmData
+            : props.updateConfirmData;
     }),
     saveResource = computed(() => {
         return props.isCreate
@@ -243,6 +252,7 @@ const showDropButton = computed(() => {
                 palette="danger"
                 v-bind:disabled="dropDisabled || !canDrop"
                 v-bind:confirm-modal="dropConfirm"
+                v-bind:confirm-data="dropConfirmData"
                 v-bind:resource="dropResource"
                 v-bind:resource-data="dropData"
                 v-on:loading="onButtonLoading"
@@ -262,6 +272,7 @@ const showDropButton = computed(() => {
                 palette="success"
                 v-bind:disabled="!ableToSave"
                 v-bind:confirm-modal="saveConfirm"
+                v-bind:confirm-data="confirmData"
                 v-bind:resource="saveResource"
                 v-bind:resource-data="saveData"
                 v-on:loading="onButtonLoading"
