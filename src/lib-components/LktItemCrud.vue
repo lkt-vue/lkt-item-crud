@@ -33,9 +33,9 @@ const props = defineProps({
     updateConfirm: {type: String, default: ''},
     dropConfirm: {type: String, default: ''},
 
-    createConfirmData: {type: String, default: ''},
-    updateConfirmData: {type: String, default: ''},
-    dropConfirmData: {type: String, default: ''},
+    createConfirmData: {type: Object, default: () => ({})},
+    updateConfirmData: {type: Object, default: () => ({})},
+    dropConfirmData: {type: Object, default: () => ({})},
 
     createDisabled: {type: Boolean, default: false},
     updateDisabled: {type: Boolean, default: false},
