@@ -113,6 +113,16 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         required: false;
         default: () => boolean;
     };
+    onCreate: {
+        type: FunctionConstructor;
+        required: false;
+        default: () => boolean;
+    };
+    onUpdate: {
+        type: FunctionConstructor;
+        required: false;
+        default: () => boolean;
+    };
 }, {
     doDrop: () => void;
     doRefresh: () => Promise<void>;
@@ -241,6 +251,16 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         required: false;
         default: () => boolean;
     };
+    onCreate: {
+        type: FunctionConstructor;
+        required: false;
+        default: () => boolean;
+    };
+    onUpdate: {
+        type: FunctionConstructor;
+        required: false;
+        default: () => boolean;
+    };
 }>> & {
     onError?: ((...args: any[]) => any) | undefined;
     onDrop?: ((...args: any[]) => any) | undefined;
@@ -252,6 +272,8 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
     "onModified-data"?: ((...args: any[]) => any) | undefined;
 }, {
     title: string;
+    onUpdate: Function;
+    onCreate: Function;
     modelValue: Record<string, any>;
     editModeText: string;
     saveText: string;

@@ -42,6 +42,9 @@ const props = defineProps({
     dropDisabled: {type: Boolean, default: false},
 
     saveValidator: {type: Function, required: false, default: () => true},
+
+    onCreate: {type: Function, required: false, default: () => true},
+    onUpdate: {type: Function, required: false, default: () => true},
 });
 
 const slots = useSlots();
@@ -186,8 +189,9 @@ const onDrop = ($event: PointerEvent, r: HTTPResponse) => {
             props.readData['id'] = r.autoReloadId;
             fetchItem();
         }
+        if (props.isCreate && typeof props.onCreate === 'function') props.onCreate();
+        if (!props.isCreate && typeof props.onUpdate === 'function') props.onUpdate();
         emit(emits, r)
-
     },
     onButtonLoading = () => {
         isLoading.value = true;
