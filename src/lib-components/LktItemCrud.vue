@@ -189,8 +189,11 @@ const onDrop = ($event: PointerEvent, r: HTTPResponse) => {
             props.readData['id'] = r.autoReloadId;
             fetchItem();
         }
-        if (props.isCreate && typeof props.onCreate === 'function') props.onCreate();
-        if (!props.isCreate && typeof props.onUpdate === 'function') props.onUpdate();
+        if (props.isCreate) {
+            if (typeof props.onCreate === 'function') props.onCreate();
+        } else {
+            if (typeof props.onUpdate === 'function') props.onUpdate();
+        }
         emit(emits, r)
     },
     onButtonLoading = () => {

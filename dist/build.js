@@ -83,7 +83,7 @@ const ne = { class: "lkt-item-crud" }, se = {
         v.value = !0;
       }
       let g = e.isCreate ? "create" : "update";
-      e.isCreate || C.value.turnStoredIntoOriginal(), u.autoReloadId && (e.readData.id = u.autoReloadId, L()), e.isCreate && typeof e.onCreate == "function" && e.onCreate(), !e.isCreate && typeof e.onUpdate == "function" && e.onUpdate(), d(g, u);
+      e.isCreate || C.value.turnStoredIntoOriginal(), u.autoReloadId && (e.readData.id = u.autoReloadId, L()), e.isCreate ? typeof e.onCreate == "function" && e.onCreate() : typeof e.onUpdate == "function" && e.onUpdate(), d(g, u);
     }, T = () => {
       l.value = !0, n.value = -1;
     }, $ = () => {
