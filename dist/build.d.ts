@@ -1,4 +1,5 @@
-export { _e as default };
-declare namespace _e {
-    function install(o: any, I?: {}): void;
+declare function Oe(u?: boolean): void;
+declare namespace Ve {
+    function install(u: any, $?: {}): void;
 }
+export { Oe as debugLktItemCrud, Ve as default };

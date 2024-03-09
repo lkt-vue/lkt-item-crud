@@ -306,14 +306,14 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
     "button-drop"?(_: {
         item: Record<string, any>;
         editMode: boolean;
-        isCreate: any;
+        isCreate: false;
         canUpdate: boolean;
         canDrop: boolean;
     }): any;
     "button-save"?(_: {
         item: Record<string, any>;
         editMode: boolean;
-        isCreate: any;
+        isCreate: boolean;
         canUpdate: boolean;
         canDrop: boolean;
     }): any;
@@ -321,7 +321,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         item: Record<string, any>;
         loading: false;
         editMode: boolean;
-        isCreate: any;
+        isCreate: boolean;
         canUpdate: boolean;
         canDrop: boolean;
     }): any;

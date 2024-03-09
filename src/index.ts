@@ -10,3 +10,5 @@ const LktItemCrud: Plugin = {
     },
 };
 export default LktItemCrud;
+
+export {debugLktItemCrud} from "./functions/debug";

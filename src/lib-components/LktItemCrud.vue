@@ -6,6 +6,7 @@ export default {name: "LktItemCrud", inheritAttrs: false}
 import {ref, watch, useSlots, computed} from "vue";
 import {httpCall, HTTPResponse} from "lkt-http-client";
 import {DataState} from "lkt-data-state";
+import {debug} from "../functions/debug";
 
 const props = defineProps({
     modelValue: {type: Object, required: false, default: () => ({})},
@@ -63,7 +64,7 @@ const isLoading = ref(true),
     saveButton = ref(null),
     dropButton = ref(null),
     dataState = ref(new DataState(item.value)),
-    createMode = ref(createMode.value);
+    createMode = ref(props.isCreate);
 
 const saveConfirm = computed(() => {
         return createMode.value
@@ -95,11 +96,13 @@ const saveConfirm = computed(() => {
     canDrop = computed(() => !createMode.value && perms.value.includes('drop'));
 
 const fetchItem = async () => {
+    debug('fetchItem');
     isLoading.value = true;
     httpStatus.value = -1;
     showStoreMessage.value = false;
     try {
         const r = await httpCall(props.readResource, props.readData);
+        debug('fetchItem -> response', r);
         isLoading.value = false;
         httpStatus.value = r.httpStatus;
         if (!r.success) {
@@ -172,6 +175,7 @@ const onDrop = ($event: PointerEvent, r: HTTPResponse) => {
 
     },
     onSave = ($event: PointerEvent, r: HTTPResponse) => {
+        debug('onSave -> received response:', r);
         if (saveResource.value) {
             isLoading.value = false;
             httpStatus.value = r.httpStatus;
@@ -184,18 +188,27 @@ const onDrop = ($event: PointerEvent, r: HTTPResponse) => {
         }
         let emits: 'create' | 'update' = createMode.value ? 'create' : 'update';
         if (!createMode.value) {
+            debug('onSave -> turn stored data into original');
             dataState.value.turnStoredIntoOriginal();
         }
 
         if (r.autoReloadId) {
+            debug('onSave -> autoReloadId detected: ', r.autoReloadId);
             props.readData['id'] = r.autoReloadId;
+            debug('onSave -> turning off create mode');
             createMode.value = false;
             fetchItem();
         }
         if (createMode.value) {
-            if (typeof props.onCreate === 'function') props.onCreate();
+            if (typeof props.onCreate === 'function') {
+                debug('onSave -> trigger onCreate callback');
+                props.onCreate();
+            }
         } else {
-            if (typeof props.onUpdate === 'function') props.onUpdate();
+            if (typeof props.onUpdate === 'function') {
+                debug('onSave -> trigger onUpdate callback');
+                props.onUpdate();
+            }
         }
         emit(emits, r)
     },
