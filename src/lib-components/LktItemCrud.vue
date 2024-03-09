@@ -199,7 +199,7 @@ const onDrop = ($event: PointerEvent, r: HTTPResponse) => {
             createMode.value = false;
             fetchItem();
         }
-        if (createMode.value) {
+        if (emits === 'create') {
             if (typeof props.onCreate === 'function') {
                 debug('onSave -> trigger onCreate callback');
                 props.onCreate();
