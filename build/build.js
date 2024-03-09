@@ -49,7 +49,8 @@ const p = (...u) => {
     dropDisabled: { type: Boolean, default: !1 },
     saveValidator: { type: Function, required: !1, default: () => !0 },
     onCreate: { type: Function, required: !1, default: () => !0 },
-    onUpdate: { type: Function, required: !1, default: () => !0 }
+    onUpdate: { type: Function, required: !1, default: () => !0 },
+    insideModal: { type: Boolean, default: !1 }
   },
   emits: ["update:modelValue", "update:isCreate", "read", "create", "update", "drop", "perms", "error", "modified-data"],
   setup(u, { expose: $, emit: W }) {
@@ -91,7 +92,7 @@ const p = (...u) => {
         m.value = !0;
       }
       let b = a.value ? "create" : "update";
-      a.value || (p("onSave -> turn stored data into original"), k.value.turnStoredIntoOriginal()), b === "create" ? typeof e.onCreate == "function" && (p("onSave -> trigger onCreate callback"), e.onCreate(l)) : typeof e.onUpdate == "function" && (p("onSave -> trigger onUpdate callback"), e.onUpdate(l)), l.autoReloadId && (p("onSave -> autoReloadId detected: ", l.autoReloadId), e.readData.id = l.autoReloadId, p("onSave -> turning off create mode"), a.value = !1, U()), n(b, l);
+      a.value || (p("onSave -> turn stored data into original"), k.value.turnStoredIntoOriginal()), b === "create" ? typeof e.onCreate == "function" && (p("onSave -> trigger onCreate callback"), e.onCreate(l)) : typeof e.onUpdate == "function" && (p("onSave -> trigger onUpdate callback"), e.onUpdate(l)), !e.insideModal && l.autoReloadId && (p("onSave -> autoReloadId detected: ", l.autoReloadId), e.readData.id = l.autoReloadId, p("onSave -> turning off create mode"), a.value = !1, U()), n(b, l);
     }, J = () => {
       o.value = !0, i.value = -1;
     }, F = () => {

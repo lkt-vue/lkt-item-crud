@@ -123,6 +123,10 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         required: false;
         default: () => boolean;
     };
+    insideModal: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
 }, {
     doDrop: () => void;
     doRefresh: () => Promise<void>;
@@ -262,6 +266,10 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         required: false;
         default: () => boolean;
     };
+    insideModal: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
 }>> & {
     onError?: ((...args: any[]) => any) | undefined;
     onDrop?: ((...args: any[]) => any) | undefined;
@@ -298,6 +306,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
     updateDisabled: boolean;
     dropDisabled: boolean;
     saveValidator: Function;
+    insideModal: boolean;
 }, {}>, {
     "post-title"?(_: {
         item: Record<string, any>;

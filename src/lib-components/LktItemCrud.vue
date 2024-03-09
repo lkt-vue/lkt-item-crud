@@ -46,6 +46,8 @@ const props = defineProps({
 
     onCreate: {type: Function, required: false, default: () => true},
     onUpdate: {type: Function, required: false, default: () => true},
+
+    insideModal: {type: Boolean, default: false},
 });
 
 const slots = useSlots();
@@ -204,7 +206,7 @@ const onDrop = ($event: PointerEvent, r: HTTPResponse) => {
             }
         }
 
-        if (r.autoReloadId) {
+        if (!props.insideModal && r.autoReloadId) {
             debug('onSave -> autoReloadId detected: ', r.autoReloadId);
             props.readData['id'] = r.autoReloadId;
             debug('onSave -> turning off create mode');
