@@ -132,6 +132,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
     drop: (...args: any[]) => void;
     update: (...args: any[]) => void;
     "update:modelValue": (...args: any[]) => void;
+    "update:isCreate": (...args: any[]) => void;
     read: (...args: any[]) => void;
     create: (...args: any[]) => void;
     perms: (...args: any[]) => void;
@@ -266,6 +267,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
     onDrop?: ((...args: any[]) => any) | undefined;
     onUpdate?: ((...args: any[]) => any) | undefined;
     "onUpdate:modelValue"?: ((...args: any[]) => any) | undefined;
+    "onUpdate:isCreate"?: ((...args: any[]) => any) | undefined;
     onRead?: ((...args: any[]) => any) | undefined;
     onCreate?: ((...args: any[]) => any) | undefined;
     onPerms?: ((...args: any[]) => any) | undefined;
@@ -304,14 +306,14 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
     "button-drop"?(_: {
         item: Record<string, any>;
         editMode: boolean;
-        isCreate: false;
+        isCreate: any;
         canUpdate: boolean;
         canDrop: boolean;
     }): any;
     "button-save"?(_: {
         item: Record<string, any>;
         editMode: boolean;
-        isCreate: boolean;
+        isCreate: any;
         canUpdate: boolean;
         canDrop: boolean;
     }): any;
@@ -319,7 +321,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         item: Record<string, any>;
         loading: false;
         editMode: boolean;
-        isCreate: boolean;
+        isCreate: any;
         canUpdate: boolean;
         canDrop: boolean;
     }): any;

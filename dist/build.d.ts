@@ -1,4 +1,4 @@
-export { Be as default };
-declare namespace Be {
-    function install(a: any, U?: {}): void;
+export { _e as default };
+declare namespace _e {
+    function install(o: any, I?: {}): void;
 }

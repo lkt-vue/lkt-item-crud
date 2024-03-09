@@ -49,7 +49,7 @@ const props = defineProps({
 
 const slots = useSlots();
 
-const emit = defineEmits(['update:modelValue', 'read', 'create', 'update', 'drop', 'perms', 'error', 'modified-data']);
+const emit = defineEmits(['update:modelValue', 'update:isCreate', 'read', 'create', 'update', 'drop', 'perms', 'error', 'modified-data']);
 
 let basePerms: string[] = [];
 
@@ -62,36 +62,37 @@ const isLoading = ref(true),
     httpStatus = ref(200),
     saveButton = ref(null),
     dropButton = ref(null),
-    dataState = ref(new DataState(item.value));
+    dataState = ref(new DataState(item.value)),
+    createMode = ref(createMode.value);
 
 const saveConfirm = computed(() => {
-        return props.isCreate
+        return createMode.value
             ? props.createConfirm
             : props.updateConfirm;
     }),
     confirmData = computed(() => {
-        return props.isCreate
+        return createMode.value
             ? props.createConfirmData
             : props.updateConfirmData;
     }),
     saveResource = computed(() => {
-        return props.isCreate
+        return createMode.value
             ? props.createResource
             : props.updateResource;
     }),
     saveData = computed(() => {
-        if (props.isCreate) {
+        if (createMode.value) {
             return {...props.createData, ...JSON.parse(JSON.stringify(item.value))};
         }
         return {...props.updateData, ...JSON.parse(JSON.stringify(item.value))};
     }),
     saveDisabled = computed(() => {
-        return props.isCreate
+        return createMode.value
             ? props.createDisabled
             : props.updateDisabled;
     }),
-    canUpdate = computed(() => !props.isCreate && perms.value.includes('update')),
-    canDrop = computed(() => !props.isCreate && perms.value.includes('drop'));
+    canUpdate = computed(() => !createMode.value && perms.value.includes('update')),
+    canDrop = computed(() => !createMode.value && perms.value.includes('drop'));
 
 const fetchItem = async () => {
     isLoading.value = true;
@@ -141,17 +142,18 @@ watch(perms, () => emit('perms', perms.value));
 
 const ableToSave = computed(() => {
     if (saveDisabled.value) return false;
-    if (!props.isCreate && !canUpdate.value) return false;
+    if (!createMode.value && !canUpdate.value) return false;
 
     if (typeof props.saveValidator === 'function' && !props.saveValidator(item.value)) return false;
 
     return dataState.value.changed();
 });
 watch(ableToSave, (v) => emit('modified-data', v));
+watch(createMode, (v) => emit('update:isCreate', v));
 
 // Fetch item
-if (props.readResource && !props.isCreate) fetchItem();
-else if (props.isCreate) {
+if (props.readResource && !createMode.value) fetchItem();
+else if (createMode.value) {
     httpSuccessRead.value = true;
     editMode.value = true;
     isLoading.value = false;
@@ -180,16 +182,17 @@ const onDrop = ($event: PointerEvent, r: HTTPResponse) => {
             }
             showStoreMessage.value = true;
         }
-        let emits: 'create' | 'update' = props.isCreate ? 'create' : 'update';
-        if (!props.isCreate) {
+        let emits: 'create' | 'update' = createMode.value ? 'create' : 'update';
+        if (!createMode.value) {
             dataState.value.turnStoredIntoOriginal();
         }
 
         if (r.autoReloadId) {
             props.readData['id'] = r.autoReloadId;
+            createMode.value = false;
             fetchItem();
         }
-        if (props.isCreate) {
+        if (createMode.value) {
             if (typeof props.onCreate === 'function') props.onCreate();
         } else {
             if (typeof props.onUpdate === 'function') props.onUpdate();
@@ -227,7 +230,7 @@ const showDropButton = computed(() => {
     showSaveButton = computed(() => {
         if (isLoading.value) return false;
 
-        if (props.isCreate) return true;
+        if (createMode.value) return true;
 
         return !props.hiddenSave
             && editMode.value
@@ -235,7 +238,7 @@ const showDropButton = computed(() => {
     }),
     showSwitchButton = computed(() => {
         return !isLoading.value
-            && !props.isCreate
+            && !createMode.value
             && httpSuccessRead.value;
     }),
     showButtons = computed(() => {
@@ -255,7 +258,7 @@ const showDropButton = computed(() => {
             <lkt-button
                 :ref="(el:any) => dropButton = el"
                 v-show="showDropButton"
-                v-if="!isCreate"
+                v-if="!createMode"
                 palette="danger"
                 v-bind:disabled="dropDisabled || !canDrop"
                 v-bind:confirm-modal="dropConfirm"
@@ -267,7 +270,7 @@ const showDropButton = computed(() => {
                 v-on:click="onDrop">
                 <slot v-if="!!slots['button-drop']" name="button-drop" v-bind:item="item"
                       v-bind:edit-mode="editMode"
-                      v-bind:is-create="isCreate"
+                      v-bind:is-create="createMode"
                       v-bind:can-update="canUpdate"
                       v-bind:can-drop="canDrop"></slot>
                 <span v-else>{{ dropText }}</span>
@@ -287,7 +290,7 @@ const showDropButton = computed(() => {
                 v-on:click="onSave">
                 <slot v-if="!!slots['button-save']" name="button-save" v-bind:item="item"
                       v-bind:edit-mode="editMode"
-                      v-bind:is-create="isCreate"
+                      v-bind:is-create="createMode"
                       v-bind:can-update="canUpdate"
                       v-bind:can-drop="canDrop"></slot>
                 <span v-else>{{ saveText }}</span>
@@ -303,7 +306,7 @@ const showDropButton = computed(() => {
                                :palette="httpStatus === 200 ? 'success' : 'danger'" can-close
                                v-on:close="showStoreMessage = false"></lkt-http-info>
                 <slot name="item" v-bind:item="item" v-bind:loading="isLoading" v-bind:edit-mode="editMode"
-                      v-bind:is-create="isCreate"
+                      v-bind:is-create="createMode"
                       v-bind:can-update="canUpdate"
                       v-bind:can-drop="canDrop"></slot>
             </div>
