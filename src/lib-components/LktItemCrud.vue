@@ -202,12 +202,12 @@ const onDrop = ($event: PointerEvent, r: HTTPResponse) => {
         if (emits === 'create') {
             if (typeof props.onCreate === 'function') {
                 debug('onSave -> trigger onCreate callback');
-                props.onCreate();
+                props.onCreate(r);
             }
         } else {
             if (typeof props.onUpdate === 'function') {
                 debug('onSave -> trigger onUpdate callback');
-                props.onUpdate();
+                props.onUpdate(r);
             }
         }
         emit(emits, r)
