@@ -6,7 +6,7 @@ const T = class T {
 T.debugEnabled = !1;
 let L = T;
 const p = (...u) => {
-  L.debugEnabled && console.info("[LktHttpClient] ", ...u);
+  L.debugEnabled && console.info("[LktItemCrud] ", ...u);
 }, Oe = (u = !0) => {
   L.debugEnabled = u;
 }, ve = { class: "lkt-item-crud" }, fe = {
@@ -106,7 +106,7 @@ const p = (...u) => {
         C.value && typeof C.value.click == "function" && C.value.click();
       }
     });
-    const H = d(() => !e.hiddenDrop && !o.value && v.value && f.value), A = d(() => o.value ? !1 : a.value ? !0 : !e.hiddenSave && v.value && f.value), P = d(() => !o.value && !a.value && f.value), oe = d(() => !e.hiddenButtons && (A.value || H.value || P.value));
+    const A = d(() => !e.hiddenDrop && !o.value && v.value && f.value), H = d(() => o.value ? !1 : a.value ? !0 : !e.hiddenSave && v.value && f.value), P = d(() => !o.value && !a.value && f.value), oe = d(() => !e.hiddenButtons && (H.value || A.value || P.value));
     return (t, l) => {
       const b = w("lkt-button"), re = w("lkt-field-switch"), z = w("lkt-http-info"), de = w("lkt-loader");
       return c(), h("article", ve, [
@@ -145,7 +145,7 @@ const p = (...u) => {
             ]),
             _: 3
           }, 8, ["disabled", "confirm-modal", "confirm-data", "resource", "resource-data"])), [
-            [I, H.value]
+            [I, A.value]
           ]),
           V(Q(b, {
             ref: (y) => C.value = y,
@@ -171,7 +171,7 @@ const p = (...u) => {
             ]),
             _: 3
           }, 8, ["disabled", "confirm-modal", "confirm-data", "resource", "resource-data"]), [
-            [I, A.value]
+            [I, H.value]
           ]),
           V(Q(re, {
             modelValue: v.value,
