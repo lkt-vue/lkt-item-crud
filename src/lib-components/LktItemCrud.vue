@@ -192,13 +192,6 @@ const onDrop = ($event: PointerEvent, r: HTTPResponse) => {
             dataState.value.turnStoredIntoOriginal();
         }
 
-        if (r.autoReloadId) {
-            debug('onSave -> autoReloadId detected: ', r.autoReloadId);
-            props.readData['id'] = r.autoReloadId;
-            debug('onSave -> turning off create mode');
-            createMode.value = false;
-            fetchItem();
-        }
         if (emits === 'create') {
             if (typeof props.onCreate === 'function') {
                 debug('onSave -> trigger onCreate callback');
@@ -209,6 +202,14 @@ const onDrop = ($event: PointerEvent, r: HTTPResponse) => {
                 debug('onSave -> trigger onUpdate callback');
                 props.onUpdate(r);
             }
+        }
+
+        if (r.autoReloadId) {
+            debug('onSave -> autoReloadId detected: ', r.autoReloadId);
+            props.readData['id'] = r.autoReloadId;
+            debug('onSave -> turning off create mode');
+            createMode.value = false;
+            fetchItem();
         }
         emit(emits, r)
     },

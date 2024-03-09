@@ -91,7 +91,7 @@ const p = (...u) => {
         m.value = !0;
       }
       let b = a.value ? "create" : "update";
-      a.value || (p("onSave -> turn stored data into original"), k.value.turnStoredIntoOriginal()), l.autoReloadId && (p("onSave -> autoReloadId detected: ", l.autoReloadId), e.readData.id = l.autoReloadId, p("onSave -> turning off create mode"), a.value = !1, U()), b === "create" ? typeof e.onCreate == "function" && (p("onSave -> trigger onCreate callback"), e.onCreate()) : typeof e.onUpdate == "function" && (p("onSave -> trigger onUpdate callback"), e.onUpdate()), n(b, l);
+      a.value || (p("onSave -> turn stored data into original"), k.value.turnStoredIntoOriginal()), b === "create" ? typeof e.onCreate == "function" && (p("onSave -> trigger onCreate callback"), e.onCreate(l)) : typeof e.onUpdate == "function" && (p("onSave -> trigger onUpdate callback"), e.onUpdate(l)), l.autoReloadId && (p("onSave -> autoReloadId detected: ", l.autoReloadId), e.readData.id = l.autoReloadId, p("onSave -> turning off create mode"), a.value = !1, U()), n(b, l);
     }, J = () => {
       o.value = !0, i.value = -1;
     }, F = () => {
