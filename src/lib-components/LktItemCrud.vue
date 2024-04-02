@@ -144,6 +144,7 @@ watch(item, (v) => {
     if (typeof props.beforeEmitUpdate === 'function') {
         debug('item updated -> has beforeEmitUpdate');
         let override = props.beforeEmitUpdate(item.value);
+        debug('item updated -> override with: ', override);
         if (typeof override === 'object') item.value = override;
     }
     emit('update:modelValue', item.value);
