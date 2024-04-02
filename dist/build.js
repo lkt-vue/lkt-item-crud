@@ -12,7 +12,7 @@ const i = (...u) => {
 }, ve = { class: "lkt-item-crud" }, fe = {
   key: 0,
   class: "lkt-item-crud_header"
-}, pe = { class: "lkt-item-crud_header-title" }, me = { class: "lkt-item-crud_header-slot" }, ye = { class: "lkt-item-crud-buttons" }, he = { key: 1 }, Se = { key: 1 }, be = {
+}, pe = { class: "lkt-item-crud_header-title" }, me = { class: "lkt-item-crud_header-slot" }, ye = { class: "lkt-item-crud-buttons" }, he = { key: 1 }, be = { key: 1 }, Se = {
   key: 1,
   class: "lkt-item-crud_content"
 }, ke = {
@@ -57,7 +57,7 @@ const i = (...u) => {
   setup(u, { expose: T, emit: W }) {
     const e = u, L = se(), n = W;
     let X = [];
-    const o = s(!0), r = s(e.modelValue), S = s(X), f = s(!1), p = s(!1), m = s(!1), c = s(200), C = s(null), B = s(null), b = s(new ce(r.value)), a = s(e.isCreate), Y = d(() => a.value ? e.createConfirm : e.updateConfirm), Z = d(() => a.value ? e.createConfirmData : e.updateConfirmData), $ = d(() => a.value ? e.createResource : e.updateResource), ee = d(() => a.value ? { ...e.createData, ...JSON.parse(JSON.stringify(r.value)) } : { ...e.updateData, ...JSON.parse(JSON.stringify(r.value)) }), te = d(() => a.value ? e.createDisabled : e.updateDisabled), _ = d(() => !a.value && S.value.includes("update")), R = d(() => !a.value && S.value.includes("drop")), M = async () => {
+    const o = s(!0), r = s(e.modelValue), b = s(X), f = s(!1), p = s(!1), m = s(!1), c = s(200), C = s(null), B = s(null), S = s(new ce(r.value)), l = s(e.isCreate), Y = d(() => l.value ? e.createConfirm : e.updateConfirm), Z = d(() => l.value ? e.createConfirmData : e.updateConfirmData), $ = d(() => l.value ? e.createResource : e.updateResource), ee = d(() => l.value ? { ...e.createData, ...JSON.parse(JSON.stringify(r.value)) } : { ...e.updateData, ...JSON.parse(JSON.stringify(r.value)) }), te = d(() => l.value ? e.createDisabled : e.updateDisabled), _ = d(() => !l.value && b.value.includes("update")), R = d(() => !l.value && b.value.includes("drop")), M = async () => {
       i("fetchItem"), o.value = !0, c.value = -1, m.value = !1;
       try {
         const t = await ie(e.readResource, e.readData);
@@ -65,35 +65,40 @@ const i = (...u) => {
           p.value = !1, c.value = t.httpStatus, n("error", t.httpStatus);
           return;
         }
-        p.value = !0, r.value = t.data, S.value = t.perms, b.value.increment(r.value).turnStoredIntoOriginal(), n("read", t);
+        p.value = !0, r.value = t.data, b.value = t.perms, S.value.increment(r.value).turnStoredIntoOriginal(), n("read", t);
       } catch {
         o.value = !1, p.value = !1, c.value = 404, n("error", 404);
         return;
       }
     }, ae = d(() => o.value ? !1 : e.title || !!L["post-title"]);
     D(() => e.modelValue, (t) => {
-      r.value = t, b.value.increment(t);
+      r.value = t, S.value.increment(t);
     }, { deep: !0 }), D(r, (t) => {
-      i("item updated ->", r.value), typeof e.beforeEmitUpdate == "function" && (i("item updated -> has beforeEmitUpdate"), e.beforeEmitUpdate(r.value)), n("update:modelValue", r.value), i("item updated -> update dataState"), b.value.increment(t);
-    }, { deep: !0 }), D(S, () => n("perms", S.value));
-    const x = d(() => te.value || !a.value && !_.value || typeof e.saveValidator == "function" && !e.saveValidator(r.value) ? !1 : b.value.changed());
-    D(x, (t) => n("modified-data", t)), D(a, (t) => n("update:isCreate", t)), e.readResource && !a.value ? M() : a.value && (p.value = !0, f.value = !0, o.value = !1);
-    const le = (t, l) => {
-      if (o.value = !1, c.value = l.httpStatus, !l.success) {
-        m.value = !0, n("error", l.httpStatus);
+      if (i("item updated ->", r.value), typeof e.beforeEmitUpdate == "function") {
+        i("item updated -> has beforeEmitUpdate");
+        let a = e.beforeEmitUpdate(r.value);
+        typeof a == "object" && (r.value = a);
+      }
+      n("update:modelValue", r.value), i("item updated -> update dataState"), S.value.increment(t);
+    }, { deep: !0 }), D(b, () => n("perms", b.value));
+    const x = d(() => te.value || !l.value && !_.value || typeof e.saveValidator == "function" && !e.saveValidator(r.value) ? !1 : S.value.changed());
+    D(x, (t) => n("modified-data", t)), D(l, (t) => n("update:isCreate", t)), e.readResource && !l.value ? M() : l.value && (p.value = !0, f.value = !0, o.value = !1);
+    const le = (t, a) => {
+      if (o.value = !1, c.value = a.httpStatus, !a.success) {
+        m.value = !0, n("error", a.httpStatus);
         return;
       }
-      m.value = !0, n("drop", l);
-    }, ue = (t, l) => {
-      if (i("onSave -> received response:", l), $.value) {
-        if (o.value = !1, c.value = l.httpStatus, !l.success) {
-          m.value = !0, n("error", l.httpStatus);
+      m.value = !0, n("drop", a);
+    }, ue = (t, a) => {
+      if (i("onSave -> received response:", a), $.value) {
+        if (o.value = !1, c.value = a.httpStatus, !a.success) {
+          m.value = !0, n("error", a.httpStatus);
           return;
         }
         m.value = !0;
       }
-      let k = a.value ? "create" : "update";
-      a.value || (i("onSave -> turn stored data into original"), b.value.turnStoredIntoOriginal()), k === "create" ? typeof e.onCreate == "function" && (i("onSave -> trigger onCreate callback"), e.onCreate(l)) : typeof e.onUpdate == "function" && (i("onSave -> trigger onUpdate callback"), e.onUpdate(l)), !e.insideModal && l.autoReloadId && (i("onSave -> autoReloadId detected: ", l.autoReloadId), e.readData.id = l.autoReloadId, i("onSave -> turning off create mode"), a.value = !1, M()), n(k, l);
+      let k = l.value ? "create" : "update";
+      l.value || (i("onSave -> turn stored data into original"), S.value.turnStoredIntoOriginal()), k === "create" ? typeof e.onCreate == "function" && (i("onSave -> trigger onCreate callback"), e.onCreate(a)) : typeof e.onUpdate == "function" && (i("onSave -> trigger onUpdate callback"), e.onUpdate(a)), !e.insideModal && a.autoReloadId && (i("onSave -> autoReloadId detected: ", a.autoReloadId), e.readData.id = a.autoReloadId, i("onSave -> turning off create mode"), l.value = !1, M()), n(k, a);
     }, F = () => {
       o.value = !0, c.value = -1;
     }, J = () => {
@@ -108,8 +113,8 @@ const i = (...u) => {
         C.value && typeof C.value.click == "function" && C.value.click();
       }
     });
-    const A = d(() => !e.hiddenDrop && !o.value && f.value && p.value), H = d(() => o.value ? !1 : a.value ? !0 : !e.hiddenSave && f.value && p.value), P = d(() => !o.value && !a.value && p.value && !(e.dropDisabled && e.updateDisabled)), oe = d(() => !e.hiddenButtons && (H.value || A.value || P.value));
-    return (t, l) => {
+    const A = d(() => !e.hiddenDrop && !o.value && f.value && p.value), H = d(() => o.value ? !1 : l.value ? !0 : !e.hiddenSave && f.value && p.value), P = d(() => !o.value && !l.value && p.value && !(e.dropDisabled && e.updateDisabled)), oe = d(() => !e.hiddenButtons && (H.value || A.value || P.value));
+    return (t, a) => {
       const k = q("lkt-button"), re = q("lkt-field-switch"), z = q("lkt-http-info"), de = q("lkt-loader");
       return v(), h("article", ve, [
         ae.value ? (v(), h("header", fe, [
@@ -122,7 +127,7 @@ const i = (...u) => {
           ])
         ])) : g("", !0),
         O(E("div", ye, [
-          a.value ? g("", !0) : O((v(), V(k, {
+          l.value ? g("", !0) : O((v(), V(k, {
             key: 0,
             ref: (y) => B.value = y,
             palette: "danger",
@@ -140,7 +145,7 @@ const i = (...u) => {
                 key: 0,
                 item: r.value,
                 editMode: f.value,
-                isCreate: a.value,
+                isCreate: l.value,
                 canUpdate: _.value,
                 canDrop: R.value
               }) : (v(), h("span", he, j(u.dropText), 1))
@@ -166,10 +171,10 @@ const i = (...u) => {
                 key: 0,
                 item: r.value,
                 editMode: f.value,
-                isCreate: a.value,
+                isCreate: l.value,
                 canUpdate: _.value,
                 canDrop: R.value
-              }) : (v(), h("span", Se, j(u.saveText), 1))
+              }) : (v(), h("span", be, j(u.saveText), 1))
             ]),
             _: 3
           }, 8, ["disabled", "confirm-modal", "confirm-data", "resource", "resource-data"]), [
@@ -177,7 +182,7 @@ const i = (...u) => {
           ]),
           O(Q(re, {
             modelValue: f.value,
-            "onUpdate:modelValue": l[0] || (l[0] = (y) => f.value = y),
+            "onUpdate:modelValue": a[0] || (a[0] = (y) => f.value = y),
             label: u.editModeText
           }, null, 8, ["modelValue", "label"]), [
             [I, P.value]
@@ -185,7 +190,7 @@ const i = (...u) => {
         ], 512), [
           [I, oe.value]
         ]),
-        o.value ? g("", !0) : (v(), h("div", be, [
+        o.value ? g("", !0) : (v(), h("div", Se, [
           p.value ? (v(), h("div", ke, [
             m.value ? (v(), V(z, {
               key: 0,
@@ -193,13 +198,13 @@ const i = (...u) => {
               quick: "",
               palette: c.value === 200 ? "success" : "danger",
               "can-close": "",
-              onClose: l[1] || (l[1] = (y) => m.value = !1)
+              onClose: a[1] || (a[1] = (y) => m.value = !1)
             }, null, 8, ["code", "palette"])) : g("", !0),
             w(t.$slots, "item", {
               item: r.value,
               loading: o.value,
               editMode: f.value,
-              isCreate: a.value,
+              isCreate: l.value,
               canUpdate: _.value,
               canDrop: R.value
             })
