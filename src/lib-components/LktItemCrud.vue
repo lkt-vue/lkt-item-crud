@@ -140,8 +140,13 @@ watch(() => props.modelValue, v => {
 }, {deep: true});
 
 watch(item, (v) => {
-    if (typeof props.beforeEmitUpdate === 'function') props.beforeEmitUpdate(item.value);
+    debug('item updated ->', item.value);
+    if (typeof props.beforeEmitUpdate === 'function') {
+        debug('item updated -> has beforeEmitUpdate');
+        props.beforeEmitUpdate(item.value);
+    }
     emit('update:modelValue', item.value);
+    debug('item updated -> update dataState');
     dataState.value.increment(v);
 }, {deep: true});
 
