@@ -1,5 +1,5 @@
-declare function Oe(u?: boolean): void;
-declare namespace Ve {
-    function install(u: any, $?: {}): void;
+declare function we(u?: boolean): void;
+declare namespace Oe {
+    function install(u: any, T?: {}): void;
 }
-export { Oe as debugLktItemCrud, Ve as default };
+export { we as debugLktItemCrud, Oe as default };

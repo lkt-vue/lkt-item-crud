@@ -43,6 +43,7 @@ const props = defineProps({
     dropDisabled: {type: Boolean, default: false},
 
     saveValidator: {type: Function, required: false, default: () => true},
+    beforeEmitUpdate: {type: Function, required: false, default: () => true},
 
     onCreate: {type: Function, required: false, default: () => true},
     onUpdate: {type: Function, required: false, default: () => true},
@@ -139,6 +140,7 @@ watch(() => props.modelValue, v => {
 }, {deep: true});
 
 watch(item, (v) => {
+    if (typeof props.beforeEmitUpdate === 'function') props.beforeEmitUpdate(item.value);
     emit('update:modelValue', item.value);
     dataState.value.increment(v);
 }, {deep: true});
@@ -255,7 +257,8 @@ const showDropButton = computed(() => {
     showSwitchButton = computed(() => {
         return !isLoading.value
             && !createMode.value
-            && httpSuccessRead.value;
+            && httpSuccessRead.value
+            && !(props.dropDisabled && props.updateDisabled);
     }),
     showButtons = computed(() => {
         return !props.hiddenButtons && (showSaveButton.value || showDropButton.value || showSwitchButton.value);

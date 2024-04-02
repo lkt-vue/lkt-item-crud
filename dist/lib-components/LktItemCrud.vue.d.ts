@@ -113,6 +113,11 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         required: false;
         default: () => boolean;
     };
+    beforeEmitUpdate: {
+        type: FunctionConstructor;
+        required: false;
+        default: () => boolean;
+    };
     onCreate: {
         type: FunctionConstructor;
         required: false;
@@ -256,6 +261,11 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         required: false;
         default: () => boolean;
     };
+    beforeEmitUpdate: {
+        type: FunctionConstructor;
+        required: false;
+        default: () => boolean;
+    };
     onCreate: {
         type: FunctionConstructor;
         required: false;
@@ -306,6 +316,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
     updateDisabled: boolean;
     dropDisabled: boolean;
     saveValidator: Function;
+    beforeEmitUpdate: Function;
     insideModal: boolean;
 }, {}>, {
     "post-title"?(_: {
