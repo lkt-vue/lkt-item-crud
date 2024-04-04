@@ -1,54 +1,76 @@
-<script lang="ts">
-export default {name: "LktItemCrud", inheritAttrs: false}
-</script>
-
 <script setup lang="ts">
-import {ref, watch, useSlots, computed} from "vue";
+import {ref, watch, useSlots, computed, nextTick} from "vue";
 import {httpCall, HTTPResponse} from "lkt-http-client";
 import {DataState} from "lkt-data-state";
 import {debug} from "../functions/debug";
+import {LktObject} from "lkt-ts-interfaces";
 
-const props = defineProps({
-    modelValue: {type: Object, required: false, default: () => ({})},
-    title: {type: String, default: ''},
-
-    editModeText: {type: String, default: 'Edition Mode'},
-    saveText: {type: String, default: 'Save'},
-    dropText: {type: String, default: 'Delete'},
-    hiddenSave: {type: Boolean, default: false},
-    hiddenDrop: {type: Boolean, default: false},
-    hiddenButtons: {type: Boolean, default: false},
-
-    readResource: {type: String, required: false},
-    createResource: {type: String, required: false},
-    updateResource: {type: String, required: false},
-    dropResource: {type: String, required: false},
-
-    readData: {type: Object, required: false, default: () => ({})},
-    createData: {type: Object, required: false, default: () => ({})},
-    updateData: {type: Object, required: false, default: () => ({})},
-    dropData: {type: Object, required: false, default: () => ({})},
-
-    isCreate: {type: Boolean, default: false},
-    createConfirm: {type: String, default: ''},
-    updateConfirm: {type: String, default: ''},
-    dropConfirm: {type: String, default: ''},
-
-    createConfirmData: {type: Object, default: () => ({})},
-    updateConfirmData: {type: Object, default: () => ({})},
-    dropConfirmData: {type: Object, default: () => ({})},
-
-    createDisabled: {type: Boolean, default: false},
-    updateDisabled: {type: Boolean, default: false},
-    dropDisabled: {type: Boolean, default: false},
-
-    saveValidator: {type: Function, required: false, default: () => true},
-    beforeEmitUpdate: {type: Function, required: false, default: () => true},
-
-    onCreate: {type: Function, required: false, default: () => true},
-    onUpdate: {type: Function, required: false, default: () => true},
-
-    insideModal: {type: Boolean, default: false},
+const props = withDefaults(defineProps<{
+    modelValue: LktObject
+    title: string
+    editModeText: string
+    saveText: string
+    dropText: string
+    hiddenSave: boolean
+    hiddenDrop: boolean
+    hiddenButtons: boolean
+    readResource: string
+    createResource: string
+    updateResource: string
+    dropResource: string
+    readData: LktObject
+    createData: LktObject
+    updateData: LktObject
+    dropData: LktObject
+    isCreate: boolean
+    createConfirm: string
+    updateConfirm: string
+    dropConfirm: string
+    createConfirmData: LktObject
+    updateConfirmData: LktObject
+    dropConfirmData: LktObject
+    createDisabled: boolean
+    updateDisabled: boolean
+    dropDisabled: boolean
+    saveValidator: Function
+    beforeEmitUpdate: Function|undefined
+    onCreate: Function|undefined
+    onUpdate: Function|undefined
+    insideModal: boolean
+    dataStateConfig: LktObject
+}>(), {
+    modelValue: () => ({}),
+    title: '',
+    editModeText: 'Edition Mode',
+    saveText: 'Save',
+    dropText: 'Delete',
+    hiddenSave: false,
+    hiddenDrop: false,
+    hiddenButtons: false,
+    readResource: '',
+    createResource: '',
+    updateResource: '',
+    dropResource: '',
+    readData: () => ({}),
+    createData: () => ({}),
+    updateData: () => ({}),
+    dropData: () => ({}),
+    isCreate: false,
+    createConfirm: '',
+    updateConfirm: '',
+    dropConfirm: '',
+    createConfirmData: () => ({}),
+    updateConfirmData: () => ({}),
+    dropConfirmData: () => ({}),
+    createDisabled: false,
+    updateDisabled: false,
+    dropDisabled: false,
+    saveValidator: () => true,
+    beforeEmitUpdate: undefined,
+    onCreate: undefined,
+    onUpdate: undefined,
+    insideModal: false,
+    dataStateConfig: () => ({}),
 });
 
 const slots = useSlots();
@@ -66,8 +88,9 @@ const isLoading = ref(true),
     httpStatus = ref(200),
     saveButton = ref(null),
     dropButton = ref(null),
-    dataState = ref(new DataState(item.value)),
-    createMode = ref(props.isCreate);
+    dataState = ref(new DataState(item.value, props.dataStateConfig)),
+    createMode = ref(props.isCreate),
+    itemBeingEdited = ref(false);
 
 const saveConfirm = computed(() => {
         return createMode.value
@@ -140,6 +163,7 @@ watch(() => props.modelValue, v => {
 }, {deep: true});
 
 watch(item, (v) => {
+    itemBeingEdited.value = true;
     debug('item updated ->', item.value);
     if (typeof props.beforeEmitUpdate === 'function') {
         debug('item updated -> has beforeEmitUpdate');
@@ -150,6 +174,7 @@ watch(item, (v) => {
     emit('update:modelValue', item.value);
     debug('item updated -> update dataState');
     dataState.value.increment(v);
+    nextTick(() => itemBeingEdited.value = false)
 }, {deep: true});
 
 watch(perms, () => emit('perms', perms.value));
@@ -269,7 +294,10 @@ const showDropButton = computed(() => {
     }),
     showButtons = computed(() => {
         return !props.hiddenButtons && (showSaveButton.value || showDropButton.value || showSwitchButton.value);
-    })
+    }),
+    computedItem = computed(() => {
+        return item;
+    });
 </script>
 
 <template>
@@ -334,7 +362,8 @@ const showDropButton = computed(() => {
                 <slot name="item" v-bind:item="item" v-bind:loading="isLoading" v-bind:edit-mode="editMode"
                       v-bind:is-create="createMode"
                       v-bind:can-update="canUpdate"
-                      v-bind:can-drop="canDrop"></slot>
+                      v-bind:can-drop="canDrop"
+                      v-bind:item-being-edited="itemBeingEdited"></slot>
             </div>
             <lkt-http-info :code="httpStatus" v-else></lkt-http-info>
         </div>
