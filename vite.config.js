@@ -28,6 +28,7 @@ export default {
                 'suneditor',
                 'katex',
                 'lkt-button',
+                'lkt-modal',
                 'lkt-field-switch',
                 'lkt-loader',
                 'lkt-http-client',

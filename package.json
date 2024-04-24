@@ -1,6 +1,6 @@
 {
   "name": "lkt-item-crud",
-  "version": "1.1.17",
+  "version": "1.1.18",
   "description": "",
   "type": "module",
   "module": "./dist/build.js",
@@ -11,7 +11,10 @@
     "./styles": "./dist/style.css"
   },
   "types": "./dist/index.d.ts",
-  "files": ["dist/*", "src/**/*.vue"],
+  "files": [
+    "dist/*",
+    "src/**/*.vue"
+  ],
   "license": "MIT",
   "sideEffects": false,
   "scripts": {
@@ -40,6 +43,7 @@
     "lkt-http-client": "^1.0.12",
     "lkt-http-info": "^1.0.2",
     "lkt-loader": "^1.0.2",
+    "lkt-modal": "^1.1.1",
     "lkt-string-tools": "^1.0.2",
     "lkt-ts-interfaces": "^1.0.2",
     "path": "^0.12.7"

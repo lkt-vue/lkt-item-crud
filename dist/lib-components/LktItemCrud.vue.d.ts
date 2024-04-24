@@ -1,4 +1,5 @@
 import { LktObject } from "lkt-ts-interfaces";
+import { ModalCallbackConfig } from "../types/ModalCallbackConfig";
 declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__VLS_WithDefaults<__VLS_TypePropsToRuntimeProps<{
     modelValue: LktObject;
     title: string;
@@ -32,6 +33,8 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     onUpdate: Function | undefined;
     insideModal: boolean;
     dataStateConfig: LktObject;
+    onCreateModalCallbacks: ModalCallbackConfig[];
+    onUpdateModalCallbacks: ModalCallbackConfig[];
 }>, {
     modelValue: () => {};
     title: string;
@@ -65,6 +68,8 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     onUpdate: undefined;
     insideModal: boolean;
     dataStateConfig: () => {};
+    onCreateModalCallbacks: () => never[];
+    onUpdateModalCallbacks: () => never[];
 }>, {
     doDrop: () => void;
     doRefresh: () => Promise<void>;
@@ -112,6 +117,8 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     onUpdate: Function | undefined;
     insideModal: boolean;
     dataStateConfig: LktObject;
+    onCreateModalCallbacks: ModalCallbackConfig[];
+    onUpdateModalCallbacks: ModalCallbackConfig[];
 }>, {
     modelValue: () => {};
     title: string;
@@ -145,6 +152,8 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     onUpdate: undefined;
     insideModal: boolean;
     dataStateConfig: () => {};
+    onCreateModalCallbacks: () => never[];
+    onUpdateModalCallbacks: () => never[];
 }>>> & {
     onError?: ((...args: any[]) => any) | undefined;
     onDrop?: ((...args: any[]) => any) | undefined;
@@ -188,6 +197,8 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     onUpdate: Function | undefined;
     insideModal: boolean;
     dataStateConfig: LktObject;
+    onCreateModalCallbacks: ModalCallbackConfig[];
+    onUpdateModalCallbacks: ModalCallbackConfig[];
 }, {}>, {
     "post-title"?(_: {
         item: LktObject;

@@ -4,6 +4,8 @@ import {httpCall, HTTPResponse} from "lkt-http-client";
 import {DataState} from "lkt-data-state";
 import {debug} from "../functions/debug";
 import {LktObject} from "lkt-ts-interfaces";
+import {ModalCallbackConfig} from "../types/ModalCallbackConfig";
+import {runModalCallback} from "../functions/modalCallbacks";
 
 const props = withDefaults(defineProps<{
     modelValue: LktObject
@@ -38,6 +40,8 @@ const props = withDefaults(defineProps<{
     onUpdate: Function|undefined
     insideModal: boolean
     dataStateConfig: LktObject
+    onCreateModalCallbacks: ModalCallbackConfig[]
+    onUpdateModalCallbacks: ModalCallbackConfig[]
 }>(), {
     modelValue: () => ({}),
     title: '',
@@ -71,6 +75,8 @@ const props = withDefaults(defineProps<{
     onUpdate: undefined,
     insideModal: false,
     dataStateConfig: () => ({}),
+    onCreateModalCallbacks: () => [],
+    onUpdateModalCallbacks: () => [],
 });
 
 const slots = useSlots();
@@ -232,11 +238,23 @@ const onDrop = ($event: PointerEvent, r: HTTPResponse) => {
             if (typeof props.onCreate === 'function') {
                 debug('onSave -> trigger onCreate callback');
                 props.onCreate(r);
+                if (props.onCreateModalCallbacks.length > 0) {
+                    debug('onSave -> has onCreateModalCallbacks');
+                    props.onCreateModalCallbacks.forEach(cb => {
+                        runModalCallback(cb);
+                    });
+                }
             }
         } else {
             if (typeof props.onUpdate === 'function') {
                 debug('onSave -> trigger onUpdate callback');
                 props.onUpdate(r);
+                if (props.onUpdateModalCallbacks.length > 0) {
+                    debug('onSave -> has onUpdateModalCallbacks');
+                    props.onUpdateModalCallbacks.forEach(cb => {
+                        runModalCallback(cb);
+                    });
+                }
             }
         }
 
