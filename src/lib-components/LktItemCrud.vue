@@ -42,6 +42,7 @@ const props = withDefaults(defineProps<{
     dataStateConfig: LktObject
     onCreateModalCallbacks: ModalCallbackConfig[]
     onUpdateModalCallbacks: ModalCallbackConfig[]
+    onDropModalCallbacks: ModalCallbackConfig[]
 }>(), {
     modelValue: () => ({}),
     title: '',
@@ -77,6 +78,7 @@ const props = withDefaults(defineProps<{
     dataStateConfig: () => ({}),
     onCreateModalCallbacks: () => [],
     onUpdateModalCallbacks: () => [],
+    onDropModalCallbacks: () => [],
 });
 
 const slots = useSlots();
@@ -213,8 +215,13 @@ const onDrop = ($event: PointerEvent, r: HTTPResponse) => {
             return;
         }
         showStoreMessage.value = true;
+        if (props.onDropModalCallbacks.length > 0) {
+            debug('onDrop -> has onDropModalCallbacks');
+            props.onDropModalCallbacks.forEach(cb => {
+                runModalCallback(cb);
+            });
+        }
         emit('drop', r)
-
     },
     onSave = ($event: PointerEvent, r: HTTPResponse) => {
         debug('onSave -> received response:', r);

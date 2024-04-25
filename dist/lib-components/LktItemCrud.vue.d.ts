@@ -35,6 +35,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     dataStateConfig: LktObject;
     onCreateModalCallbacks: ModalCallbackConfig[];
     onUpdateModalCallbacks: ModalCallbackConfig[];
+    onDropModalCallbacks: ModalCallbackConfig[];
 }>, {
     modelValue: () => {};
     title: string;
@@ -70,6 +71,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     dataStateConfig: () => {};
     onCreateModalCallbacks: () => never[];
     onUpdateModalCallbacks: () => never[];
+    onDropModalCallbacks: () => never[];
 }>, {
     doDrop: () => void;
     doRefresh: () => Promise<void>;
@@ -119,6 +121,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     dataStateConfig: LktObject;
     onCreateModalCallbacks: ModalCallbackConfig[];
     onUpdateModalCallbacks: ModalCallbackConfig[];
+    onDropModalCallbacks: ModalCallbackConfig[];
 }>, {
     modelValue: () => {};
     title: string;
@@ -154,6 +157,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     dataStateConfig: () => {};
     onCreateModalCallbacks: () => never[];
     onUpdateModalCallbacks: () => never[];
+    onDropModalCallbacks: () => never[];
 }>>> & {
     onError?: ((...args: any[]) => any) | undefined;
     onDrop?: ((...args: any[]) => any) | undefined;
@@ -199,6 +203,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     dataStateConfig: LktObject;
     onCreateModalCallbacks: ModalCallbackConfig[];
     onUpdateModalCallbacks: ModalCallbackConfig[];
+    onDropModalCallbacks: ModalCallbackConfig[];
 }, {}>, {
     "post-title"?(_: {
         item: LktObject;
