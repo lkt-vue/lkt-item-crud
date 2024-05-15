@@ -297,6 +297,8 @@ defineExpose({
 });
 
 const showDropButton = computed(() => {
+        if (!canUpdate.value && canDrop.value) return true;
+
         return !props.hiddenDrop
             && !isLoading.value
             && editMode.value
@@ -312,6 +314,9 @@ const showDropButton = computed(() => {
             && httpSuccessRead.value;
     }),
     showSwitchButton = computed(() => {
+        if (!canUpdate.value && !canDrop.value) return false;
+        if (!canUpdate.value && canDrop.value) return false;
+
         return !isLoading.value
             && !createMode.value
             && httpSuccessRead.value
