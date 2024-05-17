@@ -1,4 +1,4 @@
-import { defineComponent as ie, useSlots as ce, ref as s, computed as n, watch as B, nextTick as ve, resolveComponent as E, openBlock as v, createElementBlock as y, createElementVNode as J, toDisplayString as K, renderSlot as V, createCommentVNode as U, withDirectives as I, createBlock as N, withCtx as X, unref as Y, vShow as L, createVNode as Z } from "vue";
+import { defineComponent as ie, useSlots as ce, ref as s, computed as n, watch as B, nextTick as ve, resolveComponent as E, openBlock as v, createElementBlock as M, createElementVNode as J, toDisplayString as K, renderSlot as V, createCommentVNode as U, withDirectives as I, createBlock as N, withCtx as X, unref as Y, vShow as L, createVNode as Z } from "vue";
 import { httpCall as fe } from "lkt-http-client";
 import { DataState as pe } from "lkt-data-state";
 import { execModal as me, refreshModal as he, closeModal as ke, openModal as Ce, reOpenModal as be } from "lkt-modal";
@@ -78,7 +78,7 @@ const r = (...l) => {
   setup(l, { expose: f, emit: D }) {
     const e = l, T = ce(), i = D;
     let ee = [];
-    const d = s(!0), u = s(e.modelValue), M = s(ee), p = s(!1), m = s(!1), h = s(!1), c = s(200), w = s(null), R = s(null), _ = s(new pe(u.value, e.dataStateConfig)), o = s(e.isCreate), $ = s(!1), ae = n(() => o.value ? e.createConfirm : e.updateConfirm), te = n(() => o.value ? e.createConfirmData : e.updateConfirmData), H = n(() => o.value ? e.createResource : e.updateResource), le = n(() => o.value ? { ...e.createData, ...JSON.parse(JSON.stringify(u.value)) } : { ...e.updateData, ...JSON.parse(JSON.stringify(u.value)) }), oe = n(() => o.value ? e.createDisabled : e.updateDisabled), k = n(() => !o.value && M.value.includes("update")), C = n(() => !o.value && M.value.includes("drop")), F = async () => {
+    const d = s(!0), u = s(e.modelValue), _ = s(ee), p = s(!1), m = s(!1), h = s(!1), c = s(200), w = s(null), R = s(null), S = s(new pe(u.value, e.dataStateConfig)), o = s(e.isCreate), $ = s(!1), ae = n(() => o.value ? e.createConfirm : e.updateConfirm), te = n(() => o.value ? e.createConfirmData : e.updateConfirmData), H = n(() => o.value ? e.createResource : e.updateResource), le = n(() => o.value ? { ...e.createData, ...JSON.parse(JSON.stringify(u.value)) } : { ...e.updateData, ...JSON.parse(JSON.stringify(u.value)) }), oe = n(() => o.value ? e.createDisabled : e.updateDisabled), k = n(() => !o.value && _.value.includes("update")), C = n(() => !o.value && _.value.includes("drop")), F = async () => {
       r("fetchItem"), d.value = !0, c.value = -1, h.value = !1;
       try {
         const a = await fe(e.readResource, e.readData);
@@ -86,23 +86,23 @@ const r = (...l) => {
           m.value = !1, c.value = a.httpStatus, i("error", a.httpStatus);
           return;
         }
-        m.value = !0, u.value = a.data, M.value = a.perms, _.value.increment(u.value).turnStoredIntoOriginal(), i("read", a);
+        m.value = !0, u.value = a.data, _.value = a.perms, S.value.increment(u.value).turnStoredIntoOriginal(), i("read", a);
       } catch {
         d.value = !1, m.value = !1, c.value = 404, i("error", 404);
         return;
       }
     }, ue = n(() => d.value ? !1 : e.title || !!T["post-title"]);
     B(() => e.modelValue, (a) => {
-      u.value = a, _.value.increment(a);
+      u.value = a, S.value.increment(a);
     }, { deep: !0 }), B(u, (a) => {
       if ($.value = !0, r("item updated ->", u.value), typeof e.beforeEmitUpdate == "function") {
         r("item updated -> has beforeEmitUpdate");
         let t = e.beforeEmitUpdate(u.value);
         r("item updated -> override with: ", t), typeof t == "object" && (u.value = t);
       }
-      i("update:modelValue", u.value), r("item updated -> update dataState"), _.value.increment(a), ve(() => $.value = !1);
-    }, { deep: !0 }), B(M, () => i("perms", M.value));
-    const P = n(() => oe.value || !o.value && !k.value || typeof e.saveValidator == "function" && !e.saveValidator(u.value) ? !1 : _.value.changed());
+      i("update:modelValue", u.value), r("item updated -> update dataState"), S.value.increment(a), ve(() => $.value = !1);
+    }, { deep: !0 }), B(_, () => i("perms", _.value));
+    const P = n(() => oe.value || !o.value && !k.value || typeof e.saveValidator == "function" && !e.saveValidator(u.value) ? !1 : S.value.changed());
     B(P, (a) => i("modified-data", a)), B(o, (a) => i("update:isCreate", a)), e.readResource && !o.value ? F() : o.value && (m.value = !0, p.value = !0, d.value = !1);
     const de = (a, t) => {
       if (d.value = !1, c.value = t.httpStatus, !t.success) {
@@ -121,7 +121,7 @@ const r = (...l) => {
         h.value = !0;
       }
       let b = o.value ? "create" : "update";
-      o.value || (r("onSave -> turn stored data into original"), _.value.turnStoredIntoOriginal()), b === "create" ? typeof e.onCreate == "function" && (r("onSave -> trigger onCreate callback"), e.onCreate(t), e.onCreateModalCallbacks.length > 0 && (r("onSave -> has onCreateModalCallbacks"), e.onCreateModalCallbacks.forEach((g) => {
+      o.value || (r("onSave -> turn stored data into original"), S.value.turnStoredIntoOriginal()), b === "create" ? typeof e.onCreate == "function" && (r("onSave -> trigger onCreate callback"), e.onCreate(t), e.onCreateModalCallbacks.length > 0 && (r("onSave -> has onCreateModalCallbacks"), e.onCreateModalCallbacks.forEach((g) => {
         j(g);
       }))) : typeof e.onUpdate == "function" && (r("onSave -> trigger onUpdate callback"), e.onUpdate(t), e.onUpdateModalCallbacks.length > 0 && (r("onSave -> has onUpdateModalCallbacks"), e.onUpdateModalCallbacks.forEach((g) => {
         j(g);
@@ -140,11 +140,11 @@ const r = (...l) => {
         w.value && typeof w.value.click == "function" && w.value.click();
       }
     });
-    const A = n(() => !k.value && C.value ? !0 : !e.hiddenDrop && !d.value && p.value && m.value), G = n(() => d.value ? !1 : o.value ? !0 : !e.hiddenSave && p.value && m.value), Q = n(() => !k.value && !C.value || !k.value && C.value ? !1 : !d.value && !o.value && m.value && !(e.dropDisabled && e.updateDisabled)), ne = n(() => !e.hiddenButtons && (G.value || A.value || Q.value));
+    const A = n(() => !k.value && C.value ? !0 : !e.hiddenDrop && !d.value && p.value && m.value), G = n(() => S.value.changed() ? !0 : d.value ? !1 : o.value ? !0 : !e.hiddenSave && p.value && m.value), Q = n(() => !k.value && !C.value || !k.value && C.value ? !1 : !d.value && !o.value && m.value && !(e.dropDisabled && e.updateDisabled)), ne = n(() => !e.hiddenButtons && (G.value || A.value || Q.value));
     return n(() => u), (a, t) => {
       const b = E("lkt-button"), g = E("lkt-field-switch"), W = E("lkt-http-info"), se = E("lkt-loader");
-      return v(), y("article", De, [
-        ue.value ? (v(), y("header", Se, [
+      return v(), M("article", De, [
+        ue.value ? (v(), M("header", Se, [
           J("h1", ye, K(a.title), 1),
           J("div", Me, [
             V(a.$slots, "post-title", {
@@ -156,7 +156,7 @@ const r = (...l) => {
         I(J("div", _e, [
           o.value ? U("", !0) : I((v(), N(b, {
             key: 0,
-            ref: (S) => R.value = S,
+            ref: (y) => R.value = y,
             palette: "danger",
             disabled: a.dropDisabled || !C.value,
             "confirm-modal": a.dropConfirm,
@@ -175,14 +175,14 @@ const r = (...l) => {
                 isCreate: o.value,
                 canUpdate: k.value,
                 canDrop: C.value
-              }) : (v(), y("span", ge, K(a.dropText), 1))
+              }) : (v(), M("span", ge, K(a.dropText), 1))
             ]),
             _: 3
           }, 8, ["disabled", "confirm-modal", "confirm-data", "resource", "resource-data"])), [
             [L, A.value]
           ]),
           I(Z(b, {
-            ref: (S) => w.value = S,
+            ref: (y) => w.value = y,
             palette: "success",
             disabled: !P.value,
             "confirm-modal": ae.value,
@@ -201,7 +201,7 @@ const r = (...l) => {
                 isCreate: o.value,
                 canUpdate: k.value,
                 canDrop: C.value
-              }) : (v(), y("span", Be, K(a.saveText), 1))
+              }) : (v(), M("span", Be, K(a.saveText), 1))
             ]),
             _: 3
           }, 8, ["disabled", "confirm-modal", "confirm-data", "resource", "resource-data"]), [
@@ -209,7 +209,7 @@ const r = (...l) => {
           ]),
           I(Z(g, {
             modelValue: p.value,
-            "onUpdate:modelValue": t[0] || (t[0] = (S) => p.value = S),
+            "onUpdate:modelValue": t[0] || (t[0] = (y) => p.value = y),
             label: a.editModeText
           }, null, 8, ["modelValue", "label"]), [
             [L, Q.value]
@@ -217,15 +217,15 @@ const r = (...l) => {
         ], 512), [
           [L, ne.value]
         ]),
-        d.value ? U("", !0) : (v(), y("div", Ue, [
-          m.value ? (v(), y("div", we, [
+        d.value ? U("", !0) : (v(), M("div", Ue, [
+          m.value ? (v(), M("div", we, [
             h.value ? (v(), N(W, {
               key: 0,
               code: c.value,
               quick: "",
               palette: c.value === 200 ? "success" : "danger",
               "can-close": "",
-              onClose: t[1] || (t[1] = (S) => h.value = !1)
+              onClose: t[1] || (t[1] = (y) => h.value = !1)
             }, null, 8, ["code", "palette"])) : U("", !0),
             V(a.$slots, "item", {
               item: u.value,

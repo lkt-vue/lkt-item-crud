@@ -305,6 +305,8 @@ const showDropButton = computed(() => {
             && httpSuccessRead.value;
     }),
     showSaveButton = computed(() => {
+
+        if (dataState.value.changed()) return true;
         if (isLoading.value) return false;
 
         if (createMode.value) return true;
@@ -324,9 +326,6 @@ const showDropButton = computed(() => {
     }),
     showButtons = computed(() => {
         return !props.hiddenButtons && (showSaveButton.value || showDropButton.value || showSwitchButton.value);
-    }),
-    computedItem = computed(() => {
-        return item;
     });
 </script>
 
