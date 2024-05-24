@@ -43,6 +43,7 @@ const props = withDefaults(defineProps<{
     onCreateModalCallbacks: ModalCallbackConfig[]
     onUpdateModalCallbacks: ModalCallbackConfig[]
     onDropModalCallbacks: ModalCallbackConfig[]
+    editing: boolean
 }>(), {
     modelValue: () => ({}),
     title: '',
@@ -79,24 +80,26 @@ const props = withDefaults(defineProps<{
     onCreateModalCallbacks: () => [],
     onUpdateModalCallbacks: () => [],
     onDropModalCallbacks: () => [],
+    editing: false,
 });
 
 const slots = useSlots();
 
-const emit = defineEmits(['update:modelValue', 'update:isCreate', 'read', 'create', 'update', 'drop', 'perms', 'error', 'modified-data']);
+const emit = defineEmits(['update:modelValue', 'update:isCreate', 'update:editing', 'read', 'create', 'update', 'drop', 'before-save', 'perms', 'error', 'modified-data']);
 
 let basePerms: string[] = [];
 
 const isLoading = ref(true),
     item = ref(props.modelValue),
     perms = ref(basePerms),
-    editMode = ref(false),
+    editMode = ref(props.editing),
     httpSuccessRead = ref(false),
     showStoreMessage = ref(false),
     httpStatus = ref(200),
     saveButton = ref(null),
     dropButton = ref(null),
     dataState = ref(new DataState(item.value, props.dataStateConfig)),
+    readDataState = ref(new DataState(props.readData)),
     createMode = ref(props.isCreate),
     itemBeingEdited = ref(false);
 
@@ -149,6 +152,7 @@ const fetchItem = async () => {
         item.value = r.data;
         perms.value = r.perms;
         dataState.value.increment(item.value).turnStoredIntoOriginal();
+        readDataState.value.turnStoredIntoOriginal();
         emit('read', r);
     } catch (e) {
         isLoading.value = false;
@@ -198,6 +202,20 @@ const ableToSave = computed(() => {
 watch(ableToSave, (v) => emit('modified-data', v));
 watch(createMode, (v) => emit('update:isCreate', v));
 
+watch(() => props.readData, v => {
+    readDataState.value.increment(v);
+    if (readDataState.value.changed()) fetchItem()
+})
+
+watch(() => props.editing, v => {
+    debug('editing updated -> updating editMode', v);
+    editMode.value = v;
+});
+watch(editMode, (v) => {
+    debug('editMode updated -> emit update', v);
+    emit('update:editing', v)
+});
+
 // Fetch item
 if (props.readResource && !createMode.value) fetchItem();
 else if (createMode.value) {
@@ -225,6 +243,7 @@ const onDrop = ($event: PointerEvent, r: HTTPResponse) => {
     },
     onSave = ($event: PointerEvent, r: HTTPResponse) => {
         debug('onSave -> received response:', r);
+        emit('before-save');
         if (saveResource.value) {
             isLoading.value = false;
             httpStatus.value = r.httpStatus;

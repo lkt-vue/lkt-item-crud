@@ -36,6 +36,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     onCreateModalCallbacks: ModalCallbackConfig[];
     onUpdateModalCallbacks: ModalCallbackConfig[];
     onDropModalCallbacks: ModalCallbackConfig[];
+    editing: boolean;
 }>, {
     modelValue: () => {};
     title: string;
@@ -72,6 +73,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     onCreateModalCallbacks: () => never[];
     onUpdateModalCallbacks: () => never[];
     onDropModalCallbacks: () => never[];
+    editing: boolean;
 }>, {
     doDrop: () => void;
     doRefresh: () => Promise<void>;
@@ -82,8 +84,10 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     update: (...args: any[]) => void;
     "update:modelValue": (...args: any[]) => void;
     "update:isCreate": (...args: any[]) => void;
+    "update:editing": (...args: any[]) => void;
     read: (...args: any[]) => void;
     create: (...args: any[]) => void;
+    "before-save": (...args: any[]) => void;
     perms: (...args: any[]) => void;
     "modified-data": (...args: any[]) => void;
 }, string, import("vue").PublicProps, Readonly<import("vue").ExtractPropTypes<__VLS_WithDefaults<__VLS_TypePropsToRuntimeProps<{
@@ -122,6 +126,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     onCreateModalCallbacks: ModalCallbackConfig[];
     onUpdateModalCallbacks: ModalCallbackConfig[];
     onDropModalCallbacks: ModalCallbackConfig[];
+    editing: boolean;
 }>, {
     modelValue: () => {};
     title: string;
@@ -158,6 +163,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     onCreateModalCallbacks: () => never[];
     onUpdateModalCallbacks: () => never[];
     onDropModalCallbacks: () => never[];
+    editing: boolean;
 }>>> & {
     onError?: ((...args: any[]) => any) | undefined;
     onDrop?: ((...args: any[]) => any) | undefined;
@@ -165,7 +171,9 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     onUpdate?: ((...args: any[]) => any) | undefined;
     "onUpdate:modelValue"?: ((...args: any[]) => any) | undefined;
     "onUpdate:isCreate"?: ((...args: any[]) => any) | undefined;
+    "onUpdate:editing"?: ((...args: any[]) => any) | undefined;
     onRead?: ((...args: any[]) => any) | undefined;
+    "onBefore-save"?: ((...args: any[]) => any) | undefined;
     onPerms?: ((...args: any[]) => any) | undefined;
     "onModified-data"?: ((...args: any[]) => any) | undefined;
 }, {
@@ -204,6 +212,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     onCreateModalCallbacks: ModalCallbackConfig[];
     onUpdateModalCallbacks: ModalCallbackConfig[];
     onDropModalCallbacks: ModalCallbackConfig[];
+    editing: boolean;
 }, {}>, {
     "post-title"?(_: {
         item: LktObject;
