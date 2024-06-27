@@ -29,13 +29,13 @@ const u = (...l) => {
 }, Se = { class: "lkt-item-crud" }, ye = {
   key: 0,
   class: "lkt-item-crud_header"
-}, ge = { class: "lkt-item-crud_header-title" }, Me = { class: "lkt-item-crud_header-slot" }, _e = { class: "lkt-item-crud-buttons" }, Be = { key: 1 }, we = { key: 1 }, Ue = {
+}, ge = { class: "lkt-item-crud_header-title" }, Me = { class: "lkt-item-crud_header-slot" }, _e = { class: "lkt-item-crud-buttons" }, Be = { key: 1 }, we = { key: 1 }, Ee = {
   key: 1,
   class: "lkt-item-crud_content"
-}, Re = {
+}, Ue = {
   key: 0,
   class: "lkt-grid-1"
-}, Ee = /* @__PURE__ */ ve({
+}, Re = /* @__PURE__ */ ve({
   __name: "LktItemCrud",
   props: {
     modelValue: { default: () => ({}) },
@@ -69,6 +69,7 @@ const u = (...l) => {
     onCreate: { type: Function, default: void 0 },
     onUpdate: { type: Function, default: void 0 },
     insideModal: { type: Boolean, default: !1 },
+    hideSwitchEdition: { type: Boolean, default: !1 },
     dataStateConfig: { default: () => ({}) },
     onCreateModalCallbacks: { default: () => [] },
     onUpdateModalCallbacks: { default: () => [] },
@@ -79,7 +80,7 @@ const u = (...l) => {
   setup(l, { expose: p, emit: S }) {
     const e = l, $ = fe(), n = S;
     let te = [];
-    const d = s(!0), r = s(e.modelValue), _ = s(te), c = s(e.editing), m = s(!1), k = s(!1), v = s(200), U = s(null), R = s(null), y = s(new ae(r.value, e.dataStateConfig)), F = s(new ae(e.readData)), o = s(e.isCreate), J = s(!1), le = i(() => o.value ? e.createConfirm : e.updateConfirm), oe = i(() => o.value ? e.createConfirmData : e.updateConfirmData), P = i(() => o.value ? e.createResource : e.updateResource), ue = i(() => o.value ? { ...e.createData, ...JSON.parse(JSON.stringify(r.value)) } : { ...e.updateData, ...JSON.parse(JSON.stringify(r.value)) }), de = i(() => o.value ? e.createDisabled : e.updateDisabled), C = i(() => !o.value && _.value.includes("update")), b = i(() => !o.value && _.value.includes("drop")), E = async () => {
+    const d = s(!0), r = s(e.modelValue), _ = s(te), c = s(e.editing), m = s(!1), k = s(!1), v = s(200), E = s(null), U = s(null), y = s(new ae(r.value, e.dataStateConfig)), F = s(new ae(e.readData)), o = s(e.isCreate), J = s(!1), le = i(() => o.value ? e.createConfirm : e.updateConfirm), oe = i(() => o.value ? e.createConfirmData : e.updateConfirmData), P = i(() => o.value ? e.createResource : e.updateResource), ue = i(() => o.value ? { ...e.createData, ...JSON.parse(JSON.stringify(r.value)) } : { ...e.updateData, ...JSON.parse(JSON.stringify(r.value)) }), de = i(() => o.value ? e.createDisabled : e.updateDisabled), C = i(() => !o.value && _.value.includes("update")), b = i(() => !o.value && _.value.includes("drop")), R = async () => {
       u("fetchItem"), d.value = !0, v.value = -1, k.value = !1;
       try {
         const a = await me(e.readResource, e.readData);
@@ -105,12 +106,12 @@ const u = (...l) => {
     }, { deep: !0 }), h(_, () => n("perms", _.value));
     const x = i(() => de.value || !o.value && !C.value || typeof e.saveValidator == "function" && !e.saveValidator(r.value) ? !1 : y.value.changed());
     h(x, (a) => n("modified-data", a)), h(o, (a) => n("update:isCreate", a)), h(() => e.readData, (a) => {
-      F.value.increment(a), F.value.changed() && E();
+      F.value.increment(a), F.value.changed() && R();
     }), h(() => e.editing, (a) => {
       u("editing updated -> updating editMode", a), c.value = a;
     }), h(c, (a) => {
       u("editMode updated -> emit update", a), n("update:editing", a);
-    }), e.readResource && !o.value ? E() : o.value && (m.value = !0, c.value = !0, d.value = !1);
+    }), e.readResource && !o.value ? R() : o.value && (m.value = !0, c.value = !0, d.value = !1);
     const ne = (a, t) => {
       if (d.value = !1, v.value = t.httpStatus, !t.success) {
         k.value = !0, n("error", t.httpStatus);
@@ -132,7 +133,7 @@ const u = (...l) => {
         q(B);
       }))) : typeof e.onUpdate == "function" && (u("onSave -> trigger onUpdate callback"), e.onUpdate(t), e.onUpdateModalCallbacks.length > 0 && (u("onSave -> has onUpdateModalCallbacks"), e.onUpdateModalCallbacks.forEach((B) => {
         q(B);
-      }))), !e.insideModal && t.autoReloadId && (u("onSave -> autoReloadId detected: ", t.autoReloadId), e.readData.id = t.autoReloadId, u("onSave -> turning off create mode"), o.value = !1, E()), n(D, t);
+      }))), !e.insideModal && t.autoReloadId && (u("onSave -> autoReloadId detected: ", t.autoReloadId), e.readData.id = t.autoReloadId, u("onSave -> turning off create mode"), o.value = !1, R()), n(D, t);
     }, z = () => {
       d.value = !0, v.value = -1;
     }, A = () => {
@@ -140,14 +141,14 @@ const u = (...l) => {
     };
     p({
       doDrop: () => {
-        R.value && typeof R.value.click == "function" && R.value.click();
-      },
-      doRefresh: E,
-      doSave: () => {
         U.value && typeof U.value.click == "function" && U.value.click();
+      },
+      doRefresh: R,
+      doSave: () => {
+        E.value && typeof E.value.click == "function" && E.value.click();
       }
     });
-    const G = i(() => !C.value && b.value ? !0 : !e.hiddenDrop && !d.value && c.value && m.value), Q = i(() => y.value.changed() ? !0 : d.value ? !1 : o.value ? !0 : !e.hiddenSave && c.value && m.value), W = i(() => !C.value && !b.value || !C.value && b.value ? !1 : !d.value && !o.value && m.value && !(e.dropDisabled && e.updateDisabled)), ie = i(() => !e.hiddenButtons && (Q.value || G.value || W.value));
+    const G = i(() => !C.value && b.value ? !0 : !e.hiddenDrop && !d.value && c.value && m.value), Q = i(() => y.value.changed() ? !0 : d.value ? !1 : o.value ? !0 : !e.hiddenSave && c.value && m.value), W = i(() => e.hideSwitchEdition || !C.value && !b.value || !C.value && b.value ? !1 : !d.value && !o.value && m.value && !(e.dropDisabled && e.updateDisabled)), ie = i(() => !e.hiddenButtons && (Q.value || G.value || W.value));
     return (a, t) => {
       const D = I("lkt-button"), B = I("lkt-field-switch"), X = I("lkt-http-info"), ce = I("lkt-loader");
       return f(), M("article", Se, [
@@ -163,7 +164,7 @@ const u = (...l) => {
         N(K("div", _e, [
           o.value ? w("", !0) : N((f(), L(D, {
             key: 0,
-            ref: (g) => R.value = g,
+            ref: (g) => U.value = g,
             palette: "danger",
             disabled: a.dropDisabled || !b.value,
             "confirm-modal": a.dropConfirm,
@@ -189,7 +190,7 @@ const u = (...l) => {
             [O, G.value]
           ]),
           N(ee(D, {
-            ref: (g) => U.value = g,
+            ref: (g) => E.value = g,
             palette: "success",
             disabled: !x.value,
             "confirm-modal": le.value,
@@ -224,8 +225,8 @@ const u = (...l) => {
         ], 512), [
           [O, ie.value]
         ]),
-        d.value ? w("", !0) : (f(), M("div", Ue, [
-          m.value ? (f(), M("div", Re, [
+        d.value ? w("", !0) : (f(), M("div", Ee, [
+          m.value ? (f(), M("div", Ue, [
             k.value ? (f(), L(X, {
               key: 0,
               code: v.value,
@@ -254,7 +255,7 @@ const u = (...l) => {
   }
 }), Fe = {
   install: (l, p = {}) => {
-    l.component("lkt-item-crud") === void 0 && l.component("lkt-item-crud", Ee);
+    l.component("lkt-item-crud") === void 0 && l.component("lkt-item-crud", Re);
   }
 };
 export {

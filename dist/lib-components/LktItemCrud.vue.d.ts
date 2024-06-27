@@ -32,6 +32,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     onCreate: Function | undefined;
     onUpdate: Function | undefined;
     insideModal: boolean;
+    hideSwitchEdition: boolean;
     dataStateConfig: LktObject;
     onCreateModalCallbacks: ModalCallbackConfig[];
     onUpdateModalCallbacks: ModalCallbackConfig[];
@@ -69,6 +70,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     onCreate: undefined;
     onUpdate: undefined;
     insideModal: boolean;
+    hideSwitchEdition: boolean;
     dataStateConfig: () => {};
     onCreateModalCallbacks: () => never[];
     onUpdateModalCallbacks: () => never[];
@@ -122,6 +124,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     onCreate: Function | undefined;
     onUpdate: Function | undefined;
     insideModal: boolean;
+    hideSwitchEdition: boolean;
     dataStateConfig: LktObject;
     onCreateModalCallbacks: ModalCallbackConfig[];
     onUpdateModalCallbacks: ModalCallbackConfig[];
@@ -159,6 +162,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     onCreate: undefined;
     onUpdate: undefined;
     insideModal: boolean;
+    hideSwitchEdition: boolean;
     dataStateConfig: () => {};
     onCreateModalCallbacks: () => never[];
     onUpdateModalCallbacks: () => never[];
@@ -208,6 +212,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     onCreate: Function | undefined;
     onUpdate: Function | undefined;
     insideModal: boolean;
+    hideSwitchEdition: boolean;
     dataStateConfig: LktObject;
     onCreateModalCallbacks: ModalCallbackConfig[];
     onUpdateModalCallbacks: ModalCallbackConfig[];

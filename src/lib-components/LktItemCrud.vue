@@ -39,6 +39,7 @@ const props = withDefaults(defineProps<{
     onCreate: Function|undefined
     onUpdate: Function|undefined
     insideModal: boolean
+    hideSwitchEdition: boolean
     dataStateConfig: LktObject
     onCreateModalCallbacks: ModalCallbackConfig[]
     onUpdateModalCallbacks: ModalCallbackConfig[]
@@ -76,6 +77,7 @@ const props = withDefaults(defineProps<{
     onCreate: undefined,
     onUpdate: undefined,
     insideModal: false,
+    hideSwitchEdition: false,
     dataStateConfig: () => ({}),
     onCreateModalCallbacks: () => [],
     onUpdateModalCallbacks: () => [],
@@ -335,6 +337,7 @@ const showDropButton = computed(() => {
             && httpSuccessRead.value;
     }),
     showSwitchButton = computed(() => {
+        if (props.hideSwitchEdition) return false;
         if (!canUpdate.value && !canDrop.value) return false;
         if (!canUpdate.value && canDrop.value) return false;
 
