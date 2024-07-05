@@ -12,7 +12,9 @@ const props = withDefaults(defineProps<{
     title: string
     editModeText: string
     saveText: string
+    saveIcon: string
     dropText: string
+    dropIcon: string
     hiddenSave: boolean
     hiddenDrop: boolean
     hiddenButtons: boolean
@@ -370,6 +372,8 @@ const showDropButton = computed(() => {
                 v-bind:confirm-data="dropConfirmData"
                 v-bind:resource="dropResource"
                 v-bind:resource-data="dropData"
+                :text="slots['button-drop'] ? '' : dropText"
+                :icon="slots['button-drop'] ? '' : dropIcon"
                 v-on:loading="onButtonLoading"
                 v-on:loaded="onButtonLoaded"
                 v-on:click="onDrop">
@@ -378,7 +382,6 @@ const showDropButton = computed(() => {
                       v-bind:is-create="createMode"
                       v-bind:can-update="canUpdate"
                       v-bind:can-drop="canDrop"></slot>
-                <span v-else>{{ dropText }}</span>
             </lkt-button>
 
             <lkt-button
@@ -390,6 +393,8 @@ const showDropButton = computed(() => {
                 v-bind:confirm-data="confirmData"
                 v-bind:resource="saveResource"
                 v-bind:resource-data="saveData"
+                :text="slots['button-save'] ? '' : saveText"
+                :icon="slots['button-save'] ? '' : saveIcon"
                 v-on:loading="onButtonLoading"
                 v-on:loaded="onButtonLoaded"
                 v-on:click="onSave">
@@ -398,7 +403,6 @@ const showDropButton = computed(() => {
                       v-bind:is-create="createMode"
                       v-bind:can-update="canUpdate"
                       v-bind:can-drop="canDrop"></slot>
-                <span v-else>{{ saveText }}</span>
             </lkt-button>
 
             <lkt-field-switch

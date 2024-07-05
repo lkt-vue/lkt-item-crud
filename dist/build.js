@@ -1,48 +1,50 @@
-import { defineComponent as ve, useSlots as fe, ref as s, computed as i, watch as h, nextTick as pe, resolveComponent as I, openBlock as f, createElementBlock as M, createElementVNode as K, toDisplayString as j, renderSlot as V, createCommentVNode as w, withDirectives as N, createBlock as L, withCtx as Y, unref as Z, vShow as O, createVNode as ee } from "vue";
+import { defineComponent as ce, useSlots as ve, ref as i, computed as s, watch as m, nextTick as fe, resolveComponent as V, openBlock as h, createElementBlock as N, createElementVNode as x, toDisplayString as pe, renderSlot as L, createCommentVNode as y, withDirectives as O, createBlock as T, unref as _, withCtx as Y, vShow as $, createVNode as Z } from "vue";
 import { httpCall as me } from "lkt-http-client";
-import { DataState as ae } from "lkt-data-state";
-import { execModal as he, refreshModal as ke, closeModal as Ce, openModal as be, reOpenModal as De } from "lkt-modal";
-const H = class H {
+import { DataState as ee } from "lkt-data-state";
+import { execModal as he, refreshModal as be, closeModal as ke, openModal as Ce, reOpenModal as De } from "lkt-modal";
+const q = class q {
 };
-H.debugEnabled = !1;
-let T = H;
+q.debugEnabled = !1;
+let F = q;
 const u = (...l) => {
-  T.debugEnabled && console.info("[LktItemCrud] ", ...l);
-}, $e = (l = !0) => {
-  T.debugEnabled = l;
-}, q = (l) => {
+  F.debugEnabled && console.info("[LktItemCrud] ", ...l);
+}, Oe = (l = !0) => {
+  F.debugEnabled = l;
+}, j = (l) => {
   u("runModalCallback -> init", l);
-  let p = l.modalKey ? l.modalKey : "_", S = l.args ? l.args : {};
+  let f = l.modalKey ? l.modalKey : "_", g = l.args ? l.args : {};
   switch (l.action) {
     case "reOpen":
-      return De(l.modalName, p, S);
+      return De(l.modalName, f, g);
     case "open":
-      return be(l.modalName, p, S);
+      return Ce(l.modalName, f, g);
     case "close":
-      return Ce(l.modalName, p);
+      return ke(l.modalName, f);
     case "refresh":
-      return ke(l.modalName, p, S);
+      return be(l.modalName, f, g);
     case "exec":
       let e = l.method;
-      return e ? he(l.modalName, p, e, S) : void 0;
+      return e ? he(l.modalName, f, e, g) : void 0;
   }
 }, Se = { class: "lkt-item-crud" }, ye = {
   key: 0,
   class: "lkt-item-crud_header"
-}, ge = { class: "lkt-item-crud_header-title" }, Me = { class: "lkt-item-crud_header-slot" }, _e = { class: "lkt-item-crud-buttons" }, Be = { key: 1 }, we = { key: 1 }, Ee = {
+}, ge = { class: "lkt-item-crud_header-title" }, Me = { class: "lkt-item-crud_header-slot" }, Be = { class: "lkt-item-crud-buttons" }, _e = {
   key: 1,
   class: "lkt-item-crud_content"
-}, Ue = {
+}, we = {
   key: 0,
   class: "lkt-grid-1"
-}, Re = /* @__PURE__ */ ve({
+}, Ie = /* @__PURE__ */ ce({
   __name: "LktItemCrud",
   props: {
     modelValue: { default: () => ({}) },
     title: { default: "" },
     editModeText: { default: "Edition Mode" },
     saveText: { default: "Save" },
+    saveIcon: {},
     dropText: { default: "Delete" },
+    dropIcon: {},
     hiddenSave: { type: Boolean, default: !1 },
     hiddenDrop: { type: Boolean, default: !1 },
     hiddenButtons: { type: Boolean, default: !1 },
@@ -77,69 +79,69 @@ const u = (...l) => {
     editing: { type: Boolean, default: !1 }
   },
   emits: ["update:modelValue", "update:isCreate", "update:editing", "read", "create", "update", "drop", "before-save", "perms", "error", "modified-data"],
-  setup(l, { expose: p, emit: S }) {
-    const e = l, $ = fe(), n = S;
-    let te = [];
-    const d = s(!0), r = s(e.modelValue), _ = s(te), c = s(e.editing), m = s(!1), k = s(!1), v = s(200), E = s(null), U = s(null), y = s(new ae(r.value, e.dataStateConfig)), F = s(new ae(e.readData)), o = s(e.isCreate), J = s(!1), le = i(() => o.value ? e.createConfirm : e.updateConfirm), oe = i(() => o.value ? e.createConfirmData : e.updateConfirmData), P = i(() => o.value ? e.createResource : e.updateResource), ue = i(() => o.value ? { ...e.createData, ...JSON.parse(JSON.stringify(r.value)) } : { ...e.updateData, ...JSON.parse(JSON.stringify(r.value)) }), de = i(() => o.value ? e.createDisabled : e.updateDisabled), C = i(() => !o.value && _.value.includes("update")), b = i(() => !o.value && _.value.includes("drop")), R = async () => {
+  setup(l, { expose: f, emit: g }) {
+    const e = l, b = ve(), n = g;
+    let ae = [];
+    const d = i(!0), r = i(e.modelValue), w = i(ae), c = i(e.editing), p = i(!1), k = i(!1), v = i(200), E = i(null), U = i(null), M = i(new ee(r.value, e.dataStateConfig)), J = i(new ee(e.readData)), o = i(e.isCreate), K = i(!1), te = s(() => o.value ? e.createConfirm : e.updateConfirm), le = s(() => o.value ? e.createConfirmData : e.updateConfirmData), H = s(() => o.value ? e.createResource : e.updateResource), oe = s(() => o.value ? { ...e.createData, ...JSON.parse(JSON.stringify(r.value)) } : { ...e.updateData, ...JSON.parse(JSON.stringify(r.value)) }), ue = s(() => o.value ? e.createDisabled : e.updateDisabled), C = s(() => !o.value && w.value.includes("update")), D = s(() => !o.value && w.value.includes("drop")), R = async () => {
       u("fetchItem"), d.value = !0, v.value = -1, k.value = !1;
       try {
         const a = await me(e.readResource, e.readData);
         if (u("fetchItem -> response", a), d.value = !1, v.value = a.httpStatus, !a.success) {
-          m.value = !1, v.value = a.httpStatus, n("error", a.httpStatus);
+          p.value = !1, v.value = a.httpStatus, n("error", a.httpStatus);
           return;
         }
-        m.value = !0, r.value = a.data, _.value = a.perms, y.value.increment(r.value).turnStoredIntoOriginal(), F.value.turnStoredIntoOriginal(), n("read", a);
+        p.value = !0, r.value = a.data, w.value = a.perms, M.value.increment(r.value).turnStoredIntoOriginal(), J.value.turnStoredIntoOriginal(), n("read", a);
       } catch {
-        d.value = !1, m.value = !1, v.value = 404, n("error", 404);
+        d.value = !1, p.value = !1, v.value = 404, n("error", 404);
         return;
       }
-    }, re = i(() => d.value ? !1 : e.title || !!$["post-title"]);
-    h(() => e.modelValue, (a) => {
-      r.value = a, y.value.increment(a);
-    }, { deep: !0 }), h(r, (a) => {
-      if (J.value = !0, u("item updated ->", r.value), typeof e.beforeEmitUpdate == "function") {
+    }, de = s(() => d.value ? !1 : e.title || !!b["post-title"]);
+    m(() => e.modelValue, (a) => {
+      r.value = a, M.value.increment(a);
+    }, { deep: !0 }), m(r, (a) => {
+      if (K.value = !0, u("item updated ->", r.value), typeof e.beforeEmitUpdate == "function") {
         u("item updated -> has beforeEmitUpdate");
         let t = e.beforeEmitUpdate(r.value);
         u("item updated -> override with: ", t), typeof t == "object" && (r.value = t);
       }
-      n("update:modelValue", r.value), u("item updated -> update dataState"), y.value.increment(a), pe(() => J.value = !1);
-    }, { deep: !0 }), h(_, () => n("perms", _.value));
-    const x = i(() => de.value || !o.value && !C.value || typeof e.saveValidator == "function" && !e.saveValidator(r.value) ? !1 : y.value.changed());
-    h(x, (a) => n("modified-data", a)), h(o, (a) => n("update:isCreate", a)), h(() => e.readData, (a) => {
-      F.value.increment(a), F.value.changed() && R();
-    }), h(() => e.editing, (a) => {
+      n("update:modelValue", r.value), u("item updated -> update dataState"), M.value.increment(a), fe(() => K.value = !1);
+    }, { deep: !0 }), m(w, () => n("perms", w.value));
+    const P = s(() => ue.value || !o.value && !C.value || typeof e.saveValidator == "function" && !e.saveValidator(r.value) ? !1 : M.value.changed());
+    m(P, (a) => n("modified-data", a)), m(o, (a) => n("update:isCreate", a)), m(() => e.readData, (a) => {
+      J.value.increment(a), J.value.changed() && R();
+    }), m(() => e.editing, (a) => {
       u("editing updated -> updating editMode", a), c.value = a;
-    }), h(c, (a) => {
+    }), m(c, (a) => {
       u("editMode updated -> emit update", a), n("update:editing", a);
-    }), e.readResource && !o.value ? R() : o.value && (m.value = !0, c.value = !0, d.value = !1);
-    const ne = (a, t) => {
+    }), e.readResource && !o.value ? R() : o.value && (p.value = !0, c.value = !0, d.value = !1);
+    const re = (a, t) => {
       if (d.value = !1, v.value = t.httpStatus, !t.success) {
         k.value = !0, n("error", t.httpStatus);
         return;
       }
-      k.value = !0, e.onDropModalCallbacks.length > 0 && (u("onDrop -> has onDropModalCallbacks"), e.onDropModalCallbacks.forEach((D) => {
-        q(D);
+      k.value = !0, e.onDropModalCallbacks.length > 0 && (u("onDrop -> has onDropModalCallbacks"), e.onDropModalCallbacks.forEach((S) => {
+        j(S);
       })), n("drop", t);
-    }, se = (a, t) => {
-      if (u("onSave -> received response:", t), n("before-save"), P.value) {
+    }, ne = (a, t) => {
+      if (u("onSave -> received response:", t), n("before-save"), H.value) {
         if (d.value = !1, v.value = t.httpStatus, !t.success) {
           k.value = !0, n("error", t.httpStatus);
           return;
         }
         k.value = !0;
       }
-      let D = o.value ? "create" : "update";
-      o.value || (u("onSave -> turn stored data into original"), y.value.turnStoredIntoOriginal()), D === "create" ? typeof e.onCreate == "function" && (u("onSave -> trigger onCreate callback"), e.onCreate(t), e.onCreateModalCallbacks.length > 0 && (u("onSave -> has onCreateModalCallbacks"), e.onCreateModalCallbacks.forEach((B) => {
-        q(B);
-      }))) : typeof e.onUpdate == "function" && (u("onSave -> trigger onUpdate callback"), e.onUpdate(t), e.onUpdateModalCallbacks.length > 0 && (u("onSave -> has onUpdateModalCallbacks"), e.onUpdateModalCallbacks.forEach((B) => {
-        q(B);
-      }))), !e.insideModal && t.autoReloadId && (u("onSave -> autoReloadId detected: ", t.autoReloadId), e.readData.id = t.autoReloadId, u("onSave -> turning off create mode"), o.value = !1, R()), n(D, t);
+      let S = o.value ? "create" : "update";
+      o.value || (u("onSave -> turn stored data into original"), M.value.turnStoredIntoOriginal()), S === "create" ? typeof e.onCreate == "function" && (u("onSave -> trigger onCreate callback"), e.onCreate(t), e.onCreateModalCallbacks.length > 0 && (u("onSave -> has onCreateModalCallbacks"), e.onCreateModalCallbacks.forEach((I) => {
+        j(I);
+      }))) : typeof e.onUpdate == "function" && (u("onSave -> trigger onUpdate callback"), e.onUpdate(t), e.onUpdateModalCallbacks.length > 0 && (u("onSave -> has onUpdateModalCallbacks"), e.onUpdateModalCallbacks.forEach((I) => {
+        j(I);
+      }))), !e.insideModal && t.autoReloadId && (u("onSave -> autoReloadId detected: ", t.autoReloadId), e.readData.id = t.autoReloadId, u("onSave -> turning off create mode"), o.value = !1, R()), n(S, t);
     }, z = () => {
       d.value = !0, v.value = -1;
     }, A = () => {
       d.value = !1;
     };
-    p({
+    f({
       doDrop: () => {
         U.value && typeof U.value.click == "function" && U.value.click();
       },
@@ -148,117 +150,121 @@ const u = (...l) => {
         E.value && typeof E.value.click == "function" && E.value.click();
       }
     });
-    const G = i(() => !C.value && b.value ? !0 : !e.hiddenDrop && !d.value && c.value && m.value), Q = i(() => y.value.changed() ? !0 : d.value ? !1 : o.value ? !0 : !e.hiddenSave && c.value && m.value), W = i(() => e.hideSwitchEdition || !C.value && !b.value || !C.value && b.value ? !1 : !d.value && !o.value && m.value && !(e.dropDisabled && e.updateDisabled)), ie = i(() => !e.hiddenButtons && (Q.value || G.value || W.value));
+    const G = s(() => !C.value && D.value ? !0 : !e.hiddenDrop && !d.value && c.value && p.value), Q = s(() => M.value.changed() ? !0 : d.value ? !1 : o.value ? !0 : !e.hiddenSave && c.value && p.value), W = s(() => e.hideSwitchEdition || !C.value && !D.value || !C.value && D.value ? !1 : !d.value && !o.value && p.value && !(e.dropDisabled && e.updateDisabled)), ie = s(() => !e.hiddenButtons && (Q.value || G.value || W.value));
     return (a, t) => {
-      const D = I("lkt-button"), B = I("lkt-field-switch"), X = I("lkt-http-info"), ce = I("lkt-loader");
-      return f(), M("article", Se, [
-        re.value ? (f(), M("header", ye, [
-          K("h1", ge, j(a.title), 1),
-          K("div", Me, [
-            V(a.$slots, "post-title", {
+      const S = V("lkt-button"), I = V("lkt-field-switch"), X = V("lkt-http-info"), se = V("lkt-loader");
+      return h(), N("article", Se, [
+        de.value ? (h(), N("header", ye, [
+          x("h1", ge, pe(a.title), 1),
+          x("div", Me, [
+            L(a.$slots, "post-title", {
               item: r.value,
               loading: d.value
             })
           ])
-        ])) : w("", !0),
-        N(K("div", _e, [
-          o.value ? w("", !0) : N((f(), L(D, {
+        ])) : y("", !0),
+        O(x("div", Be, [
+          o.value ? y("", !0) : O((h(), T(S, {
             key: 0,
-            ref: (g) => U.value = g,
+            ref: (B) => U.value = B,
             palette: "danger",
-            disabled: a.dropDisabled || !b.value,
+            disabled: a.dropDisabled || !D.value,
             "confirm-modal": a.dropConfirm,
             "confirm-data": a.dropConfirmData,
             resource: a.dropResource,
             "resource-data": a.dropData,
+            text: _(b)["button-drop"] ? "" : a.dropText,
+            icon: _(b)["button-drop"] ? "" : a.dropIcon,
+            onLoading: z,
+            onLoaded: A,
+            onClick: re
+          }, {
+            default: Y(() => [
+              _(b)["button-drop"] ? L(a.$slots, "button-drop", {
+                key: 0,
+                item: r.value,
+                editMode: c.value,
+                isCreate: o.value,
+                canUpdate: C.value,
+                canDrop: D.value
+              }) : y("", !0)
+            ]),
+            _: 3
+          }, 8, ["disabled", "confirm-modal", "confirm-data", "resource", "resource-data", "text", "icon"])), [
+            [$, G.value]
+          ]),
+          O(Z(S, {
+            ref: (B) => E.value = B,
+            palette: "success",
+            disabled: !P.value,
+            "confirm-modal": te.value,
+            "confirm-data": le.value,
+            resource: H.value,
+            "resource-data": oe.value,
+            text: _(b)["button-save"] ? "" : a.saveText,
+            icon: _(b)["button-save"] ? "" : a.saveIcon,
             onLoading: z,
             onLoaded: A,
             onClick: ne
           }, {
             default: Y(() => [
-              Z($)["button-drop"] ? V(a.$slots, "button-drop", {
+              _(b)["button-save"] ? L(a.$slots, "button-save", {
                 key: 0,
                 item: r.value,
                 editMode: c.value,
                 isCreate: o.value,
                 canUpdate: C.value,
-                canDrop: b.value
-              }) : (f(), M("span", Be, j(a.dropText), 1))
+                canDrop: D.value
+              }) : y("", !0)
             ]),
             _: 3
-          }, 8, ["disabled", "confirm-modal", "confirm-data", "resource", "resource-data"])), [
-            [O, G.value]
+          }, 8, ["disabled", "confirm-modal", "confirm-data", "resource", "resource-data", "text", "icon"]), [
+            [$, Q.value]
           ]),
-          N(ee(D, {
-            ref: (g) => E.value = g,
-            palette: "success",
-            disabled: !x.value,
-            "confirm-modal": le.value,
-            "confirm-data": oe.value,
-            resource: P.value,
-            "resource-data": ue.value,
-            onLoading: z,
-            onLoaded: A,
-            onClick: se
-          }, {
-            default: Y(() => [
-              Z($)["button-save"] ? V(a.$slots, "button-save", {
-                key: 0,
-                item: r.value,
-                editMode: c.value,
-                isCreate: o.value,
-                canUpdate: C.value,
-                canDrop: b.value
-              }) : (f(), M("span", we, j(a.saveText), 1))
-            ]),
-            _: 3
-          }, 8, ["disabled", "confirm-modal", "confirm-data", "resource", "resource-data"]), [
-            [O, Q.value]
-          ]),
-          N(ee(B, {
+          O(Z(I, {
             modelValue: c.value,
-            "onUpdate:modelValue": t[0] || (t[0] = (g) => c.value = g),
+            "onUpdate:modelValue": t[0] || (t[0] = (B) => c.value = B),
             label: a.editModeText
           }, null, 8, ["modelValue", "label"]), [
-            [O, W.value]
+            [$, W.value]
           ])
         ], 512), [
-          [O, ie.value]
+          [$, ie.value]
         ]),
-        d.value ? w("", !0) : (f(), M("div", Ee, [
-          m.value ? (f(), M("div", Ue, [
-            k.value ? (f(), L(X, {
+        d.value ? y("", !0) : (h(), N("div", _e, [
+          p.value ? (h(), N("div", we, [
+            k.value ? (h(), T(X, {
               key: 0,
               code: v.value,
               quick: "",
               palette: v.value === 200 ? "success" : "danger",
               "can-close": "",
-              onClose: t[1] || (t[1] = (g) => k.value = !1)
-            }, null, 8, ["code", "palette"])) : w("", !0),
-            V(a.$slots, "item", {
+              onClose: t[1] || (t[1] = (B) => k.value = !1)
+            }, null, 8, ["code", "palette"])) : y("", !0),
+            L(a.$slots, "item", {
               item: r.value,
               loading: d.value,
               editMode: c.value,
               isCreate: o.value,
               canUpdate: C.value,
-              canDrop: b.value,
-              itemBeingEdited: J.value
+              canDrop: D.value,
+              itemBeingEdited: K.value
             })
-          ])) : (f(), L(X, {
+          ])) : (h(), T(X, {
             key: 1,
             code: v.value
           }, null, 8, ["code"]))
         ])),
-        d.value ? (f(), L(ce, { key: 2 })) : w("", !0)
+        d.value ? (h(), T(se, { key: 2 })) : y("", !0)
       ]);
     };
   }
-}), Fe = {
-  install: (l, p = {}) => {
-    l.component("lkt-item-crud") === void 0 && l.component("lkt-item-crud", Re);
+}), Te = {
+  install: (l, f = {}) => {
+    l.component("lkt-item-crud") === void 0 && l.component("lkt-item-crud", Ie);
   }
 };
 export {
-  $e as debugLktItemCrud,
-  Fe as default
+  Oe as debugLktItemCrud,
+  Te as default
 };

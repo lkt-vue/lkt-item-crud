@@ -1,7 +1,7 @@
 .lkt-item-crud {
     display: flex;
     flex-direction: column;
-    gap: var(--gap);
+    gap: var(--lkt-item-crud-gap);
 }
 
 .lkt-item-crud_content {
@@ -12,10 +12,10 @@
 
 .lkt-item-crud-buttons {
     position: sticky;
-    top: calc(-1 * var(--gap));
+    top: calc(-1 * var(--lkt-item-crud-gap));
     display: flex;
     align-items: center;
-    gap: var(--gap);
+    gap: var(--lkt-item-crud-gap-buttons);
     transition: all linear .150s;
     background: transparent;
     z-index: 2;

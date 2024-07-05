@@ -5,7 +5,9 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     title: string;
     editModeText: string;
     saveText: string;
+    saveIcon: string;
     dropText: string;
+    dropIcon: string;
     hiddenSave: boolean;
     hiddenDrop: boolean;
     hiddenButtons: boolean;
@@ -97,7 +99,9 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     title: string;
     editModeText: string;
     saveText: string;
+    saveIcon: string;
     dropText: string;
+    dropIcon: string;
     hiddenSave: boolean;
     hiddenDrop: boolean;
     hiddenButtons: boolean;
