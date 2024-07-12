@@ -356,8 +356,11 @@ const showDropButton = computed(() => {
 <template>
     <article class="lkt-item-crud">
         <header class="lkt-item-crud_header" v-if="displayHeader">
+            <div class="lkt-item-crud_header-slot" v-if="slots['pre-title']">
+                <slot name="pre-title" v-bind:item="item" v-bind:loading="isLoading"></slot>
+            </div>
             <h1 class="lkt-item-crud_header-title">{{ title }}</h1>
-            <div class="lkt-item-crud_header-slot">
+            <div class="lkt-item-crud_header-slot" v-if="slots['post-title']">
                 <slot name="post-title" v-bind:item="item" v-bind:loading="isLoading"></slot>
             </div>
         </header>

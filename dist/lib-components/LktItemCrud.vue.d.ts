@@ -223,6 +223,10 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     onDropModalCallbacks: ModalCallbackConfig[];
     editing: boolean;
 }, {}>, {
+    "pre-title"?(_: {
+        item: LktObject;
+        loading: boolean;
+    }): any;
     "post-title"?(_: {
         item: LktObject;
         loading: boolean;
