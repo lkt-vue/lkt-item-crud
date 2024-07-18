@@ -1,5 +1,5 @@
-declare function Te(l?: boolean): void;
-declare namespace $e {
+declare function Je(l?: boolean): void;
+declare namespace Ke {
     function install(l: any, h?: {}): void;
 }
-export { Te as debugLktItemCrud, $e as default };
+export { Je as debugLktItemCrud, Ke as default };

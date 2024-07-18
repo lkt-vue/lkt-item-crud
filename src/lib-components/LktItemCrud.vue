@@ -6,6 +6,7 @@ import {debug} from "../functions/debug";
 import {LktObject} from "lkt-ts-interfaces";
 import {ModalCallbackConfig} from "../types/ModalCallbackConfig";
 import {runModalCallback} from "../functions/modalCallbacks";
+import {__} from "lkt-i18n";
 
 const props = withDefaults(defineProps<{
     modelValue: LktObject
@@ -37,9 +38,9 @@ const props = withDefaults(defineProps<{
     updateDisabled: boolean
     dropDisabled: boolean
     saveValidator: Function
-    beforeEmitUpdate: Function|undefined
-    onCreate: Function|undefined
-    onUpdate: Function|undefined
+    beforeEmitUpdate: Function | undefined
+    onCreate: Function | undefined
+    onUpdate: Function | undefined
     insideModal: boolean
     hideSwitchEdition: boolean
     dataStateConfig: LktObject
@@ -167,11 +168,6 @@ const fetchItem = async () => {
     }
 }
 
-const displayHeader = computed(() => {
-    if (isLoading.value) return false;
-
-    return props.title || !!slots['post-title'];
-})
 
 watch(() => props.modelValue, v => {
     item.value = v;
@@ -350,6 +346,17 @@ const showDropButton = computed(() => {
     }),
     showButtons = computed(() => {
         return !props.hiddenButtons && (showSaveButton.value || showDropButton.value || showSwitchButton.value);
+    }),
+    computedTitle = computed(() => {
+        if (props.title.startsWith('__:')) {
+            return String(__(props.title.substring(3)));
+        }
+        return props.title;
+    }),
+    displayHeader = computed(() => {
+        if (isLoading.value) return false;
+
+        return computedTitle.value.length > 0 || !!slots['post-title'];
     });
 </script>
 
@@ -359,7 +366,7 @@ const showDropButton = computed(() => {
             <div class="lkt-item-crud_header-slot" v-if="slots['pre-title']">
                 <slot name="pre-title" v-bind:item="item" v-bind:loading="isLoading"></slot>
             </div>
-            <h1 class="lkt-item-crud_header-title">{{ title }}</h1>
+            <h1 class="lkt-item-crud_header-title" v-if="computedTitle.length > 0">{{ computedTitle }}</h1>
             <div class="lkt-item-crud_header-slot" v-if="slots['post-title']">
                 <slot name="post-title" v-bind:item="item" v-bind:loading="isLoading"></slot>
             </div>

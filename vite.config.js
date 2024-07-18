@@ -33,6 +33,7 @@ export default {
                 'lkt-loader',
                 'lkt-http-client',
                 'lkt-http-info',
+                'lkt-i18n',
                 'lkt-tools',
                 'lkt-string-tools',
                 'lkt-vue-tools',
