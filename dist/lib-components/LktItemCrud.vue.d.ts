@@ -82,6 +82,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     doDrop: () => void;
     doRefresh: () => Promise<void>;
     doSave: () => void;
+    hasModifiedData: () => boolean;
 }, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
     error: (...args: any[]) => void;
     drop: (...args: any[]) => void;

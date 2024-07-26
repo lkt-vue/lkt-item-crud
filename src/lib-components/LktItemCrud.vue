@@ -312,7 +312,8 @@ const onDrop = ($event: PointerEvent, r: HTTPResponse) => {
 defineExpose({
     doDrop,
     doRefresh: fetchItem,
-    doSave
+    doSave,
+    hasModifiedData: () => dataState.value.changed()
 });
 
 const showDropButton = computed(() => {
