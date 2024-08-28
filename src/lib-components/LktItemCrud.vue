@@ -7,6 +7,7 @@ import {LktObject} from "lkt-ts-interfaces";
 import {ModalCallbackConfig} from "../types/ModalCallbackConfig";
 import {runModalCallback} from "../functions/modalCallbacks";
 import {__} from "lkt-i18n";
+import {Settings} from "../settings/Settings";
 
 const props = withDefaults(defineProps<{
     modelValue: LktObject
@@ -54,6 +55,8 @@ const props = withDefaults(defineProps<{
     editModeText: 'Edition Mode',
     saveText: 'Save',
     dropText: 'Delete',
+    saveIcon: () => Settings.defaultSaveIcon,
+    dropIcon: () => Settings.defaultDropIcon,
     hiddenSave: false,
     hiddenDrop: false,
     hiddenButtons: false,

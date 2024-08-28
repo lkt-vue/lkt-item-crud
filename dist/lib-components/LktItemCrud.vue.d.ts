@@ -46,6 +46,8 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     editModeText: string;
     saveText: string;
     dropText: string;
+    saveIcon: () => string;
+    dropIcon: () => string;
     hiddenSave: boolean;
     hiddenDrop: boolean;
     hiddenButtons: boolean;
@@ -141,6 +143,8 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     editModeText: string;
     saveText: string;
     dropText: string;
+    saveIcon: () => string;
+    dropIcon: () => string;
     hiddenSave: boolean;
     hiddenDrop: boolean;
     hiddenButtons: boolean;
@@ -190,7 +194,9 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     modelValue: LktObject;
     editModeText: string;
     saveText: string;
+    saveIcon: string;
     dropText: string;
+    dropIcon: string;
     hiddenSave: boolean;
     hiddenDrop: boolean;
     hiddenButtons: boolean;
