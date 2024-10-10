@@ -1,7 +1,7 @@
-declare function Je(t?: boolean): void;
-declare namespace Ke {
-    function install(t: any, h?: {}): void;
+declare function je(t?: boolean): void;
+declare namespace qe {
+    function install(t: any, C?: {}): void;
 }
-declare function je(t: any): void;
-declare function xe(t: any): void;
-export { Je as debugLktItemCrud, Ke as default, je as setItemCrudDefaultDropIcon, xe as setItemCrudDefaultSaveIcon };
+declare function Pe(t: any): void;
+declare function He(t: any): void;
+export { je as debugLktItemCrud, qe as default, Pe as setItemCrudDefaultDropIcon, He as setItemCrudDefaultSaveIcon };

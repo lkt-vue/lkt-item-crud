@@ -24,3 +24,7 @@
 .lkt-item-crud-buttons > :last-child {
     margin-left: auto;
 }
+
+.lkt-item-crud-buttons > .lkt-item-crud-buttons {
+    padding: 0;
+}
