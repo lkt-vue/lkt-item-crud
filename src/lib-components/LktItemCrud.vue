@@ -346,6 +346,12 @@
         hasModifiedData: () => dataState.value.changed(),
     });
 
+
+
+    const closeConfirm = computed(() => {
+        return dataState.value.changed() ? props.editedCloseConfirm : '';
+    })
+
     const showDropButton = computed(() => {
             if (!canUpdate.value && canDrop.value) return true;
 
@@ -392,28 +398,32 @@
     computedContainerTag = computed(() => {
         if (props.insideModal) return 'lkt-modal';
         return 'section';
+    }),
+    computedContainerAttrs = computed(() => {
+        if (computedContainerTag.value === 'lkt-modal') {
+            return {
+                'modal-name': props.modalName,
+                'modal-key': props.modalKey,
+                'z-index': props.zIndex,
+                'pre-title': props.preTitle,
+                'show-close': props.showClose,
+                'before-close': props.beforeClose,
+                'disabled-close': props.disabledClose,
+                'disabled-veil-click': props.disabledVeilClick,
+                'close-confirm': closeConfirm.value,
+                'close-confirm-key': props.editedCloseConfirmKey,
+                title: props.title,
+                size: props.size,
+            }
+        }
+        return {};
     });
-
-    const closeConfirm = computed(() => {
-        return dataState.value.changed() ? props.editedCloseConfirm : '';
-    })
 </script>
 
 <template>
     <component
         :is="computedContainerTag"
-        :pre-title="preTitle"
-        :title="title"
-        :modal-name="modalName"
-        :modal-key="modalKey"
-        :z-index="zIndex"
-        :size="size"
-        :show-close="showClose"
-        :before-close="beforeClose"
-        :disabled-close="disabledClose"
-        :disabled-veil-click="disabledVeilClick"
-        :close-confirm="closeConfirm"
-        :close-confirm-key="editedCloseConfirmKey"
+        v-bind="computedContainerAttrs"
     >
         <article class="lkt-item-crud">
             <header class="lkt-item-crud_header" v-if="!insideModal && displayHeader">
