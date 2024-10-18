@@ -382,6 +382,7 @@
                 && !(props.dropDisabled && props.updateDisabled);
         }),
         showButtons = computed(() => {
+            if (slots['prev-buttons-ever']) return true;
             return !props.hiddenButtons && (showSaveButton.value || showDropButton.value || showSwitchButton.value);
         }),
         computedTitle = computed(() => {
@@ -436,6 +437,15 @@
                 </div>
             </header>
             <div class="lkt-item-crud-buttons" v-show="showButtons">
+
+                <div class="lkt-item-crud-buttons" v-if="slots['prev-buttons-ever']" v-show="!isLoading">
+                    <slot name="prev-buttons-ever"/>
+                </div>
+
+                <div class="lkt-item-crud-buttons" v-if="slots['prev-buttons']" v-show="editMode && !isLoading">
+                    <slot name="prev-buttons"/>
+                </div>
+
                 <lkt-button
                     :ref="(el:any) => saveButton = el"
                     v-show="showSaveButton"
@@ -479,7 +489,7 @@
                           :can-drop="canDrop"></slot>
                 </lkt-button>
 
-                <div class="lkt-item-crud-buttons" v-if="slots.buttons" v-show="editMode">
+                <div class="lkt-item-crud-buttons" v-if="slots.buttons" v-show="editMode && !isLoading">
                     <slot name="buttons"/>
                 </div>
 
