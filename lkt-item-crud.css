@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     gap: var(--lkt-item-crud-gap);
+    text-align: var(--lkt-item-crud-text-align);
 }
 
 .lkt-item-crud_content {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { ref, watch, useSlots, computed, nextTick } from 'vue';
+    import { computed, nextTick, ref, useSlots, watch } from 'vue';
     import { httpCall, HTTPResponse } from 'lkt-http-client';
     import { DataState } from 'lkt-data-state';
     import { debug } from '../functions/debug';
@@ -8,6 +8,9 @@
     import { runModalCallback } from '../functions/modalCallbacks';
     import { __ } from 'lkt-i18n';
     import { Settings } from '../settings/Settings';
+    import ButtonNav from '../components/ButtonNav.vue';
+    import { ButtonNavPosition } from '../enums/ButtonNavPosition';
+    import { ButtonNavVisibility } from '../enums/ButtonNavVisibility';
 
     const props = withDefaults(defineProps<{
         modelValue: LktObject
@@ -49,6 +52,8 @@
         onUpdateModalCallbacks: ModalCallbackConfig[]
         onDropModalCallbacks: ModalCallbackConfig[]
         editing: boolean
+        buttonNavPosition?: ButtonNavPosition
+        buttonNavVisibility?: ButtonNavVisibility
 
         // Modal props
         size: string
@@ -60,8 +65,8 @@
         modalKey: string
         zIndex: number
         editedCloseConfirm: string
-        editedCloseConfirmKey: string|number
-        beforeClose: Function|undefined
+        editedCloseConfirmKey: string | number
+        beforeClose: Function | undefined
 
     }>(), {
         modelValue: () => ({}),
@@ -103,6 +108,8 @@
         onUpdateModalCallbacks: () => [],
         onDropModalCallbacks: () => [],
         editing: false,
+        buttonNavPosition: ButtonNavPosition.Top,
+        buttonNavVisibility: ButtonNavVisibility.Changed,
 
         // Modal props
         size: '',
@@ -138,6 +145,8 @@
         createMode = ref(props.isCreate),
         itemBeingEdited = ref(false);
 
+    const buttonNav = ref(null);
+
     const saveConfirm = computed(() => {
             return createMode.value
                 ? props.createConfirm
@@ -164,8 +173,8 @@
                 ? props.createDisabled
                 : props.updateDisabled;
         }),
-        canUpdate = computed(() => !createMode.value && perms.value.includes('update')),
-        canDrop = computed(() => !createMode.value && perms.value.includes('drop'));
+        canUpdate = computed(() => !createMode.value && Array.isArray(perms.value) && perms.value.includes('update')),
+        canDrop = computed(() => !createMode.value && Array.isArray(perms.value) && perms.value.includes('drop'));
 
     const fetchItem = async () => {
         debug('fetchItem');
@@ -228,6 +237,10 @@
         if (typeof props.saveValidator === 'function' && !props.saveValidator(item.value)) return false;
 
         return dataState.value.changed();
+    });
+
+    const ableToDrop = computed(() => {
+        return !props.dropDisabled && canDrop.value;
     });
     watch(ableToSave, (v) => emit('modified-data', v));
     watch(createMode, (v) => emit('update:isCreate', v));
@@ -332,11 +345,11 @@
         },
         doSave = () => {
             // @ts-ignore
-            if (saveButton.value && typeof saveButton.value.click === 'function') saveButton.value.click();
+            if (buttonNav.value) saveButton.value.doSave();
         },
         doDrop = () => {
             // @ts-ignore
-            if (dropButton.value && typeof dropButton.value.click === 'function') dropButton.value.click();
+            if (buttonNav.value) dropButton.value.doDrop();
         };
 
     defineExpose({
@@ -347,10 +360,9 @@
     });
 
 
-
     const closeConfirm = computed(() => {
         return dataState.value.changed() ? props.editedCloseConfirm : '';
-    })
+    });
 
     const showDropButton = computed(() => {
             if (!canUpdate.value && canDrop.value) return true;
@@ -367,6 +379,10 @@
 
             if (createMode.value) return true;
 
+            if (props.buttonNavVisibility === ButtonNavVisibility.Always) {
+                return ableToSave.value;
+            }
+
             return !props.hiddenSave
                 && editMode.value
                 && httpSuccessRead.value;
@@ -382,6 +398,7 @@
                 && !(props.dropDisabled && props.updateDisabled);
         }),
         showButtons = computed(() => {
+            if (props.buttonNavVisibility === ButtonNavVisibility.Always && (ableToSave.value || ableToDrop.value)) return true;
             if (slots['prev-buttons-ever']) return true;
             return !props.hiddenButtons && (showSaveButton.value || showDropButton.value || showSwitchButton.value);
         }),
@@ -396,29 +413,29 @@
 
             return computedTitle.value.length > 0 || !!slots['post-title'];
         }),
-    computedContainerTag = computed(() => {
-        if (props.insideModal) return 'lkt-modal';
-        return 'section';
-    }),
-    computedContainerAttrs = computed(() => {
-        if (computedContainerTag.value === 'lkt-modal') {
-            return {
-                'modal-name': props.modalName,
-                'modal-key': props.modalKey,
-                'z-index': props.zIndex,
-                'pre-title': props.preTitle,
-                'show-close': props.showClose,
-                'before-close': props.beforeClose,
-                'disabled-close': props.disabledClose,
-                'disabled-veil-click': props.disabledVeilClick,
-                'close-confirm': closeConfirm.value,
-                'close-confirm-key': props.editedCloseConfirmKey,
-                title: props.title,
-                size: props.size,
+        computedContainerTag = computed(() => {
+            if (props.insideModal) return 'lkt-modal';
+            return 'section';
+        }),
+        computedContainerAttrs = computed(() => {
+            if (computedContainerTag.value === 'lkt-modal') {
+                return {
+                    'modal-name': props.modalName,
+                    'modal-key': props.modalKey,
+                    'z-index': props.zIndex,
+                    'pre-title': props.preTitle,
+                    'show-close': props.showClose,
+                    'before-close': props.beforeClose,
+                    'disabled-close': props.disabledClose,
+                    'disabled-veil-click': props.disabledVeilClick,
+                    'close-confirm': closeConfirm.value,
+                    'close-confirm-key': props.editedCloseConfirmKey,
+                    title: props.title,
+                    size: props.size,
+                };
             }
-        }
-        return {};
-    });
+            return {};
+        });
 </script>
 
 <template>
@@ -436,14 +453,53 @@
                     <slot name="post-title" :item="item" :loading="isLoading"></slot>
                 </div>
             </header>
-            <div class="lkt-item-crud-buttons" v-show="showButtons">
+
+            <button-nav
+                ref="buttonNav"
+                v-show="showButtons && buttonNavPosition === 'top'"
+                v-model:loading="isLoading"
+                v-model:editing="editMode"
+                :item="item"
+                :create-mode="createMode"
+                :can-update="canUpdate"
+                :can-drop="canDrop"
+                :show-switch-button="showSwitchButton"
+                :show-save-button="showSaveButton"
+                :show-drop-button="showDropButton"
+                :able-to-save="ableToSave"
+                :able-to-drop="ableToDrop"
+                :save-confirm="saveConfirm"
+                :drop-confirm="dropConfirm"
+                :confirm-data="confirmData"
+                :drop-confirm-data="dropConfirmData"
+                :save-resource="saveResource"
+                :drop-resource="dropResource"
+                :save-data="saveData"
+                :drop-data="dropData"
+                :save-text="saveText"
+                :drop-text="dropText"
+                :save-icon="saveIcon"
+                :drop-icon="dropIcon"
+                :edit-mode-text="editModeText"
+                @save="onSave"
+                @drop="onDrop"
+            >
+                <template #prev-buttons-ever v-if="slots['prev-buttons-ever']">
+                    <slot name="prev-buttons-ever" />
+                </template>
+                <template #prev-buttons-ever v-if="slots['prev-buttons']">
+                    <slot name="prev-buttons" />
+                </template>
+            </button-nav>
+
+            <div v-if="false" class="lkt-item-crud-buttons" v-show="showButtons">
 
                 <div class="lkt-item-crud-buttons" v-if="slots['prev-buttons-ever']" v-show="!isLoading">
-                    <slot name="prev-buttons-ever"/>
+                    <slot name="prev-buttons-ever" />
                 </div>
 
                 <div class="lkt-item-crud-buttons" v-if="slots['prev-buttons']" v-show="editMode && !isLoading">
-                    <slot name="prev-buttons"/>
+                    <slot name="prev-buttons" />
                 </div>
 
                 <lkt-button
@@ -490,7 +546,7 @@
                 </lkt-button>
 
                 <div class="lkt-item-crud-buttons" v-if="slots.buttons" v-show="editMode && !isLoading">
-                    <slot name="buttons"/>
+                    <slot name="buttons" />
                 </div>
 
                 <lkt-button
@@ -498,7 +554,7 @@
                     v-model:checked="editMode"
                     class="lkt-item-crud--switch-mode-button"
                     show-switch
-                    :text="editModeText"/>
+                    :text="editModeText" />
             </div>
             <div class="lkt-item-crud_content" v-if="!isLoading">
                 <div v-if="httpSuccessRead" class="lkt-grid-1">
@@ -513,7 +569,46 @@
                 </div>
                 <lkt-http-info :code="httpStatus" v-else></lkt-http-info>
             </div>
-            <lkt-loader v-if="isLoading"></lkt-loader>
+            <lkt-loader v-if="isLoading" />
+
+            <button-nav
+                ref="buttonNav"
+                v-if="buttonNavPosition === ButtonNavPosition.Bottom"
+                v-show="showButtons"
+                v-model:loading="isLoading"
+                v-model:editing="editMode"
+                :item="item"
+                :create-mode="createMode"
+                :can-update="canUpdate"
+                :can-drop="canDrop"
+                :show-switch-button="showSwitchButton"
+                :show-save-button="showSaveButton"
+                :show-drop-button="showDropButton"
+                :able-to-save="ableToSave"
+                :able-to-drop="ableToDrop"
+                :save-confirm="saveConfirm"
+                :drop-confirm="dropConfirm"
+                :confirm-data="confirmData"
+                :drop-confirm-data="dropConfirmData"
+                :save-resource="saveResource"
+                :drop-resource="dropResource"
+                :save-data="saveData"
+                :drop-data="dropData"
+                :save-text="saveText"
+                :drop-text="dropText"
+                :save-icon="saveIcon"
+                :drop-icon="dropIcon"
+                :edit-mode-text="editModeText"
+                @save="onSave"
+                @drop="onDrop"
+            >
+                <template #prev-buttons-ever v-if="slots['prev-buttons-ever']">
+                    <slot name="prev-buttons-ever" />
+                </template>
+                <template #prev-buttons-ever v-if="slots['prev-buttons']">
+                    <slot name="prev-buttons" />
+                </template>
+            </button-nav>
         </article>
     </component>
 </template>
