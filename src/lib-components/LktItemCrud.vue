@@ -336,13 +336,6 @@
             }
             emit(emits, r);
         },
-        onButtonLoading = () => {
-            isLoading.value = true;
-            httpStatus.value = -1;
-        },
-        onButtonLoaded = () => {
-            isLoading.value = false;
-        },
         doSave = () => {
             // @ts-ignore
             if (buttonNav.value) saveButton.value.doSave();
@@ -492,70 +485,6 @@
                 </template>
             </button-nav>
 
-            <div v-if="false" class="lkt-item-crud-buttons" v-show="showButtons">
-
-                <div class="lkt-item-crud-buttons" v-if="slots['prev-buttons-ever']" v-show="!isLoading">
-                    <slot name="prev-buttons-ever" />
-                </div>
-
-                <div class="lkt-item-crud-buttons" v-if="slots['prev-buttons']" v-show="editMode && !isLoading">
-                    <slot name="prev-buttons" />
-                </div>
-
-                <lkt-button
-                    :ref="(el:any) => saveButton = el"
-                    v-show="showSaveButton"
-                    palette="success"
-                    :disabled="!ableToSave"
-                    :confirm-modal="saveConfirm"
-                    :confirm-data="confirmData"
-                    :resource="saveResource"
-                    :resource-data="saveData"
-                    :text="slots['button-save'] ? '' : saveText"
-                    :icon="slots['button-save'] ? '' : saveIcon"
-                    v-on:loading="onButtonLoading"
-                    v-on:loaded="onButtonLoaded"
-                    v-on:click="onSave">
-                    <slot v-if="!!slots['button-save']" name="button-save" :item="item"
-                          :edit-mode="editMode"
-                          :is-create="createMode"
-                          :can-update="canUpdate"
-                          :can-drop="canDrop"></slot>
-                </lkt-button>
-
-                <lkt-button
-                    :ref="(el:any) => dropButton = el"
-                    v-show="showDropButton"
-                    v-if="!createMode"
-                    palette="danger"
-                    :disabled="dropDisabled || !canDrop"
-                    :confirm-modal="dropConfirm"
-                    :confirm-data="dropConfirmData"
-                    :resource="dropResource"
-                    :resource-data="dropData"
-                    :text="slots['button-drop'] ? '' : dropText"
-                    :icon="slots['button-drop'] ? '' : dropIcon"
-                    v-on:loading="onButtonLoading"
-                    v-on:loaded="onButtonLoaded"
-                    v-on:click="onDrop">
-                    <slot v-if="!!slots['button-drop']" name="button-drop" :item="item"
-                          :edit-mode="editMode"
-                          :is-create="createMode"
-                          :can-update="canUpdate"
-                          :can-drop="canDrop"></slot>
-                </lkt-button>
-
-                <div class="lkt-item-crud-buttons" v-if="slots.buttons" v-show="editMode && !isLoading">
-                    <slot name="buttons" />
-                </div>
-
-                <lkt-button
-                    v-show="showSwitchButton"
-                    v-model:checked="editMode"
-                    class="lkt-item-crud--switch-mode-button"
-                    show-switch
-                    :text="editModeText" />
-            </div>
             <div class="lkt-item-crud_content" v-if="!isLoading">
                 <div v-if="httpSuccessRead" class="lkt-grid-1">
                     <lkt-http-info :code="httpStatus" v-if="showStoreMessage" quick
