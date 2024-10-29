@@ -439,11 +439,11 @@
         <article class="lkt-item-crud">
             <header class="lkt-item-crud_header" v-if="!insideModal && displayHeader">
                 <div class="lkt-item-crud_header-slot" v-if="slots['pre-title']">
-                    <slot name="pre-title" :item="item" :loading="isLoading"></slot>
+                    <slot name="pre-title" :item="item" :loading="isLoading"/>
                 </div>
                 <h1 class="lkt-item-crud_header-title" v-if="computedTitle.length > 0">{{ computedTitle }}</h1>
                 <div class="lkt-item-crud_header-slot" v-if="slots['post-title']">
-                    <slot name="post-title" :item="item" :loading="isLoading"></slot>
+                    <slot name="post-title" :item="item" :loading="isLoading"/>
                 </div>
             </header>
 
@@ -489,14 +489,14 @@
                 <div v-if="httpSuccessRead" class="lkt-grid-1">
                     <lkt-http-info :code="httpStatus" v-if="showStoreMessage" quick
                                    :palette="httpStatus === 200 ? 'success' : 'danger'" can-close
-                                   v-on:close="showStoreMessage = false"></lkt-http-info>
+                                   v-on:close="showStoreMessage = false"/>
                     <slot name="item" :item="item" :loading="isLoading" :edit-mode="editMode"
                           :is-create="createMode"
                           :can-update="canUpdate"
                           :can-drop="canDrop"
                           :item-being-edited="itemBeingEdited"></slot>
                 </div>
-                <lkt-http-info :code="httpStatus" v-else></lkt-http-info>
+                <lkt-http-info :code="httpStatus" v-else/>
             </div>
             <lkt-loader v-if="isLoading" />
 
