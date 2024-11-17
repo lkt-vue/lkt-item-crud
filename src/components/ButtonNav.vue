@@ -91,7 +91,7 @@
 
         <lkt-button
             ref="saveButton"
-            v-show="showSaveButton"
+            v-if="showSaveButton"
             palette="success"
             :disabled="!ableToSave"
             :confirm-modal="saveConfirm"
@@ -137,7 +137,7 @@
         </div>
 
         <lkt-button
-            v-show="showSwitchButton"
+            v-if="showSwitchButton"
             v-model:checked="isEditing"
             class="lkt-item-crud--switch-mode-button"
             show-switch

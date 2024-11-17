@@ -449,7 +449,7 @@
 
             <button-nav
                 ref="buttonNav"
-                v-show="showButtons && buttonNavPosition === 'top'"
+                v-if="showButtons && buttonNavPosition === 'top'"
                 v-model:loading="isLoading"
                 v-model:editing="editMode"
                 :item="item"
