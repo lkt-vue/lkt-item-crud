@@ -10,7 +10,7 @@
     },
     "./styles": "./dist/style.css"
   },
-  "types": "./dist/index.d.ts",
+  "types": "./dist/build.d.ts",
   "files": [
     "dist/*",
     "src/**/*.vue"
