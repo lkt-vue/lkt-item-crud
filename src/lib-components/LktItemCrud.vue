@@ -289,11 +289,13 @@
             emit('before-save');
             if (saveResource.value) {
                 isLoading.value = false;
-                httpStatus.value = r.httpStatus;
-                if (!r.success) {
-                    showStoreMessage.value = true;
-                    emit('error', r.httpStatus);
-                    return;
+                if (typeof r !== 'undefined') {
+                    httpStatus.value = r.httpStatus;
+                    if (r.success) {
+                        showStoreMessage.value = true;
+                        emit('error', r.httpStatus);
+                        return;
+                    }
                 }
                 showStoreMessage.value = true;
             }

@@ -1,6 +1,7 @@
 <script setup lang="ts">
     import { ref, useSlots, watch } from 'vue';
     import { LktObject } from 'lkt-ts-interfaces';
+    import { HTTPResponse } from 'lkt-http-client';
 
     const emit = defineEmits(['update:loading', 'update:editing', 'save', 'drop']);
 
@@ -57,11 +58,11 @@
         onButtonLoaded = () => {
             isLoading.value = false;
         },
-        onSave = () => {
-            emit('save');
+        onSave = ($event: Event, r: HTTPResponse) => {
+            emit('save', $event, r);
         },
-        onDrop = () => {
-            emit('drop');
+        onDrop = ($event: Event, r: HTTPResponse) => {
+            emit('drop', $event, r);
         };
 
     const doSave = () => {
