@@ -101,9 +101,9 @@
             :resource-data="saveData"
             :text="slots['button-save'] ? '' : saveText"
             :icon="slots['button-save'] ? '' : saveIcon"
-            v-on:loading="onButtonLoading"
-            v-on:loaded="onButtonLoaded"
-            v-on:click="onSave">
+            @loading="onButtonLoading"
+            @loaded="onButtonLoaded"
+            @click="onSave">
             <slot v-if="!!slots['button-save']" name="button-save" :item="item"
                   :edit-mode="isEditing"
                   :is-create="createMode"
@@ -123,9 +123,9 @@
             :resource-data="dropData"
             :text="slots['button-drop'] ? '' : dropText"
             :icon="slots['button-drop'] ? '' : dropIcon"
-            v-on:loading="onButtonLoading"
-            v-on:loaded="onButtonLoaded"
-            v-on:click="onDrop">
+            @loading="onButtonLoading"
+            @loaded="onButtonLoaded"
+            @click="onDrop">
             <slot v-if="!!slots['button-drop']" name="button-drop" :item="item"
                   :edit-mode="isEditing"
                   :is-create="createMode"

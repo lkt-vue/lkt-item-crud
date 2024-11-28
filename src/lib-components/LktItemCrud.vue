@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { computed, nextTick, ref, useSlots, watch } from 'vue';
+    import { computed, nextTick, onMounted, ref, useSlots, watch } from 'vue';
     import { httpCall, HTTPResponse } from 'lkt-http-client';
     import { DataState } from 'lkt-data-state';
     import { debug } from '../functions/debug';
@@ -143,7 +143,8 @@
         dataState = ref(new DataState(item.value, props.dataStateConfig)),
         readDataState = ref(new DataState(props.readData)),
         createMode = ref(props.isCreate),
-        itemBeingEdited = ref(false);
+        itemBeingEdited = ref(false),
+        itemCreated = ref(false);
 
     const buttonNav = ref(null);
 
@@ -259,13 +260,16 @@
         emit('update:editing', v);
     });
 
-    // Fetch item
-    if (props.readResource && !createMode.value) fetchItem();
-    else if (createMode.value) {
-        httpSuccessRead.value = true;
-        editMode.value = true;
-        isLoading.value = false;
-    }
+    onMounted(() => {
+        // Fetch item
+        if (props.readResource && !createMode.value) fetchItem();
+        else if (createMode.value) {
+            httpSuccessRead.value = true;
+            editMode.value = true;
+            isLoading.value = false;
+            dataState.value.increment(item.value).turnStoredIntoOriginal();
+        }
+    })
 
     const onDrop = ($event: PointerEvent, r: HTTPResponse) => {
             isLoading.value = false;
@@ -291,7 +295,7 @@
                 isLoading.value = false;
                 if (typeof r !== 'undefined') {
                     httpStatus.value = r.httpStatus;
-                    if (r.success) {
+                    if (!r.success) {
                         showStoreMessage.value = true;
                         emit('error', r.httpStatus);
                         return;
@@ -305,7 +309,10 @@
                 dataState.value.turnStoredIntoOriginal();
             }
 
+
             if (emits === 'create') {
+                itemCreated.value = true;
+                dataState.value.increment(item.value).turnStoredIntoOriginal();
                 if (typeof props.onCreate === 'function') {
                     debug('onSave -> trigger onCreate callback');
                     props.onCreate(r);
@@ -358,6 +365,15 @@
     const closeConfirm = computed(() => {
         return dataState.value.changed() ? props.editedCloseConfirm : '';
     });
+
+    const crudBeforeClose = (modalData: LktObject) => {
+        if (typeof props.beforeClose === 'function') {
+            return props.beforeClose({
+                ...modalData,
+                itemCreated: itemCreated.value,
+            });
+        }
+    };
 
     const showDropButton = computed(() => {
             if (!canUpdate.value && canDrop.value) return true;
@@ -414,19 +430,21 @@
         }),
         computedContainerAttrs = computed(() => {
             if (computedContainerTag.value === 'lkt-modal') {
+
                 return {
                     'modal-name': props.modalName,
                     'modal-key': props.modalKey,
                     'z-index': props.zIndex,
                     'pre-title': props.preTitle,
                     'show-close': props.showClose,
-                    'before-close': props.beforeClose,
+                    'before-close': crudBeforeClose,
                     'disabled-close': props.disabledClose,
                     'disabled-veil-click': props.disabledVeilClick,
                     'close-confirm': closeConfirm.value,
                     'close-confirm-key': props.editedCloseConfirmKey,
                     title: props.title,
                     size: props.size,
+                    item: item.value,
                 };
             }
             return {};
