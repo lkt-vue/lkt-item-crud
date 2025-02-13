@@ -4,8 +4,8 @@
     import { DataState } from 'lkt-data-state';
     import { debug } from '../functions/debug';
     import { LktObject } from 'lkt-ts-interfaces';
-    import { ModalCallbackConfig } from '../types/ModalCallbackConfig';
-    import { runModalCallback } from '../functions/modalCallbacks';
+    import { ModalCallbackConfig } from 'lkt-vue-kernel';
+    import { runModalCallback } from 'lkt-modal';
     import { __ } from 'lkt-i18n';
     import { Settings } from '../settings/Settings';
     import ButtonNav from '../components/ButtonNav.vue';

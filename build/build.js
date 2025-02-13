@@ -321,7 +321,7 @@ const Ae = { class: "lkt-item-crud" }, ze = {
       hasModifiedData: () => a.value.changed()
     });
     const me = v(() => a.value.changed() ? e.editedCloseConfirm : ""), be = (t) => {
-      if (typeof e.beforeClose == "function")
+      if (console.log("crudBeforeClose: ", t), typeof e.beforeClose == "function")
         return e.beforeClose({
           ...t,
           itemCreated: te.value

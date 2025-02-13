@@ -39,7 +39,8 @@ export default {
                 'lkt-vue-tools',
                 'lkt-control-tools',
                 'lkt-data-state',
-                'lkt-events'
+                'lkt-events',
+                'lkt-vue-kernel',
             ],
             output: {
                 globals: {
