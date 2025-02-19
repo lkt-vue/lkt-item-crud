@@ -3,14 +3,16 @@
     import { httpCall, HTTPResponse } from 'lkt-http-client';
     import { DataState } from 'lkt-data-state';
     import { debug } from '../functions/debug';
-    import { LktObject } from 'lkt-ts-interfaces';
-    import { ModalCallbackConfig } from 'lkt-vue-kernel';
+    import {
+        ItemCrudButtonNavPosition,
+        ItemCrudButtonNavVisibility,
+        LktObject,
+        ModalCallbackConfig,
+    } from 'lkt-vue-kernel';
     import { runModalCallback } from 'lkt-modal';
     import { __ } from 'lkt-i18n';
     import { Settings } from '../settings/Settings';
     import ButtonNav from '../components/ButtonNav.vue';
-    import { ButtonNavPosition } from '../enums/ButtonNavPosition';
-    import { ButtonNavVisibility } from '../enums/ButtonNavVisibility';
 
     const props = withDefaults(defineProps<{
         modelValue: LktObject
@@ -52,8 +54,8 @@
         onUpdateModalCallbacks: ModalCallbackConfig[]
         onDropModalCallbacks: ModalCallbackConfig[]
         editing: boolean
-        buttonNavPosition?: ButtonNavPosition
-        buttonNavVisibility?: ButtonNavVisibility
+        buttonNavPosition?: ItemCrudButtonNavPosition
+        buttonNavVisibility?: ItemCrudButtonNavVisibility
 
         // Modal props
         size: string
@@ -108,8 +110,8 @@
         onUpdateModalCallbacks: () => [],
         onDropModalCallbacks: () => [],
         editing: false,
-        buttonNavPosition: ButtonNavPosition.Top,
-        buttonNavVisibility: ButtonNavVisibility.Changed,
+        buttonNavPosition: ItemCrudButtonNavPosition.Top,
+        buttonNavVisibility: ItemCrudButtonNavVisibility.Changed,
 
         // Modal props
         size: '',
@@ -390,7 +392,7 @@
 
             if (createMode.value) return true;
 
-            if (props.buttonNavVisibility === ButtonNavVisibility.Always) {
+            if (props.buttonNavVisibility === ItemCrudButtonNavVisibility.Always) {
                 return ableToSave.value;
             }
 
@@ -409,7 +411,7 @@
                 && !(props.dropDisabled && props.updateDisabled);
         }),
         showButtons = computed(() => {
-            if (props.buttonNavVisibility === ButtonNavVisibility.Always && (ableToSave.value || ableToDrop.value)) return true;
+            if (props.buttonNavVisibility === ItemCrudButtonNavVisibility.Always && (ableToSave.value || ableToDrop.value)) return true;
             if (slots['prev-buttons-ever']) return true;
             return !props.hiddenButtons && (showSaveButton.value || showDropButton.value || showSwitchButton.value);
         }),
@@ -522,7 +524,7 @@
 
             <button-nav
                 ref="buttonNav"
-                v-if="buttonNavPosition === ButtonNavPosition.Bottom"
+                v-if="buttonNavPosition === ItemCrudButtonNavPosition.Bottom"
                 v-show="showButtons"
                 v-model:loading="isLoading"
                 v-model:editing="editMode"

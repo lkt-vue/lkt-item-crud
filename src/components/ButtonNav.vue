@@ -1,9 +1,14 @@
 <script setup lang="ts">
     import { ref, useSlots, watch } from 'vue';
-    import { LktObject } from 'lkt-ts-interfaces';
+    import { LktObject } from 'lkt-vue-kernel';
     import { HTTPResponse } from 'lkt-http-client';
 
-    const emit = defineEmits(['update:loading', 'update:editing', 'save', 'drop']);
+    const emit = defineEmits([
+        'update:loading',
+        'update:editing',
+        'save',
+        'drop'
+    ]);
 
     const props = withDefaults(defineProps<{
         item: LktObject,

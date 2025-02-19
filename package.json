@@ -1,6 +1,6 @@
 {
   "name": "lkt-item-crud",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "",
   "type": "module",
   "module": "./dist/build.js",
@@ -39,15 +39,12 @@
   "dependencies": {
     "lkt-button": "^1.0.14",
     "lkt-data-state": "^1.0.9",
-    "lkt-events": "^1.0.2",
-    "lkt-field-switch": "^1.0.0",
     "lkt-http-client": "^1.0.12",
     "lkt-http-info": "^1.0.2",
     "lkt-i18n": "^1.0.4",
     "lkt-loader": "^1.0.2",
     "lkt-modal": "^1.2.1",
     "lkt-string-tools": "^1.0.2",
-    "lkt-ts-interfaces": "^1.0.2",
     "lkt-vue-kernel": "^1.0.7",
     "path": "^0.12.7"
   }
