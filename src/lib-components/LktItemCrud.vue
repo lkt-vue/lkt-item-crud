@@ -1,135 +1,39 @@
 <script setup lang="ts">
-    import { computed, nextTick, onMounted, ref, useSlots, watch } from 'vue';
+    import { computed, nextTick, onMounted, ref, SetupContext, useSlots, watch } from 'vue';
     import { httpCall, HTTPResponse } from 'lkt-http-client';
     import { DataState } from 'lkt-data-state';
     import { debug } from '../functions/debug';
     import {
+        getDefaultValues,
+        ItemCrud,
         ItemCrudButtonNavPosition,
-        ItemCrudButtonNavVisibility,
+        ItemCrudConfig,
+        ItemCrudMode,
+        ItemCrudView,
         LktObject,
-        ModalCallbackConfig,
+        TablePermission,
     } from 'lkt-vue-kernel';
-    import { runModalCallback } from 'lkt-modal';
+    import { closeModal } from 'lkt-modal';
     import { __ } from 'lkt-i18n';
-    import { Settings } from '../settings/Settings';
     import ButtonNav from '../components/ButtonNav.vue';
 
-    const props = withDefaults(defineProps<{
-        modelValue: LktObject
-        title: string
-        editModeText: string
-        saveText: string
-        saveIcon: string
-        dropText: string
-        dropIcon: string
-        hiddenSave: boolean
-        hiddenDrop: boolean
-        hiddenButtons: boolean
-        readResource: string
-        createResource: string
-        updateResource: string
-        dropResource: string
-        readData: LktObject
-        createData: LktObject
-        updateData: LktObject
-        dropData: LktObject
-        isCreate: boolean
-        createConfirm: string
-        updateConfirm: string
-        dropConfirm: string
-        createConfirmData: LktObject
-        updateConfirmData: LktObject
-        dropConfirmData: LktObject
-        createDisabled: boolean
-        updateDisabled: boolean
-        dropDisabled: boolean
-        saveValidator: Function
-        beforeEmitUpdate: Function | undefined
-        onCreate: Function | undefined
-        onUpdate: Function | undefined
-        insideModal: boolean
-        hideSwitchEdition: boolean
-        dataStateConfig: LktObject
-        onCreateModalCallbacks: ModalCallbackConfig[]
-        onUpdateModalCallbacks: ModalCallbackConfig[]
-        onDropModalCallbacks: ModalCallbackConfig[]
-        editing: boolean
-        buttonNavPosition?: ItemCrudButtonNavPosition
-        buttonNavVisibility?: ItemCrudButtonNavVisibility
 
-        // Modal props
-        size: string
-        preTitle: string
-        showClose: boolean
-        disabledClose: boolean
-        disabledVeilClick: boolean
-        modalName: string
-        modalKey: string
-        zIndex: number
-        editedCloseConfirm: string
-        editedCloseConfirmKey: string | number
-        beforeClose: Function | undefined
+    const props = withDefaults(defineProps<ItemCrudConfig>(), getDefaultValues(ItemCrud));
 
-    }>(), {
-        modelValue: () => ({}),
-        title: '',
-        editModeText: 'Edition Mode',
-        saveText: 'Save',
-        dropText: 'Delete',
-        saveIcon: () => Settings.defaultSaveIcon,
-        dropIcon: () => Settings.defaultDropIcon,
-        hiddenSave: false,
-        hiddenDrop: false,
-        hiddenButtons: false,
-        readResource: '',
-        createResource: '',
-        updateResource: '',
-        dropResource: '',
-        readData: () => ({}),
-        createData: () => ({}),
-        updateData: () => ({}),
-        dropData: () => ({}),
-        isCreate: false,
-        createConfirm: '',
-        updateConfirm: '',
-        dropConfirm: '',
-        createConfirmData: () => ({}),
-        updateConfirmData: () => ({}),
-        dropConfirmData: () => ({}),
-        createDisabled: false,
-        updateDisabled: false,
-        dropDisabled: false,
-        saveValidator: () => true,
-        beforeEmitUpdate: undefined,
-        onCreate: undefined,
-        onUpdate: undefined,
-        insideModal: false,
-        hideSwitchEdition: false,
-        dataStateConfig: () => ({}),
-        onCreateModalCallbacks: () => [],
-        onUpdateModalCallbacks: () => [],
-        onDropModalCallbacks: () => [],
-        editing: false,
-        buttonNavPosition: ItemCrudButtonNavPosition.Top,
-        buttonNavVisibility: ItemCrudButtonNavVisibility.Changed,
+    const slots: SetupContext['slots'] = useSlots();
 
-        // Modal props
-        size: '',
-        preTitle: '',
-        showClose: true,
-        disabledClose: false,
-        disabledVeilClick: false,
-        modalName: '',
-        modalKey: '_',
-        zIndex: 500,
-        editedCloseConfirm: '',
-        editedCloseConfirmKey: '_',
-        beforeClose: undefined,
-    });
-
-    const slots = useSlots();
-
-    const emit = defineEmits(['update:modelValue', 'update:isCreate', 'update:editing', 'read', 'create', 'update', 'drop', 'before-save', 'perms', 'error', 'modified-data']);
+    const emit = defineEmits([
+        'update:modelValue',
+        'update:editing',
+        'read',
+        'create',
+        'update',
+        'drop',
+        'before-save',
+        'perms',
+        'error',
+        'modified-data',
+    ]);
 
     let basePerms: string[] = [];
 
@@ -140,50 +44,23 @@
         httpSuccessRead = ref(false),
         showStoreMessage = ref(false),
         httpStatus = ref(200),
-        saveButton = ref(null),
-        dropButton = ref(null),
         dataState = ref(new DataState(item.value, props.dataStateConfig)),
+        dataChanged = ref(false),
         readDataState = ref(new DataState(props.readData)),
-        createMode = ref(props.isCreate),
+        createMode = ref(props.mode === ItemCrudMode.Create),
         itemBeingEdited = ref(false),
-        itemCreated = ref(false);
-
-    const buttonNav = ref(null);
-
-    const saveConfirm = computed(() => {
-            return createMode.value
-                ? props.createConfirm
-                : props.updateConfirm;
-        }),
-        confirmData = computed(() => {
-            return createMode.value
-                ? props.createConfirmData
-                : props.updateConfirmData;
-        }),
-        saveResource = computed(() => {
-            return createMode.value
-                ? props.createResource
-                : props.updateResource;
-        }),
-        saveData = computed(() => {
-            if (createMode.value) {
-                return { ...props.createData, ...JSON.parse(JSON.stringify(item.value)) };
-            }
-            return { ...props.updateData, ...JSON.parse(JSON.stringify(item.value)) };
-        }),
-        saveDisabled = computed(() => {
-            return createMode.value
-                ? props.createDisabled
-                : props.updateDisabled;
-        }),
-        canUpdate = computed(() => !createMode.value && Array.isArray(perms.value) && perms.value.includes('update')),
-        canDrop = computed(() => !createMode.value && Array.isArray(perms.value) && perms.value.includes('drop'));
+        itemCreated = ref(false),
+        buttonNav = ref(null),
+        canUpdate = computed(() => !createMode.value && Array.isArray(perms.value) && perms.value.includes(TablePermission.Update)),
+        canDrop = computed(() => !createMode.value && Array.isArray(perms.value) && perms.value.includes(TablePermission.Drop)),
+        canSwitchEditMode = computed(() => !createMode.value && Array.isArray(perms.value) && perms.value.includes(TablePermission.SwitchEditMode));
 
     const fetchItem = async () => {
         debug('fetchItem');
         isLoading.value = true;
         httpStatus.value = -1;
         showStoreMessage.value = false;
+
         try {
             const r = await httpCall(props.readResource, props.readData);
             debug('fetchItem -> response', r);
@@ -199,8 +76,10 @@
             item.value = r.data;
             perms.value = r.perms;
             dataState.value.increment(item.value).turnStoredIntoOriginal();
+            dataChanged.value = dataState.value.changed();
             readDataState.value.turnStoredIntoOriginal();
             emit('read', r);
+
         } catch (e) {
             isLoading.value = false;
             httpSuccessRead.value = false;
@@ -228,25 +107,14 @@
         emit('update:modelValue', item.value);
         debug('item updated -> update dataState');
         dataState.value.increment(v);
+        dataChanged.value = dataState.value.changed();
         nextTick(() => itemBeingEdited.value = false);
     }, { deep: true });
 
     watch(perms, () => emit('perms', perms.value));
-
-    const ableToSave = computed(() => {
-        if (saveDisabled.value) return false;
-        if (!createMode.value && !canUpdate.value) return false;
-
-        if (typeof props.saveValidator === 'function' && !props.saveValidator(item.value)) return false;
-
-        return dataState.value.changed();
+    watch(dataChanged, (v) => {
+        emit('modified-data', v);
     });
-
-    const ableToDrop = computed(() => {
-        return !props.dropDisabled && canDrop.value;
-    });
-    watch(ableToSave, (v) => emit('modified-data', v));
-    watch(createMode, (v) => emit('update:isCreate', v));
 
     watch(() => props.readData, v => {
         readDataState.value.increment(v);
@@ -270,90 +138,68 @@
             editMode.value = true;
             isLoading.value = false;
             dataState.value.increment(item.value).turnStoredIntoOriginal();
+            dataChanged.value = dataState.value.changed();
         }
-    })
+    });
 
-    const onDrop = ($event: PointerEvent, r: HTTPResponse) => {
-            isLoading.value = false;
-            httpStatus.value = r.httpStatus;
-            if (!r.success) {
-                showStoreMessage.value = true;
-                emit('error', r.httpStatus);
-                return;
-            }
-            showStoreMessage.value = true;
-            if (props.onDropModalCallbacks.length > 0) {
-                debug('onDrop -> has onDropModalCallbacks');
-                props.onDropModalCallbacks.forEach(cb => {
-                    runModalCallback(cb);
-                });
-            }
-            emit('drop', r);
-        },
-        onSave = ($event: PointerEvent, r: HTTPResponse) => {
-            debug('onSave -> received response:', r);
-            emit('before-save');
-            if (saveResource.value) {
+    const ensureValidResourceSave = (r: HTTPResponse, resource?: string) => {
+            if (resource) {
                 isLoading.value = false;
                 if (typeof r !== 'undefined') {
                     httpStatus.value = r.httpStatus;
                     if (!r.success) {
                         showStoreMessage.value = true;
                         emit('error', r.httpStatus);
-                        return;
+                        return false;
                     }
                 }
                 showStoreMessage.value = true;
             }
-            let emits: 'create' | 'update' = createMode.value ? 'create' : 'update';
-            if (!createMode.value) {
-                debug('onSave -> turn stored data into original');
-                dataState.value.turnStoredIntoOriginal();
-            }
-
-
-            if (emits === 'create') {
-                itemCreated.value = true;
-                dataState.value.increment(item.value).turnStoredIntoOriginal();
-                if (typeof props.onCreate === 'function') {
-                    debug('onSave -> trigger onCreate callback');
-                    props.onCreate(r);
-                    if (props.onCreateModalCallbacks.length > 0) {
-                        debug('onSave -> has onCreateModalCallbacks');
-                        props.onCreateModalCallbacks.forEach(cb => {
-                            runModalCallback(cb);
-                        });
-                    }
-                }
-            } else {
-                if (typeof props.onUpdate === 'function') {
-                    debug('onSave -> trigger onUpdate callback');
-                    props.onUpdate(r);
-                    if (props.onUpdateModalCallbacks.length > 0) {
-                        debug('onSave -> has onUpdateModalCallbacks');
-                        props.onUpdateModalCallbacks.forEach(cb => {
-                            runModalCallback(cb);
-                        });
-                    }
-                }
-            }
-
-            if (!props.insideModal && r.autoReloadId) {
-                debug('onSave -> autoReloadId detected: ', r.autoReloadId);
+            return true;
+        },
+        doAutoReloadId = (r: HTTPResponse) => {
+            if (!computedInsideModal.value && r.autoReloadId) {
+                debug('doAutoReloadId -> autoReloadId detected: ', r.autoReloadId);
                 props.readData['id'] = r.autoReloadId;
-                debug('onSave -> turning off create mode');
+                debug('doAutoReloadId -> turning off create mode');
                 createMode.value = false;
                 fetchItem();
             }
-            emit(emits, r);
+        },
+        onCreate = ($event: PointerEvent, r: HTTPResponse) => {
+            debug('onCreate');
+            if (!ensureValidResourceSave(r, props.createButton.resource)) return;
+            itemCreated.value = true;
+            debug('onCreate -> turn stored data into original');
+            dataState.value.increment(item.value).turnStoredIntoOriginal();
+            doAutoReloadId(r);
+            emit('create', r);
+        },
+        onUpdate = ($event: PointerEvent, r: HTTPResponse) => {
+            debug('onUpdate');
+            if (!ensureValidResourceSave(r, props.updateButton.resource)) return;
+            debug('onUpdate -> turn stored data into original');
+            dataState.value.turnStoredIntoOriginal();
+            doAutoReloadId(r);
+            emit('update', r);
+        },
+        onDrop = ($event: PointerEvent, r: HTTPResponse) => {
+            debug('onDrop');
+            if (!ensureValidResourceSave(r, props.dropButton.resource)) return;
+            emit('drop', r);
+            if (props.view === ItemCrudView.Modal) {
+                debug('onDrop -> close modal');
+                //@ts-ignore
+                closeModal(props.modalConfig.modalName, props.modalConfig.modalKey);
+            }
         },
         doSave = () => {
             // @ts-ignore
-            if (buttonNav.value) saveButton.value.doSave();
+            if (buttonNav.value) buttonNav.value.doSave();
         },
         doDrop = () => {
             // @ts-ignore
-            if (buttonNav.value) dropButton.value.doDrop();
+            if (buttonNav.value) buttonNav.value.doDrop();
         };
 
     defineExpose({
@@ -365,57 +211,20 @@
 
 
     const closeConfirm = computed(() => {
-        return dataState.value.changed() ? props.editedCloseConfirm : '';
+        return dataState.value.changed() ? props.modalConfig?.closeConfirm : '';
     });
 
     const crudBeforeClose = (modalData: LktObject) => {
-        if (typeof props.beforeClose === 'function') {
-            return props.beforeClose({
+        if (typeof props.modalConfig?.beforeClose === 'function') {
+            //@ts-ignore
+            return props.modalConfig.beforeClose({
                 ...modalData,
                 itemCreated: itemCreated.value,
             });
         }
     };
 
-    const showDropButton = computed(() => {
-            if (!canUpdate.value && canDrop.value) return true;
-
-            return !props.hiddenDrop
-                && !isLoading.value
-                && editMode.value
-                && httpSuccessRead.value;
-        }),
-        showSaveButton = computed(() => {
-
-            if (dataState.value.changed()) return true;
-            if (isLoading.value) return false;
-
-            if (createMode.value) return true;
-
-            if (props.buttonNavVisibility === ItemCrudButtonNavVisibility.Always) {
-                return ableToSave.value;
-            }
-
-            return !props.hiddenSave
-                && editMode.value
-                && httpSuccessRead.value;
-        }),
-        showSwitchButton = computed(() => {
-            if (props.hideSwitchEdition) return false;
-            if (!canUpdate.value && !canDrop.value) return false;
-            if (!canUpdate.value && canDrop.value) return false;
-
-            return !isLoading.value
-                && !createMode.value
-                && httpSuccessRead.value
-                && !(props.dropDisabled && props.updateDisabled);
-        }),
-        showButtons = computed(() => {
-            if (props.buttonNavVisibility === ItemCrudButtonNavVisibility.Always && (ableToSave.value || ableToDrop.value)) return true;
-            if (slots['prev-buttons-ever']) return true;
-            return !props.hiddenButtons && (showSaveButton.value || showDropButton.value || showSwitchButton.value);
-        }),
-        computedTitle = computed(() => {
+    const computedTitle = computed(() => {
             if (props.title.startsWith('__:')) {
                 return String(__(props.title.substring(3)));
             }
@@ -426,27 +235,25 @@
 
             return computedTitle.value.length > 0 || !!slots['post-title'];
         }),
+        computedInsideModal = computed(() => {
+            return props.view === ItemCrudView.Modal;
+        }),
         computedContainerTag = computed(() => {
-            if (props.insideModal) return 'lkt-modal';
+            if (computedInsideModal.value) return 'lkt-modal';
             return 'section';
         }),
         computedContainerAttrs = computed(() => {
             if (computedContainerTag.value === 'lkt-modal') {
-
                 return {
-                    'modal-name': props.modalName,
-                    'modal-key': props.modalKey,
-                    'z-index': props.zIndex,
-                    'pre-title': props.preTitle,
-                    'show-close': props.showClose,
-                    'before-close': crudBeforeClose,
-                    'disabled-close': props.disabledClose,
-                    'disabled-veil-click': props.disabledVeilClick,
-                    'close-confirm': closeConfirm.value,
-                    'close-confirm-key': props.editedCloseConfirmKey,
-                    title: props.title,
-                    size: props.size,
-                    item: item.value,
+                    ...{
+                        title: props.title,
+                        item: item.value,
+                    },
+                    ...props.modalConfig,
+                    ...{
+                        'before-close': crudBeforeClose,
+                        'close-confirm': closeConfirm.value,
+                    },
                 };
             }
             return {};
@@ -459,44 +266,36 @@
         v-bind="computedContainerAttrs"
     >
         <article class="lkt-item-crud">
-            <header class="lkt-item-crud_header" v-if="!insideModal && displayHeader">
+            <header class="lkt-item-crud_header" v-if="!computedInsideModal && displayHeader">
                 <div class="lkt-item-crud_header-slot" v-if="slots['pre-title']">
-                    <slot name="pre-title" :item="item" :loading="isLoading"/>
+                    <slot name="pre-title" :item="item" :loading="isLoading" />
                 </div>
                 <h1 class="lkt-item-crud_header-title" v-if="computedTitle.length > 0">{{ computedTitle }}</h1>
                 <div class="lkt-item-crud_header-slot" v-if="slots['post-title']">
-                    <slot name="post-title" :item="item" :loading="isLoading"/>
+                    <slot name="post-title" :item="item" :loading="isLoading" />
                 </div>
             </header>
 
             <button-nav
                 ref="buttonNav"
-                v-if="showButtons && buttonNavPosition === 'top'"
+                v-if="buttonNavPosition === ItemCrudButtonNavPosition.Top"
                 v-model:loading="isLoading"
                 v-model:editing="editMode"
                 :item="item"
-                :create-mode="createMode"
+                :mode="mode"
+                :view="view"
+                :button-nav-visibility="buttonNavVisibility"
+                :create-button="createButton"
+                :update-button="updateButton"
+                :drop-button="dropButton"
+                :edit-mode-button="editModeButton"
+                :data-changed="dataChanged"
+                :http-success-read="httpSuccessRead"
                 :can-update="canUpdate"
                 :can-drop="canDrop"
-                :show-switch-button="showSwitchButton"
-                :show-save-button="showSaveButton"
-                :show-drop-button="showDropButton"
-                :able-to-save="ableToSave"
-                :able-to-drop="ableToDrop"
-                :save-confirm="saveConfirm"
-                :drop-confirm="dropConfirm"
-                :confirm-data="confirmData"
-                :drop-confirm-data="dropConfirmData"
-                :save-resource="saveResource"
-                :drop-resource="dropResource"
-                :save-data="saveData"
-                :drop-data="dropData"
-                :save-text="saveText"
-                :drop-text="dropText"
-                :save-icon="saveIcon"
-                :drop-icon="dropIcon"
-                :edit-mode-text="editModeText"
-                @save="onSave"
+                :can-switch-edit-mode="canSwitchEditMode"
+                @create="onCreate"
+                @save="onUpdate"
                 @drop="onDrop"
             >
                 <template #prev-buttons-ever v-if="slots['prev-buttons-ever']">
@@ -511,46 +310,37 @@
                 <div v-if="httpSuccessRead" class="lkt-grid-1">
                     <lkt-http-info :code="httpStatus" v-if="showStoreMessage" quick
                                    :palette="httpStatus === 200 ? 'success' : 'danger'" can-close
-                                   v-on:close="showStoreMessage = false"/>
+                                   v-on:close="showStoreMessage = false" />
                     <slot name="item" :item="item" :loading="isLoading" :edit-mode="editMode"
                           :is-create="createMode"
                           :can-update="canUpdate"
                           :can-drop="canDrop"
                           :item-being-edited="itemBeingEdited"></slot>
                 </div>
-                <lkt-http-info :code="httpStatus" v-else/>
+                <lkt-http-info :code="httpStatus" v-else />
             </div>
             <lkt-loader v-if="isLoading" />
 
             <button-nav
                 ref="buttonNav"
                 v-if="buttonNavPosition === ItemCrudButtonNavPosition.Bottom"
-                v-show="showButtons"
                 v-model:loading="isLoading"
                 v-model:editing="editMode"
                 :item="item"
-                :create-mode="createMode"
+                :mode="mode"
+                :view="view"
+                :button-nav-visibility="buttonNavVisibility"
+                :create-button="createButton"
+                :update-button="updateButton"
+                :drop-button="dropButton"
+                :edit-mode-button="editModeButton"
+                :data-changed="dataChanged"
+                :http-success-read="httpSuccessRead"
                 :can-update="canUpdate"
                 :can-drop="canDrop"
-                :show-switch-button="showSwitchButton"
-                :show-save-button="showSaveButton"
-                :show-drop-button="showDropButton"
-                :able-to-save="ableToSave"
-                :able-to-drop="ableToDrop"
-                :save-confirm="saveConfirm"
-                :drop-confirm="dropConfirm"
-                :confirm-data="confirmData"
-                :drop-confirm-data="dropConfirmData"
-                :save-resource="saveResource"
-                :drop-resource="dropResource"
-                :save-data="saveData"
-                :drop-data="dropData"
-                :save-text="saveText"
-                :drop-text="dropText"
-                :save-icon="saveIcon"
-                :drop-icon="dropIcon"
-                :edit-mode-text="editModeText"
-                @save="onSave"
+                :can-switch-edit-mode="canSwitchEditMode"
+                @create="onCreate"
+                @save="onUpdate"
                 @drop="onDrop"
             >
                 <template #prev-buttons-ever v-if="slots['prev-buttons-ever']">

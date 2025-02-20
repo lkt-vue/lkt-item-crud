@@ -14,10 +14,10 @@ export default LktItemCrud;
 
 export {debugLktItemCrud} from "./functions/debug";
 
-export const setItemCrudDefaultSaveIcon = (icon) => {
+export const setItemCrudDefaultSaveIcon = (icon: string) => {
     Settings.defaultSaveIcon = icon;
 }
 
-export const setItemCrudDefaultDropIcon = (icon) => {
+export const setItemCrudDefaultDropIcon = (icon: string) => {
     Settings.defaultDropIcon = icon;
 }
