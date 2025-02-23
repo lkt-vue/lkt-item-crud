@@ -1,6 +1,6 @@
 {
   "name": "lkt-item-crud",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "",
   "type": "module",
   "module": "./dist/build.js",
@@ -8,7 +8,7 @@
     ".": {
       "import": "./dist/build.js"
     },
-    "./styles": "./dist/style.css"
+    "./styles": "./dist/build.css"
   },
   "types": "./dist/build.d.ts",
   "files": [
