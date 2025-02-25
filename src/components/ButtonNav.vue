@@ -112,26 +112,28 @@
 
     const ableToUpdate = computed(() => {
             if (props.mode !== ItemCrudMode.Create && !props.canUpdate) return false;
+            if (!props.dataChanged) return false;
 
-            if (typeof safeUpdateButton.value?.disabled === 'function') return safeUpdateButton.value.disabled(props.item);
-            if (typeof safeUpdateButton.value?.disabled === 'boolean') return safeUpdateButton.value.disabled;
+            if (typeof safeUpdateButton.value?.disabled === 'function') return !safeUpdateButton.value.disabled(props.item);
+            if (typeof safeUpdateButton.value?.disabled === 'boolean') return !safeUpdateButton.value.disabled;
 
-            return props.dataChanged;
+            return true;
         }),
         ableToCreate = computed(() => {
             if (props.mode !== ItemCrudMode.Create) return false;
+            if (!props.dataChanged) return false;
 
-            if (typeof safeCreateButton.value?.disabled === 'function') return safeCreateButton.value.disabled(props.item);
-            if (typeof safeCreateButton.value?.disabled === 'boolean') return safeCreateButton.value.disabled;
+            if (typeof safeCreateButton.value?.disabled === 'function') return !safeCreateButton.value.disabled(props.item);
+            if (typeof safeCreateButton.value?.disabled === 'boolean') return !safeCreateButton.value.disabled;
 
-            return props.dataChanged;
+            return true;
         }),
         ableToDrop = computed(() => {
 
             if (!props.canDrop) return false;
 
-            if (typeof safeDropButton.value?.disabled === 'function') return safeDropButton.value.disabled(props.item);
-            if (typeof safeDropButton.value?.disabled === 'boolean') return safeDropButton.value.disabled;
+            if (typeof safeDropButton.value?.disabled === 'function') return !safeDropButton.value.disabled(props.item);
+            if (typeof safeDropButton.value?.disabled === 'boolean') return !safeDropButton.value.disabled;
 
             return true;
         }),

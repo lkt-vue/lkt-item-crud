@@ -86,13 +86,13 @@ const b = (...k) => {
     });
     const T = g(() => {
       var t, r;
-      return a.mode !== E.Create && !a.canUpdate ? !1 : typeof ((t = M.value) == null ? void 0 : t.disabled) == "function" ? M.value.disabled(a.item) : typeof ((r = M.value) == null ? void 0 : r.disabled) == "boolean" ? M.value.disabled : a.dataChanged;
+      return a.mode !== E.Create && !a.canUpdate || !a.dataChanged ? !1 : typeof ((t = M.value) == null ? void 0 : t.disabled) == "function" ? !M.value.disabled(a.item) : typeof ((r = M.value) == null ? void 0 : r.disabled) == "boolean" ? !M.value.disabled : !0;
     }), _ = g(() => {
       var t, r;
-      return a.mode !== E.Create ? !1 : typeof ((t = v.value) == null ? void 0 : t.disabled) == "function" ? v.value.disabled(a.item) : typeof ((r = v.value) == null ? void 0 : r.disabled) == "boolean" ? v.value.disabled : a.dataChanged;
+      return a.mode !== E.Create || !a.dataChanged ? !1 : typeof ((t = v.value) == null ? void 0 : t.disabled) == "function" ? !v.value.disabled(a.item) : typeof ((r = v.value) == null ? void 0 : r.disabled) == "boolean" ? !v.value.disabled : !0;
     }), z = g(() => {
       var t, r;
-      return a.canDrop ? typeof ((t = n.value) == null ? void 0 : t.disabled) == "function" ? n.value.disabled(a.item) : typeof ((r = n.value) == null ? void 0 : r.disabled) == "boolean" ? n.value.disabled : !0 : !1;
+      return a.canDrop ? typeof ((t = n.value) == null ? void 0 : t.disabled) == "function" ? !n.value.disabled(a.item) : typeof ((r = n.value) == null ? void 0 : r.disabled) == "boolean" ? !n.value.disabled : !0 : !1;
     }), A = g(() => a.canDrop ? !a.canUpdate && a.canDrop ? !0 : !m.value && a.editing && a.httpSuccessRead : !1), P = g(() => a.dataChanged ? !0 : m.value ? !1 : a.mode === E.Create ? !0 : a.buttonNavVisibility === te.Never ? !1 : a.editing && a.httpSuccessRead), F = g(() => !a.canSwitchEditMode || !a.canUpdate && !a.canDrop || !a.canUpdate && a.canDrop ? !1 : !m.value && a.mode !== E.Create && a.httpSuccessRead), G = g(() => a.buttonNavVisibility === te.Always && (T.value || _.value || z.value) || c["prev-buttons-ever"] ? !0 : a.buttonNavVisibility === te.Never ? !1 : P.value || A.value || F.value);
     return (t, r) => {
       const H = oe("lkt-button");
