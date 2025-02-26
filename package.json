@@ -1,6 +1,6 @@
 {
   "name": "lkt-item-crud",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "",
   "type": "module",
   "module": "./dist/build.js",
@@ -22,6 +22,9 @@
     "rebuild": "rm -rf dist/*; vue-tsc --declaration --emitDeclarationOnly; vite build; tsc --project tsconfig.build.json; cp build/* dist/"
   },
   "author": "Antonio Ibáñez",
+  "engines": {
+    "node": ">=18"
+  },
   "devDependencies": {
     "@babel/types": "^7.23.6",
     "@types/node": "^20.11.19",
@@ -33,19 +36,18 @@
     "vue": "^3.3.0",
     "vue-tsc": "^2.2.0"
   },
-  "engines": {
-    "node": ">=18"
-  },
   "dependencies": {
-    "lkt-button": "^2.0.1",
+    "lkt-button": "^2.0.4",
     "lkt-data-state": "^1.0.9",
     "lkt-http-client": "^1.0.12",
     "lkt-http-info": "^1.0.2",
     "lkt-i18n": "^1.0.4",
     "lkt-loader": "^1.0.2",
-    "lkt-modal": "^2.0.1",
+    "lkt-modal": "^2.0.2",
     "lkt-string-tools": "^1.0.2",
-    "lkt-vue-kernel": "^1.0.7",
-    "path": "^0.12.7"
+    "lkt-vue-kernel": "^1.0.23"
+  },
+  "peerDependencies": {
+    "vue": "^3.3.0"
   }
 }
