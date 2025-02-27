@@ -1,6 +1,6 @@
 {
   "name": "lkt-item-crud",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "",
   "type": "module",
   "module": "./dist/build.js",
@@ -45,7 +45,8 @@
     "lkt-loader": "^1.0.2",
     "lkt-modal": "^2.0.2",
     "lkt-string-tools": "^1.0.2",
-    "lkt-vue-kernel": "^1.0.23"
+    "lkt-toast": "^1.0.1",
+    "lkt-vue-kernel": "^1.0.27"
   },
   "peerDependencies": {
     "vue": "^3.3.0"

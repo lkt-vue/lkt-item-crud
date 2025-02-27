@@ -23,16 +23,13 @@ export default {
         rollupOptions: {
             external: [
                 'vue',
-                '@vuepic/vue-datepicker',
-                'vue-next-select',
-                'katex',
                 'lkt-button',
                 'lkt-modal',
                 'lkt-loader',
                 'lkt-http-client',
                 'lkt-http-info',
                 'lkt-i18n',
-                'lkt-tools',
+                'lkt-toast',
                 'lkt-string-tools',
                 'lkt-vue-tools',
                 'lkt-data-state',
@@ -41,11 +38,6 @@ export default {
             output: {
                 globals: {
                     vue: 'Vue',
-                    '@vuepic/vue-datepicker': 'Datepicker',
-                    'vue-next-select': 'VueSelect',
-                    'suneditor': 'suneditor',
-                    'katex': 'katex',
-                    'lkt-tools': 'LktTools',
                     'lkt-data-state': 'LktDataState',
                     'lkt-http-client': 'LktHttpClient',
                     'lkt-string-tools': 'LktStringTools',

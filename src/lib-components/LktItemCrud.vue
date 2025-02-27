@@ -11,11 +11,16 @@
         ItemCrudMode,
         ItemCrudView,
         LktObject,
+        LktSettings,
+        NotificationType,
         TablePermission,
+        ToastConfig,
+        ToastPositionX,
     } from 'lkt-vue-kernel';
     import { closeModal } from 'lkt-modal';
     import { __ } from 'lkt-i18n';
     import ButtonNav from '../components/ButtonNav.vue';
+    import { openToast } from 'lkt-toast';
 
 
     const props = withDefaults(defineProps<ItemCrudConfig>(), getDefaultValues(ItemCrud));
@@ -168,7 +173,17 @@
         },
         onCreate = ($event: PointerEvent, r: HTTPResponse) => {
             debug('onCreate');
-            if (!ensureValidResourceSave(r, props.createButton.resource)) return;
+            if (!ensureValidResourceSave(r, props.createButton.resource)) {
+                if (props.notificationType === NotificationType.Toast) {
+                    openToast(<ToastConfig>{
+                        text: LktSettings.defaultCreateErrorText,
+                        details: LktSettings.defaultCreateErrorDetails,
+                        icon: LktSettings.defaultCreateErrorIcon,
+                        positionX: ToastPositionX.Right,
+                    });
+                }
+                return;
+            }
             itemCreated.value = true;
             debug('onCreate -> turn stored data into original');
             dataState.value.increment(item.value).turnStoredIntoOriginal();
@@ -177,7 +192,17 @@
         },
         onUpdate = ($event: PointerEvent, r: HTTPResponse) => {
             debug('onUpdate');
-            if (!ensureValidResourceSave(r, props.updateButton.resource)) return;
+            if (!ensureValidResourceSave(r, props.updateButton.resource)) {
+                if (props.notificationType === NotificationType.Toast) {
+                    openToast(<ToastConfig>{
+                        text: LktSettings.defaultUpdateErrorText,
+                        details: LktSettings.defaultUpdateErrorDetails,
+                        icon: LktSettings.defaultUpdateErrorIcon,
+                        positionX: ToastPositionX.Right,
+                    });
+                }
+                return;
+            }
             debug('onUpdate -> turn stored data into original');
             dataState.value.turnStoredIntoOriginal();
             doAutoReloadId(r);
@@ -185,7 +210,17 @@
         },
         onDrop = ($event: PointerEvent, r: HTTPResponse) => {
             debug('onDrop');
-            if (!ensureValidResourceSave(r, props.dropButton.resource)) return;
+            if (!ensureValidResourceSave(r, props.dropButton.resource)) {
+                if (props.notificationType === NotificationType.Toast) {
+                    openToast(<ToastConfig>{
+                        text: LktSettings.defaultDropErrorText,
+                        details: LktSettings.defaultDropErrorDetails,
+                        icon: LktSettings.defaultDropErrorIcon,
+                        positionX: ToastPositionX.Right,
+                    });
+                }
+                return;
+            }
             emit('drop', r);
             if (props.view === ItemCrudView.Modal) {
                 debug('onDrop -> close modal');
@@ -308,16 +343,20 @@
 
             <div class="lkt-item-crud_content" v-if="!isLoading">
                 <div v-if="httpSuccessRead" class="lkt-grid-1">
-                    <lkt-http-info :code="httpStatus" v-if="showStoreMessage" quick
-                                   :palette="httpStatus === 200 ? 'success' : 'danger'" can-close
-                                   v-on:close="showStoreMessage = false" />
+                    <lkt-http-info
+                        v-if="showStoreMessage && notificationType === NotificationType.Inline"
+                        :code="httpStatus"
+                        :palette="httpStatus === 200 ? 'success' : 'danger'"
+                        quick
+                        can-close
+                        v-on:close="showStoreMessage = false" />
                     <slot name="item" :item="item" :loading="isLoading" :edit-mode="editMode"
                           :is-create="createMode"
                           :can-update="canUpdate"
                           :can-drop="canDrop"
                           :item-being-edited="itemBeingEdited"></slot>
                 </div>
-                <lkt-http-info :code="httpStatus" v-else />
+                <lkt-http-info :code="httpStatus" v-else-if="notificationType === NotificationType.Inline" />
             </div>
             <lkt-loader v-if="isLoading" />
 
