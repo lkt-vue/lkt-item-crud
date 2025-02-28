@@ -87,13 +87,16 @@
         onButtonLoaded = () => {
             isLoading.value = false;
         },
-        onCreate = ($event: Event, r: HTTPResponse) => {
+        onCreate = ($event: Event|undefined, r: HTTPResponse) => {
+            if (typeof $event === 'undefined') return;
             emit('create', $event, r);
         },
-        onSave = ($event: Event, r: HTTPResponse) => {
+        onSave = ($event: Event|undefined, r: HTTPResponse) => {
+            if (typeof $event === 'undefined') return;
             emit('save', $event, r);
         },
-        onDrop = ($event: Event, r: HTTPResponse) => {
+        onDrop = ($event: Event|undefined, r: HTTPResponse) => {
+            if (typeof $event === 'undefined') return;
             emit('drop', $event, r);
         };
 

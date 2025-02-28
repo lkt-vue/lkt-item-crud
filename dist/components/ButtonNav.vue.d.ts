@@ -1536,7 +1536,7 @@ declare const saveButtonRef: import("vue").Ref<HTMLButtonElement | null, HTMLBut
 declare const dropButtonRef: import("vue").Ref<HTMLButtonElement | null, HTMLButtonElement | null>;
 declare const isLoading: import("vue").Ref<boolean, boolean>;
 declare const isEditing: import("vue").Ref<boolean, boolean>;
-declare const onButtonLoading: () => void, onButtonLoaded: () => void, onCreate: ($event: Event, r: HTTPResponse) => void, onSave: ($event: Event, r: HTTPResponse) => void, onDrop: ($event: Event, r: HTTPResponse) => void;
+declare const onButtonLoading: () => void, onButtonLoaded: () => void, onCreate: ($event: Event | undefined, r: HTTPResponse) => void, onSave: ($event: Event | undefined, r: HTTPResponse) => void, onDrop: ($event: Event | undefined, r: HTTPResponse) => void;
 declare const ableToUpdate: import("vue").ComputedRef<boolean>, ableToCreate: import("vue").ComputedRef<boolean>, ableToDrop: import("vue").ComputedRef<boolean>, showDropButton: import("vue").ComputedRef<boolean>, showSaveButton: import("vue").ComputedRef<boolean>, showSwitchButton: import("vue").ComputedRef<boolean>, showButtons: import("vue").ComputedRef<boolean>;
 declare const __VLS_ctx: InstanceType<__VLS_PickNotAny<typeof __VLS_self, new () => {}>>;
 declare var __VLS_1: {}, __VLS_3: {}, __VLS_17: {

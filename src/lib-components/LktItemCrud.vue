@@ -187,6 +187,14 @@
             itemCreated.value = true;
             debug('onCreate -> turn stored data into original');
             dataState.value.increment(item.value).turnStoredIntoOriginal();
+            if (props.notificationType === NotificationType.Toast) {
+                openToast(<ToastConfig>{
+                    text: LktSettings.defaultCreateSuccessText,
+                    details: LktSettings.defaultCreateSuccessDetails,
+                    icon: LktSettings.defaultCreateSuccessIcon,
+                    positionX: ToastPositionX.Right,
+                });
+            }
             doAutoReloadId(r);
             emit('create', r);
         },
@@ -205,6 +213,14 @@
             }
             debug('onUpdate -> turn stored data into original');
             dataState.value.turnStoredIntoOriginal();
+            if (props.notificationType === NotificationType.Toast) {
+                openToast(<ToastConfig>{
+                    text: LktSettings.defaultUpdateSuccessText,
+                    details: LktSettings.defaultUpdateSuccessDetails,
+                    icon: LktSettings.defaultUpdateSuccessIcon,
+                    positionX: ToastPositionX.Right,
+                });
+            }
             doAutoReloadId(r);
             emit('update', r);
         },
@@ -220,6 +236,14 @@
                     });
                 }
                 return;
+            }
+            if (props.notificationType === NotificationType.Toast) {
+                openToast(<ToastConfig>{
+                    text: LktSettings.defaultDropSuccessText,
+                    details: LktSettings.defaultDropSuccessDetails,
+                    icon: LktSettings.defaultDropSuccessIcon,
+                    positionX: ToastPositionX.Right,
+                });
             }
             emit('drop', r);
             if (props.view === ItemCrudView.Modal) {
