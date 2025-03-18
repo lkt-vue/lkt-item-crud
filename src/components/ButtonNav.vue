@@ -27,10 +27,10 @@
         view: ItemCrudView
         mode: ItemCrudMode
 
-        createButton?: ButtonConfig
-        updateButton?: ButtonConfig
-        dropButton?: ButtonConfig
-        editModeButton?: ButtonConfig
+        createButton?: ButtonConfig|false
+        updateButton?: ButtonConfig|false
+        dropButton?: ButtonConfig|false
+        editModeButton?: ButtonConfig|false
 
         dataChanged: boolean
 
@@ -141,7 +141,7 @@
             return true;
         }),
         showDropButton = computed(() => {
-            if (!props.canDrop) return false;
+            if (!props.canDrop || props.dropButton === false) return false;
             if (!props.canUpdate && props.canDrop) return true;
 
             return !isLoading.value
@@ -149,10 +149,14 @@
                 && props.httpSuccessRead;
         }),
         showSaveButton = computed(() => {
+            if (props.mode === ItemCrudMode.Create && props.createButton === false) return false;
+            if (props.mode === ItemCrudMode.Update && props.updateButton === false) return false;
             if (props.dataChanged) return true;
             if (isLoading.value) return false;
 
-            if (props.mode === ItemCrudMode.Create) return true;
+            if (props.mode === ItemCrudMode.Create) {
+                return true;
+            }
 
             if (props.buttonNavVisibility === ItemCrudButtonNavVisibility.Never) {
                 return false;
@@ -162,6 +166,7 @@
                 && props.httpSuccessRead;
         }),
         showSwitchButton = computed(() => {
+            if (props.editModeButton === false) return false;
             if (!props.canSwitchEditMode) return false;
             if (!props.canUpdate && !props.canDrop) return false;
             if (!props.canUpdate && props.canDrop) return false;

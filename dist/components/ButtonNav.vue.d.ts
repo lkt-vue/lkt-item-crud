@@ -7,10 +7,10 @@ type __VLS_Props = {
     loading?: boolean;
     view: ItemCrudView;
     mode: ItemCrudMode;
-    createButton?: ButtonConfig;
-    updateButton?: ButtonConfig;
-    dropButton?: ButtonConfig;
-    editModeButton?: ButtonConfig;
+    createButton?: ButtonConfig | false;
+    updateButton?: ButtonConfig | false;
+    dropButton?: ButtonConfig | false;
+    editModeButton?: ButtonConfig | false;
     dataChanged: boolean;
     canUpdate?: boolean;
     canDrop?: boolean;
@@ -33,12 +33,12 @@ declare const safeCreateButton: import("vue").Ref<{
     iconEnd?: string | undefined;
     img?: string | undefined;
     checked?: boolean | undefined;
-    textOn?: string | number | undefined | undefined;
-    textOff?: string | number | undefined | undefined;
-    iconOn?: string | number | undefined | undefined;
-    iconOff?: string | number | undefined | undefined;
-    iconEndOn?: string | number | undefined | undefined;
-    iconEndOff?: string | number | undefined | undefined;
+    textOn?: import("lkt-vue-kernel").ValidTextValue;
+    textOff?: import("lkt-vue-kernel").ValidTextValue;
+    iconOn?: import("lkt-vue-kernel").ValidTextValue;
+    iconOff?: import("lkt-vue-kernel").ValidTextValue;
+    iconEndOn?: import("lkt-vue-kernel").ValidTextValue;
+    iconEndOff?: import("lkt-vue-kernel").ValidTextValue;
     dot?: import("lkt-vue-kernel").ValidButtonDot | undefined;
     anchor?: {
         type?: import("lkt-vue-kernel").AnchorType | undefined;
@@ -63,12 +63,14 @@ declare const safeCreateButton: import("vue").Ref<{
         isActive?: boolean | undefined;
         downloadFileName?: string | undefined;
         disabled?: boolean | undefined;
-        onClick?: Function | undefined;
         confirmModal?: import("lkt-vue-kernel").ValidModalName;
-        confirmModalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+        confirmModalKey?: import("lkt-vue-kernel").ValidModalKey;
         confirmData?: {
             [x: string]: any;
             [x: number]: any;
+            modalName?: import("lkt-vue-kernel").ValidModalName;
+            modalKey?: import("lkt-vue-kernel").ValidModalKey;
+            zIndex?: number | undefined;
             type?: import("lkt-vue-kernel").ModalType | undefined;
             size?: string | undefined;
             preTitle?: string | undefined;
@@ -76,14 +78,11 @@ declare const safeCreateButton: import("vue").Ref<{
             title?: string | undefined;
             closeIcon?: string | undefined;
             closeConfirm?: import("lkt-vue-kernel").ValidModalName;
-            closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+            closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey;
             showClose?: boolean | undefined;
             disabledClose?: boolean | undefined;
             disabledVeilClick?: boolean | undefined;
             hiddenFooter?: boolean | undefined;
-            modalName?: import("lkt-vue-kernel").ValidModalName;
-            modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
-            zIndex?: number | undefined;
             beforeClose?: import("lkt-vue-kernel").ValidBeforeCloseModal;
             item?: LktObject | undefined;
             confirmButton?: /*elided*/ any | undefined;
@@ -91,6 +90,11 @@ declare const safeCreateButton: import("vue").Ref<{
         } | undefined;
         imposter?: boolean | undefined;
         external?: boolean | undefined;
+        text?: import("lkt-vue-kernel").ValidTextValue;
+        events?: {
+            click?: Function | undefined;
+        } | undefined;
+        onClick?: Function | undefined;
     } | {
         type: import("lkt-vue-kernel").AnchorType;
         to?: string | {
@@ -120,6 +124,10 @@ declare const safeCreateButton: import("vue").Ref<{
         confirmData: LktObject;
         imposter: boolean;
         external: boolean;
+        text?: import("lkt-vue-kernel").ValidTextValue;
+        events?: {
+            click?: Function | undefined;
+        } | undefined;
         getHref: () => string;
         feed: (data?: LktObject, target?: import("lkt-vue-kernel").Anchor | undefined) => void;
         assignProp: (key: string, value: any) => void;
@@ -127,10 +135,13 @@ declare const safeCreateButton: import("vue").Ref<{
     resource?: string | undefined;
     resourceData?: LktObject | undefined;
     modal?: import("lkt-vue-kernel").ValidModalName;
-    modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
-    modalData?: {
+    modalKey?: import("lkt-vue-kernel").ValidModalKey;
+    modalData?: Function | {
         [x: string]: any;
         [x: number]: any;
+        modalName?: import("lkt-vue-kernel").ValidModalName;
+        modalKey?: import("lkt-vue-kernel").ValidModalKey;
+        zIndex?: number | undefined;
         type?: import("lkt-vue-kernel").ModalType | undefined;
         size?: string | undefined;
         preTitle?: string | undefined;
@@ -138,24 +149,24 @@ declare const safeCreateButton: import("vue").Ref<{
         title?: string | undefined;
         closeIcon?: string | undefined;
         closeConfirm?: import("lkt-vue-kernel").ValidModalName;
-        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey;
         showClose?: boolean | undefined;
         disabledClose?: boolean | undefined;
         disabledVeilClick?: boolean | undefined;
         hiddenFooter?: boolean | undefined;
-        modalName?: import("lkt-vue-kernel").ValidModalName;
-        modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
-        zIndex?: number | undefined;
         beforeClose?: import("lkt-vue-kernel").ValidBeforeCloseModal;
         item?: LktObject | undefined;
         confirmButton?: /*elided*/ any | undefined;
         cancelButton?: /*elided*/ any | undefined;
     } | undefined;
     confirmModal?: import("lkt-vue-kernel").ValidModalName;
-    confirmModalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+    confirmModalKey?: import("lkt-vue-kernel").ValidModalKey;
     confirmData?: {
         [x: string]: any;
         [x: number]: any;
+        modalName?: import("lkt-vue-kernel").ValidModalName;
+        modalKey?: import("lkt-vue-kernel").ValidModalKey;
+        zIndex?: number | undefined;
         type?: import("lkt-vue-kernel").ModalType | undefined;
         size?: string | undefined;
         preTitle?: string | undefined;
@@ -163,14 +174,11 @@ declare const safeCreateButton: import("vue").Ref<{
         title?: string | undefined;
         closeIcon?: string | undefined;
         closeConfirm?: import("lkt-vue-kernel").ValidModalName;
-        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey;
         showClose?: boolean | undefined;
         disabledClose?: boolean | undefined;
         disabledVeilClick?: boolean | undefined;
         hiddenFooter?: boolean | undefined;
-        modalName?: import("lkt-vue-kernel").ValidModalName;
-        modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
-        zIndex?: number | undefined;
         beforeClose?: import("lkt-vue-kernel").ValidBeforeCloseModal;
         item?: LktObject | undefined;
         confirmButton?: /*elided*/ any | undefined;
@@ -178,7 +186,7 @@ declare const safeCreateButton: import("vue").Ref<{
     } | undefined;
     modalCallbacks?: {
         modalName: import("lkt-vue-kernel").ValidModalName;
-        modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+        modalKey?: import("lkt-vue-kernel").ValidModalKey;
         action: import("lkt-vue-kernel").ModalCallbackAction;
         method?: string | undefined;
         args?: LktObject | undefined;
@@ -197,6 +205,10 @@ declare const safeCreateButton: import("vue").Ref<{
         referrer?: HTMLElement | undefined;
         locationY?: import("lkt-vue-kernel").TooltipLocationY | undefined;
         locationX?: import("lkt-vue-kernel").TooltipLocationX | undefined;
+        showOnReferrerHover?: boolean | undefined;
+        showOnReferrerHoverDelay?: number | undefined;
+        hideOnReferrerLeave?: boolean | undefined;
+        hideOnReferrerLeaveDelay?: number | undefined;
     } | undefined;
     splitIcon?: string | undefined;
     showTooltipOnHover?: boolean | undefined;
@@ -206,7 +218,9 @@ declare const safeCreateButton: import("vue").Ref<{
     tabindex?: import("lkt-vue-kernel").ValidTabIndex;
     prop?: LktObject | undefined;
     clickRef?: (Element | import("vue").VueElement) | undefined;
-    onClick?: Function | undefined;
+    events?: {
+        click?: Function | undefined;
+    } | undefined;
 }, Partial<ButtonConfig> | {
     type?: import("lkt-vue-kernel").ButtonType | undefined;
     name?: string | undefined;
@@ -222,12 +236,12 @@ declare const safeCreateButton: import("vue").Ref<{
     iconEnd?: string | undefined;
     img?: string | undefined;
     checked?: boolean | undefined;
-    textOn?: string | number | undefined | undefined;
-    textOff?: string | number | undefined | undefined;
-    iconOn?: string | number | undefined | undefined;
-    iconOff?: string | number | undefined | undefined;
-    iconEndOn?: string | number | undefined | undefined;
-    iconEndOff?: string | number | undefined | undefined;
+    textOn?: import("lkt-vue-kernel").ValidTextValue;
+    textOff?: import("lkt-vue-kernel").ValidTextValue;
+    iconOn?: import("lkt-vue-kernel").ValidTextValue;
+    iconOff?: import("lkt-vue-kernel").ValidTextValue;
+    iconEndOn?: import("lkt-vue-kernel").ValidTextValue;
+    iconEndOff?: import("lkt-vue-kernel").ValidTextValue;
     dot?: import("lkt-vue-kernel").ValidButtonDot | undefined;
     anchor?: {
         type?: import("lkt-vue-kernel").AnchorType | undefined;
@@ -252,12 +266,14 @@ declare const safeCreateButton: import("vue").Ref<{
         isActive?: boolean | undefined;
         downloadFileName?: string | undefined;
         disabled?: boolean | undefined;
-        onClick?: Function | undefined;
         confirmModal?: import("lkt-vue-kernel").ValidModalName;
-        confirmModalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+        confirmModalKey?: import("lkt-vue-kernel").ValidModalKey;
         confirmData?: {
             [x: string]: any;
             [x: number]: any;
+            modalName?: import("lkt-vue-kernel").ValidModalName;
+            modalKey?: import("lkt-vue-kernel").ValidModalKey;
+            zIndex?: number | undefined;
             type?: import("lkt-vue-kernel").ModalType | undefined;
             size?: string | undefined;
             preTitle?: string | undefined;
@@ -265,14 +281,11 @@ declare const safeCreateButton: import("vue").Ref<{
             title?: string | undefined;
             closeIcon?: string | undefined;
             closeConfirm?: import("lkt-vue-kernel").ValidModalName;
-            closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+            closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey;
             showClose?: boolean | undefined;
             disabledClose?: boolean | undefined;
             disabledVeilClick?: boolean | undefined;
             hiddenFooter?: boolean | undefined;
-            modalName?: import("lkt-vue-kernel").ValidModalName;
-            modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
-            zIndex?: number | undefined;
             beforeClose?: import("lkt-vue-kernel").ValidBeforeCloseModal;
             item?: LktObject | undefined;
             confirmButton?: /*elided*/ any | undefined;
@@ -280,6 +293,11 @@ declare const safeCreateButton: import("vue").Ref<{
         } | undefined;
         imposter?: boolean | undefined;
         external?: boolean | undefined;
+        text?: import("lkt-vue-kernel").ValidTextValue;
+        events?: {
+            click?: Function | undefined;
+        } | undefined;
+        onClick?: Function | undefined;
     } | {
         type: import("lkt-vue-kernel").AnchorType;
         to?: string | {
@@ -309,6 +327,10 @@ declare const safeCreateButton: import("vue").Ref<{
         confirmData: LktObject;
         imposter: boolean;
         external: boolean;
+        text?: import("lkt-vue-kernel").ValidTextValue;
+        events?: {
+            click?: Function | undefined;
+        } | undefined;
         getHref: () => string;
         feed: (data?: LktObject, target?: import("lkt-vue-kernel").Anchor | undefined) => void;
         assignProp: (key: string, value: any) => void;
@@ -316,10 +338,13 @@ declare const safeCreateButton: import("vue").Ref<{
     resource?: string | undefined;
     resourceData?: LktObject | undefined;
     modal?: import("lkt-vue-kernel").ValidModalName;
-    modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
-    modalData?: {
+    modalKey?: import("lkt-vue-kernel").ValidModalKey;
+    modalData?: Function | {
         [x: string]: any;
         [x: number]: any;
+        modalName?: import("lkt-vue-kernel").ValidModalName;
+        modalKey?: import("lkt-vue-kernel").ValidModalKey;
+        zIndex?: number | undefined;
         type?: import("lkt-vue-kernel").ModalType | undefined;
         size?: string | undefined;
         preTitle?: string | undefined;
@@ -327,24 +352,24 @@ declare const safeCreateButton: import("vue").Ref<{
         title?: string | undefined;
         closeIcon?: string | undefined;
         closeConfirm?: import("lkt-vue-kernel").ValidModalName;
-        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey;
         showClose?: boolean | undefined;
         disabledClose?: boolean | undefined;
         disabledVeilClick?: boolean | undefined;
         hiddenFooter?: boolean | undefined;
-        modalName?: import("lkt-vue-kernel").ValidModalName;
-        modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
-        zIndex?: number | undefined;
         beforeClose?: import("lkt-vue-kernel").ValidBeforeCloseModal;
         item?: LktObject | undefined;
         confirmButton?: /*elided*/ any | undefined;
         cancelButton?: /*elided*/ any | undefined;
     } | undefined;
     confirmModal?: import("lkt-vue-kernel").ValidModalName;
-    confirmModalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+    confirmModalKey?: import("lkt-vue-kernel").ValidModalKey;
     confirmData?: {
         [x: string]: any;
         [x: number]: any;
+        modalName?: import("lkt-vue-kernel").ValidModalName;
+        modalKey?: import("lkt-vue-kernel").ValidModalKey;
+        zIndex?: number | undefined;
         type?: import("lkt-vue-kernel").ModalType | undefined;
         size?: string | undefined;
         preTitle?: string | undefined;
@@ -352,14 +377,11 @@ declare const safeCreateButton: import("vue").Ref<{
         title?: string | undefined;
         closeIcon?: string | undefined;
         closeConfirm?: import("lkt-vue-kernel").ValidModalName;
-        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey;
         showClose?: boolean | undefined;
         disabledClose?: boolean | undefined;
         disabledVeilClick?: boolean | undefined;
         hiddenFooter?: boolean | undefined;
-        modalName?: import("lkt-vue-kernel").ValidModalName;
-        modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
-        zIndex?: number | undefined;
         beforeClose?: import("lkt-vue-kernel").ValidBeforeCloseModal;
         item?: LktObject | undefined;
         confirmButton?: /*elided*/ any | undefined;
@@ -367,7 +389,7 @@ declare const safeCreateButton: import("vue").Ref<{
     } | undefined;
     modalCallbacks?: {
         modalName: import("lkt-vue-kernel").ValidModalName;
-        modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+        modalKey?: import("lkt-vue-kernel").ValidModalKey;
         action: import("lkt-vue-kernel").ModalCallbackAction;
         method?: string | undefined;
         args?: LktObject | undefined;
@@ -386,6 +408,10 @@ declare const safeCreateButton: import("vue").Ref<{
         referrer?: HTMLElement | undefined;
         locationY?: import("lkt-vue-kernel").TooltipLocationY | undefined;
         locationX?: import("lkt-vue-kernel").TooltipLocationX | undefined;
+        showOnReferrerHover?: boolean | undefined;
+        showOnReferrerHoverDelay?: number | undefined;
+        hideOnReferrerLeave?: boolean | undefined;
+        hideOnReferrerLeaveDelay?: number | undefined;
     } | undefined;
     splitIcon?: string | undefined;
     showTooltipOnHover?: boolean | undefined;
@@ -395,7 +421,9 @@ declare const safeCreateButton: import("vue").Ref<{
     tabindex?: import("lkt-vue-kernel").ValidTabIndex;
     prop?: LktObject | undefined;
     clickRef?: (Element | import("vue").VueElement) | undefined;
-    onClick?: Function | undefined;
+    events?: {
+        click?: Function | undefined;
+    } | undefined;
 }>, safeUpdateButton: import("vue").Ref<{
     type?: import("lkt-vue-kernel").ButtonType | undefined;
     name?: string | undefined;
@@ -411,12 +439,12 @@ declare const safeCreateButton: import("vue").Ref<{
     iconEnd?: string | undefined;
     img?: string | undefined;
     checked?: boolean | undefined;
-    textOn?: string | number | undefined | undefined;
-    textOff?: string | number | undefined | undefined;
-    iconOn?: string | number | undefined | undefined;
-    iconOff?: string | number | undefined | undefined;
-    iconEndOn?: string | number | undefined | undefined;
-    iconEndOff?: string | number | undefined | undefined;
+    textOn?: import("lkt-vue-kernel").ValidTextValue;
+    textOff?: import("lkt-vue-kernel").ValidTextValue;
+    iconOn?: import("lkt-vue-kernel").ValidTextValue;
+    iconOff?: import("lkt-vue-kernel").ValidTextValue;
+    iconEndOn?: import("lkt-vue-kernel").ValidTextValue;
+    iconEndOff?: import("lkt-vue-kernel").ValidTextValue;
     dot?: import("lkt-vue-kernel").ValidButtonDot | undefined;
     anchor?: {
         type?: import("lkt-vue-kernel").AnchorType | undefined;
@@ -441,12 +469,14 @@ declare const safeCreateButton: import("vue").Ref<{
         isActive?: boolean | undefined;
         downloadFileName?: string | undefined;
         disabled?: boolean | undefined;
-        onClick?: Function | undefined;
         confirmModal?: import("lkt-vue-kernel").ValidModalName;
-        confirmModalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+        confirmModalKey?: import("lkt-vue-kernel").ValidModalKey;
         confirmData?: {
             [x: string]: any;
             [x: number]: any;
+            modalName?: import("lkt-vue-kernel").ValidModalName;
+            modalKey?: import("lkt-vue-kernel").ValidModalKey;
+            zIndex?: number | undefined;
             type?: import("lkt-vue-kernel").ModalType | undefined;
             size?: string | undefined;
             preTitle?: string | undefined;
@@ -454,14 +484,11 @@ declare const safeCreateButton: import("vue").Ref<{
             title?: string | undefined;
             closeIcon?: string | undefined;
             closeConfirm?: import("lkt-vue-kernel").ValidModalName;
-            closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+            closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey;
             showClose?: boolean | undefined;
             disabledClose?: boolean | undefined;
             disabledVeilClick?: boolean | undefined;
             hiddenFooter?: boolean | undefined;
-            modalName?: import("lkt-vue-kernel").ValidModalName;
-            modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
-            zIndex?: number | undefined;
             beforeClose?: import("lkt-vue-kernel").ValidBeforeCloseModal;
             item?: LktObject | undefined;
             confirmButton?: /*elided*/ any | undefined;
@@ -469,6 +496,11 @@ declare const safeCreateButton: import("vue").Ref<{
         } | undefined;
         imposter?: boolean | undefined;
         external?: boolean | undefined;
+        text?: import("lkt-vue-kernel").ValidTextValue;
+        events?: {
+            click?: Function | undefined;
+        } | undefined;
+        onClick?: Function | undefined;
     } | {
         type: import("lkt-vue-kernel").AnchorType;
         to?: string | {
@@ -498,6 +530,10 @@ declare const safeCreateButton: import("vue").Ref<{
         confirmData: LktObject;
         imposter: boolean;
         external: boolean;
+        text?: import("lkt-vue-kernel").ValidTextValue;
+        events?: {
+            click?: Function | undefined;
+        } | undefined;
         getHref: () => string;
         feed: (data?: LktObject, target?: import("lkt-vue-kernel").Anchor | undefined) => void;
         assignProp: (key: string, value: any) => void;
@@ -505,10 +541,13 @@ declare const safeCreateButton: import("vue").Ref<{
     resource?: string | undefined;
     resourceData?: LktObject | undefined;
     modal?: import("lkt-vue-kernel").ValidModalName;
-    modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
-    modalData?: {
+    modalKey?: import("lkt-vue-kernel").ValidModalKey;
+    modalData?: Function | {
         [x: string]: any;
         [x: number]: any;
+        modalName?: import("lkt-vue-kernel").ValidModalName;
+        modalKey?: import("lkt-vue-kernel").ValidModalKey;
+        zIndex?: number | undefined;
         type?: import("lkt-vue-kernel").ModalType | undefined;
         size?: string | undefined;
         preTitle?: string | undefined;
@@ -516,24 +555,24 @@ declare const safeCreateButton: import("vue").Ref<{
         title?: string | undefined;
         closeIcon?: string | undefined;
         closeConfirm?: import("lkt-vue-kernel").ValidModalName;
-        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey;
         showClose?: boolean | undefined;
         disabledClose?: boolean | undefined;
         disabledVeilClick?: boolean | undefined;
         hiddenFooter?: boolean | undefined;
-        modalName?: import("lkt-vue-kernel").ValidModalName;
-        modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
-        zIndex?: number | undefined;
         beforeClose?: import("lkt-vue-kernel").ValidBeforeCloseModal;
         item?: LktObject | undefined;
         confirmButton?: /*elided*/ any | undefined;
         cancelButton?: /*elided*/ any | undefined;
     } | undefined;
     confirmModal?: import("lkt-vue-kernel").ValidModalName;
-    confirmModalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+    confirmModalKey?: import("lkt-vue-kernel").ValidModalKey;
     confirmData?: {
         [x: string]: any;
         [x: number]: any;
+        modalName?: import("lkt-vue-kernel").ValidModalName;
+        modalKey?: import("lkt-vue-kernel").ValidModalKey;
+        zIndex?: number | undefined;
         type?: import("lkt-vue-kernel").ModalType | undefined;
         size?: string | undefined;
         preTitle?: string | undefined;
@@ -541,14 +580,11 @@ declare const safeCreateButton: import("vue").Ref<{
         title?: string | undefined;
         closeIcon?: string | undefined;
         closeConfirm?: import("lkt-vue-kernel").ValidModalName;
-        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey;
         showClose?: boolean | undefined;
         disabledClose?: boolean | undefined;
         disabledVeilClick?: boolean | undefined;
         hiddenFooter?: boolean | undefined;
-        modalName?: import("lkt-vue-kernel").ValidModalName;
-        modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
-        zIndex?: number | undefined;
         beforeClose?: import("lkt-vue-kernel").ValidBeforeCloseModal;
         item?: LktObject | undefined;
         confirmButton?: /*elided*/ any | undefined;
@@ -556,7 +592,7 @@ declare const safeCreateButton: import("vue").Ref<{
     } | undefined;
     modalCallbacks?: {
         modalName: import("lkt-vue-kernel").ValidModalName;
-        modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+        modalKey?: import("lkt-vue-kernel").ValidModalKey;
         action: import("lkt-vue-kernel").ModalCallbackAction;
         method?: string | undefined;
         args?: LktObject | undefined;
@@ -575,6 +611,10 @@ declare const safeCreateButton: import("vue").Ref<{
         referrer?: HTMLElement | undefined;
         locationY?: import("lkt-vue-kernel").TooltipLocationY | undefined;
         locationX?: import("lkt-vue-kernel").TooltipLocationX | undefined;
+        showOnReferrerHover?: boolean | undefined;
+        showOnReferrerHoverDelay?: number | undefined;
+        hideOnReferrerLeave?: boolean | undefined;
+        hideOnReferrerLeaveDelay?: number | undefined;
     } | undefined;
     splitIcon?: string | undefined;
     showTooltipOnHover?: boolean | undefined;
@@ -584,7 +624,9 @@ declare const safeCreateButton: import("vue").Ref<{
     tabindex?: import("lkt-vue-kernel").ValidTabIndex;
     prop?: LktObject | undefined;
     clickRef?: (Element | import("vue").VueElement) | undefined;
-    onClick?: Function | undefined;
+    events?: {
+        click?: Function | undefined;
+    } | undefined;
 }, Partial<ButtonConfig> | {
     type?: import("lkt-vue-kernel").ButtonType | undefined;
     name?: string | undefined;
@@ -600,12 +642,12 @@ declare const safeCreateButton: import("vue").Ref<{
     iconEnd?: string | undefined;
     img?: string | undefined;
     checked?: boolean | undefined;
-    textOn?: string | number | undefined | undefined;
-    textOff?: string | number | undefined | undefined;
-    iconOn?: string | number | undefined | undefined;
-    iconOff?: string | number | undefined | undefined;
-    iconEndOn?: string | number | undefined | undefined;
-    iconEndOff?: string | number | undefined | undefined;
+    textOn?: import("lkt-vue-kernel").ValidTextValue;
+    textOff?: import("lkt-vue-kernel").ValidTextValue;
+    iconOn?: import("lkt-vue-kernel").ValidTextValue;
+    iconOff?: import("lkt-vue-kernel").ValidTextValue;
+    iconEndOn?: import("lkt-vue-kernel").ValidTextValue;
+    iconEndOff?: import("lkt-vue-kernel").ValidTextValue;
     dot?: import("lkt-vue-kernel").ValidButtonDot | undefined;
     anchor?: {
         type?: import("lkt-vue-kernel").AnchorType | undefined;
@@ -630,12 +672,14 @@ declare const safeCreateButton: import("vue").Ref<{
         isActive?: boolean | undefined;
         downloadFileName?: string | undefined;
         disabled?: boolean | undefined;
-        onClick?: Function | undefined;
         confirmModal?: import("lkt-vue-kernel").ValidModalName;
-        confirmModalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+        confirmModalKey?: import("lkt-vue-kernel").ValidModalKey;
         confirmData?: {
             [x: string]: any;
             [x: number]: any;
+            modalName?: import("lkt-vue-kernel").ValidModalName;
+            modalKey?: import("lkt-vue-kernel").ValidModalKey;
+            zIndex?: number | undefined;
             type?: import("lkt-vue-kernel").ModalType | undefined;
             size?: string | undefined;
             preTitle?: string | undefined;
@@ -643,14 +687,11 @@ declare const safeCreateButton: import("vue").Ref<{
             title?: string | undefined;
             closeIcon?: string | undefined;
             closeConfirm?: import("lkt-vue-kernel").ValidModalName;
-            closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+            closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey;
             showClose?: boolean | undefined;
             disabledClose?: boolean | undefined;
             disabledVeilClick?: boolean | undefined;
             hiddenFooter?: boolean | undefined;
-            modalName?: import("lkt-vue-kernel").ValidModalName;
-            modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
-            zIndex?: number | undefined;
             beforeClose?: import("lkt-vue-kernel").ValidBeforeCloseModal;
             item?: LktObject | undefined;
             confirmButton?: /*elided*/ any | undefined;
@@ -658,6 +699,11 @@ declare const safeCreateButton: import("vue").Ref<{
         } | undefined;
         imposter?: boolean | undefined;
         external?: boolean | undefined;
+        text?: import("lkt-vue-kernel").ValidTextValue;
+        events?: {
+            click?: Function | undefined;
+        } | undefined;
+        onClick?: Function | undefined;
     } | {
         type: import("lkt-vue-kernel").AnchorType;
         to?: string | {
@@ -687,6 +733,10 @@ declare const safeCreateButton: import("vue").Ref<{
         confirmData: LktObject;
         imposter: boolean;
         external: boolean;
+        text?: import("lkt-vue-kernel").ValidTextValue;
+        events?: {
+            click?: Function | undefined;
+        } | undefined;
         getHref: () => string;
         feed: (data?: LktObject, target?: import("lkt-vue-kernel").Anchor | undefined) => void;
         assignProp: (key: string, value: any) => void;
@@ -694,10 +744,13 @@ declare const safeCreateButton: import("vue").Ref<{
     resource?: string | undefined;
     resourceData?: LktObject | undefined;
     modal?: import("lkt-vue-kernel").ValidModalName;
-    modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
-    modalData?: {
+    modalKey?: import("lkt-vue-kernel").ValidModalKey;
+    modalData?: Function | {
         [x: string]: any;
         [x: number]: any;
+        modalName?: import("lkt-vue-kernel").ValidModalName;
+        modalKey?: import("lkt-vue-kernel").ValidModalKey;
+        zIndex?: number | undefined;
         type?: import("lkt-vue-kernel").ModalType | undefined;
         size?: string | undefined;
         preTitle?: string | undefined;
@@ -705,24 +758,24 @@ declare const safeCreateButton: import("vue").Ref<{
         title?: string | undefined;
         closeIcon?: string | undefined;
         closeConfirm?: import("lkt-vue-kernel").ValidModalName;
-        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey;
         showClose?: boolean | undefined;
         disabledClose?: boolean | undefined;
         disabledVeilClick?: boolean | undefined;
         hiddenFooter?: boolean | undefined;
-        modalName?: import("lkt-vue-kernel").ValidModalName;
-        modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
-        zIndex?: number | undefined;
         beforeClose?: import("lkt-vue-kernel").ValidBeforeCloseModal;
         item?: LktObject | undefined;
         confirmButton?: /*elided*/ any | undefined;
         cancelButton?: /*elided*/ any | undefined;
     } | undefined;
     confirmModal?: import("lkt-vue-kernel").ValidModalName;
-    confirmModalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+    confirmModalKey?: import("lkt-vue-kernel").ValidModalKey;
     confirmData?: {
         [x: string]: any;
         [x: number]: any;
+        modalName?: import("lkt-vue-kernel").ValidModalName;
+        modalKey?: import("lkt-vue-kernel").ValidModalKey;
+        zIndex?: number | undefined;
         type?: import("lkt-vue-kernel").ModalType | undefined;
         size?: string | undefined;
         preTitle?: string | undefined;
@@ -730,14 +783,11 @@ declare const safeCreateButton: import("vue").Ref<{
         title?: string | undefined;
         closeIcon?: string | undefined;
         closeConfirm?: import("lkt-vue-kernel").ValidModalName;
-        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey;
         showClose?: boolean | undefined;
         disabledClose?: boolean | undefined;
         disabledVeilClick?: boolean | undefined;
         hiddenFooter?: boolean | undefined;
-        modalName?: import("lkt-vue-kernel").ValidModalName;
-        modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
-        zIndex?: number | undefined;
         beforeClose?: import("lkt-vue-kernel").ValidBeforeCloseModal;
         item?: LktObject | undefined;
         confirmButton?: /*elided*/ any | undefined;
@@ -745,7 +795,7 @@ declare const safeCreateButton: import("vue").Ref<{
     } | undefined;
     modalCallbacks?: {
         modalName: import("lkt-vue-kernel").ValidModalName;
-        modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+        modalKey?: import("lkt-vue-kernel").ValidModalKey;
         action: import("lkt-vue-kernel").ModalCallbackAction;
         method?: string | undefined;
         args?: LktObject | undefined;
@@ -764,6 +814,10 @@ declare const safeCreateButton: import("vue").Ref<{
         referrer?: HTMLElement | undefined;
         locationY?: import("lkt-vue-kernel").TooltipLocationY | undefined;
         locationX?: import("lkt-vue-kernel").TooltipLocationX | undefined;
+        showOnReferrerHover?: boolean | undefined;
+        showOnReferrerHoverDelay?: number | undefined;
+        hideOnReferrerLeave?: boolean | undefined;
+        hideOnReferrerLeaveDelay?: number | undefined;
     } | undefined;
     splitIcon?: string | undefined;
     showTooltipOnHover?: boolean | undefined;
@@ -773,7 +827,9 @@ declare const safeCreateButton: import("vue").Ref<{
     tabindex?: import("lkt-vue-kernel").ValidTabIndex;
     prop?: LktObject | undefined;
     clickRef?: (Element | import("vue").VueElement) | undefined;
-    onClick?: Function | undefined;
+    events?: {
+        click?: Function | undefined;
+    } | undefined;
 }>, safeDropButton: import("vue").Ref<{
     type?: import("lkt-vue-kernel").ButtonType | undefined;
     name?: string | undefined;
@@ -789,12 +845,12 @@ declare const safeCreateButton: import("vue").Ref<{
     iconEnd?: string | undefined;
     img?: string | undefined;
     checked?: boolean | undefined;
-    textOn?: string | number | undefined | undefined;
-    textOff?: string | number | undefined | undefined;
-    iconOn?: string | number | undefined | undefined;
-    iconOff?: string | number | undefined | undefined;
-    iconEndOn?: string | number | undefined | undefined;
-    iconEndOff?: string | number | undefined | undefined;
+    textOn?: import("lkt-vue-kernel").ValidTextValue;
+    textOff?: import("lkt-vue-kernel").ValidTextValue;
+    iconOn?: import("lkt-vue-kernel").ValidTextValue;
+    iconOff?: import("lkt-vue-kernel").ValidTextValue;
+    iconEndOn?: import("lkt-vue-kernel").ValidTextValue;
+    iconEndOff?: import("lkt-vue-kernel").ValidTextValue;
     dot?: import("lkt-vue-kernel").ValidButtonDot | undefined;
     anchor?: {
         type?: import("lkt-vue-kernel").AnchorType | undefined;
@@ -819,12 +875,14 @@ declare const safeCreateButton: import("vue").Ref<{
         isActive?: boolean | undefined;
         downloadFileName?: string | undefined;
         disabled?: boolean | undefined;
-        onClick?: Function | undefined;
         confirmModal?: import("lkt-vue-kernel").ValidModalName;
-        confirmModalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+        confirmModalKey?: import("lkt-vue-kernel").ValidModalKey;
         confirmData?: {
             [x: string]: any;
             [x: number]: any;
+            modalName?: import("lkt-vue-kernel").ValidModalName;
+            modalKey?: import("lkt-vue-kernel").ValidModalKey;
+            zIndex?: number | undefined;
             type?: import("lkt-vue-kernel").ModalType | undefined;
             size?: string | undefined;
             preTitle?: string | undefined;
@@ -832,14 +890,11 @@ declare const safeCreateButton: import("vue").Ref<{
             title?: string | undefined;
             closeIcon?: string | undefined;
             closeConfirm?: import("lkt-vue-kernel").ValidModalName;
-            closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+            closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey;
             showClose?: boolean | undefined;
             disabledClose?: boolean | undefined;
             disabledVeilClick?: boolean | undefined;
             hiddenFooter?: boolean | undefined;
-            modalName?: import("lkt-vue-kernel").ValidModalName;
-            modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
-            zIndex?: number | undefined;
             beforeClose?: import("lkt-vue-kernel").ValidBeforeCloseModal;
             item?: LktObject | undefined;
             confirmButton?: /*elided*/ any | undefined;
@@ -847,6 +902,11 @@ declare const safeCreateButton: import("vue").Ref<{
         } | undefined;
         imposter?: boolean | undefined;
         external?: boolean | undefined;
+        text?: import("lkt-vue-kernel").ValidTextValue;
+        events?: {
+            click?: Function | undefined;
+        } | undefined;
+        onClick?: Function | undefined;
     } | {
         type: import("lkt-vue-kernel").AnchorType;
         to?: string | {
@@ -876,6 +936,10 @@ declare const safeCreateButton: import("vue").Ref<{
         confirmData: LktObject;
         imposter: boolean;
         external: boolean;
+        text?: import("lkt-vue-kernel").ValidTextValue;
+        events?: {
+            click?: Function | undefined;
+        } | undefined;
         getHref: () => string;
         feed: (data?: LktObject, target?: import("lkt-vue-kernel").Anchor | undefined) => void;
         assignProp: (key: string, value: any) => void;
@@ -883,10 +947,13 @@ declare const safeCreateButton: import("vue").Ref<{
     resource?: string | undefined;
     resourceData?: LktObject | undefined;
     modal?: import("lkt-vue-kernel").ValidModalName;
-    modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
-    modalData?: {
+    modalKey?: import("lkt-vue-kernel").ValidModalKey;
+    modalData?: Function | {
         [x: string]: any;
         [x: number]: any;
+        modalName?: import("lkt-vue-kernel").ValidModalName;
+        modalKey?: import("lkt-vue-kernel").ValidModalKey;
+        zIndex?: number | undefined;
         type?: import("lkt-vue-kernel").ModalType | undefined;
         size?: string | undefined;
         preTitle?: string | undefined;
@@ -894,24 +961,24 @@ declare const safeCreateButton: import("vue").Ref<{
         title?: string | undefined;
         closeIcon?: string | undefined;
         closeConfirm?: import("lkt-vue-kernel").ValidModalName;
-        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey;
         showClose?: boolean | undefined;
         disabledClose?: boolean | undefined;
         disabledVeilClick?: boolean | undefined;
         hiddenFooter?: boolean | undefined;
-        modalName?: import("lkt-vue-kernel").ValidModalName;
-        modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
-        zIndex?: number | undefined;
         beforeClose?: import("lkt-vue-kernel").ValidBeforeCloseModal;
         item?: LktObject | undefined;
         confirmButton?: /*elided*/ any | undefined;
         cancelButton?: /*elided*/ any | undefined;
     } | undefined;
     confirmModal?: import("lkt-vue-kernel").ValidModalName;
-    confirmModalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+    confirmModalKey?: import("lkt-vue-kernel").ValidModalKey;
     confirmData?: {
         [x: string]: any;
         [x: number]: any;
+        modalName?: import("lkt-vue-kernel").ValidModalName;
+        modalKey?: import("lkt-vue-kernel").ValidModalKey;
+        zIndex?: number | undefined;
         type?: import("lkt-vue-kernel").ModalType | undefined;
         size?: string | undefined;
         preTitle?: string | undefined;
@@ -919,14 +986,11 @@ declare const safeCreateButton: import("vue").Ref<{
         title?: string | undefined;
         closeIcon?: string | undefined;
         closeConfirm?: import("lkt-vue-kernel").ValidModalName;
-        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey;
         showClose?: boolean | undefined;
         disabledClose?: boolean | undefined;
         disabledVeilClick?: boolean | undefined;
         hiddenFooter?: boolean | undefined;
-        modalName?: import("lkt-vue-kernel").ValidModalName;
-        modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
-        zIndex?: number | undefined;
         beforeClose?: import("lkt-vue-kernel").ValidBeforeCloseModal;
         item?: LktObject | undefined;
         confirmButton?: /*elided*/ any | undefined;
@@ -934,7 +998,7 @@ declare const safeCreateButton: import("vue").Ref<{
     } | undefined;
     modalCallbacks?: {
         modalName: import("lkt-vue-kernel").ValidModalName;
-        modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+        modalKey?: import("lkt-vue-kernel").ValidModalKey;
         action: import("lkt-vue-kernel").ModalCallbackAction;
         method?: string | undefined;
         args?: LktObject | undefined;
@@ -953,6 +1017,10 @@ declare const safeCreateButton: import("vue").Ref<{
         referrer?: HTMLElement | undefined;
         locationY?: import("lkt-vue-kernel").TooltipLocationY | undefined;
         locationX?: import("lkt-vue-kernel").TooltipLocationX | undefined;
+        showOnReferrerHover?: boolean | undefined;
+        showOnReferrerHoverDelay?: number | undefined;
+        hideOnReferrerLeave?: boolean | undefined;
+        hideOnReferrerLeaveDelay?: number | undefined;
     } | undefined;
     splitIcon?: string | undefined;
     showTooltipOnHover?: boolean | undefined;
@@ -962,7 +1030,9 @@ declare const safeCreateButton: import("vue").Ref<{
     tabindex?: import("lkt-vue-kernel").ValidTabIndex;
     prop?: LktObject | undefined;
     clickRef?: (Element | import("vue").VueElement) | undefined;
-    onClick?: Function | undefined;
+    events?: {
+        click?: Function | undefined;
+    } | undefined;
 }, Partial<ButtonConfig> | {
     type?: import("lkt-vue-kernel").ButtonType | undefined;
     name?: string | undefined;
@@ -978,12 +1048,12 @@ declare const safeCreateButton: import("vue").Ref<{
     iconEnd?: string | undefined;
     img?: string | undefined;
     checked?: boolean | undefined;
-    textOn?: string | number | undefined | undefined;
-    textOff?: string | number | undefined | undefined;
-    iconOn?: string | number | undefined | undefined;
-    iconOff?: string | number | undefined | undefined;
-    iconEndOn?: string | number | undefined | undefined;
-    iconEndOff?: string | number | undefined | undefined;
+    textOn?: import("lkt-vue-kernel").ValidTextValue;
+    textOff?: import("lkt-vue-kernel").ValidTextValue;
+    iconOn?: import("lkt-vue-kernel").ValidTextValue;
+    iconOff?: import("lkt-vue-kernel").ValidTextValue;
+    iconEndOn?: import("lkt-vue-kernel").ValidTextValue;
+    iconEndOff?: import("lkt-vue-kernel").ValidTextValue;
     dot?: import("lkt-vue-kernel").ValidButtonDot | undefined;
     anchor?: {
         type?: import("lkt-vue-kernel").AnchorType | undefined;
@@ -1008,12 +1078,14 @@ declare const safeCreateButton: import("vue").Ref<{
         isActive?: boolean | undefined;
         downloadFileName?: string | undefined;
         disabled?: boolean | undefined;
-        onClick?: Function | undefined;
         confirmModal?: import("lkt-vue-kernel").ValidModalName;
-        confirmModalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+        confirmModalKey?: import("lkt-vue-kernel").ValidModalKey;
         confirmData?: {
             [x: string]: any;
             [x: number]: any;
+            modalName?: import("lkt-vue-kernel").ValidModalName;
+            modalKey?: import("lkt-vue-kernel").ValidModalKey;
+            zIndex?: number | undefined;
             type?: import("lkt-vue-kernel").ModalType | undefined;
             size?: string | undefined;
             preTitle?: string | undefined;
@@ -1021,14 +1093,11 @@ declare const safeCreateButton: import("vue").Ref<{
             title?: string | undefined;
             closeIcon?: string | undefined;
             closeConfirm?: import("lkt-vue-kernel").ValidModalName;
-            closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+            closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey;
             showClose?: boolean | undefined;
             disabledClose?: boolean | undefined;
             disabledVeilClick?: boolean | undefined;
             hiddenFooter?: boolean | undefined;
-            modalName?: import("lkt-vue-kernel").ValidModalName;
-            modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
-            zIndex?: number | undefined;
             beforeClose?: import("lkt-vue-kernel").ValidBeforeCloseModal;
             item?: LktObject | undefined;
             confirmButton?: /*elided*/ any | undefined;
@@ -1036,6 +1105,11 @@ declare const safeCreateButton: import("vue").Ref<{
         } | undefined;
         imposter?: boolean | undefined;
         external?: boolean | undefined;
+        text?: import("lkt-vue-kernel").ValidTextValue;
+        events?: {
+            click?: Function | undefined;
+        } | undefined;
+        onClick?: Function | undefined;
     } | {
         type: import("lkt-vue-kernel").AnchorType;
         to?: string | {
@@ -1065,6 +1139,10 @@ declare const safeCreateButton: import("vue").Ref<{
         confirmData: LktObject;
         imposter: boolean;
         external: boolean;
+        text?: import("lkt-vue-kernel").ValidTextValue;
+        events?: {
+            click?: Function | undefined;
+        } | undefined;
         getHref: () => string;
         feed: (data?: LktObject, target?: import("lkt-vue-kernel").Anchor | undefined) => void;
         assignProp: (key: string, value: any) => void;
@@ -1072,10 +1150,13 @@ declare const safeCreateButton: import("vue").Ref<{
     resource?: string | undefined;
     resourceData?: LktObject | undefined;
     modal?: import("lkt-vue-kernel").ValidModalName;
-    modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
-    modalData?: {
+    modalKey?: import("lkt-vue-kernel").ValidModalKey;
+    modalData?: Function | {
         [x: string]: any;
         [x: number]: any;
+        modalName?: import("lkt-vue-kernel").ValidModalName;
+        modalKey?: import("lkt-vue-kernel").ValidModalKey;
+        zIndex?: number | undefined;
         type?: import("lkt-vue-kernel").ModalType | undefined;
         size?: string | undefined;
         preTitle?: string | undefined;
@@ -1083,24 +1164,24 @@ declare const safeCreateButton: import("vue").Ref<{
         title?: string | undefined;
         closeIcon?: string | undefined;
         closeConfirm?: import("lkt-vue-kernel").ValidModalName;
-        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey;
         showClose?: boolean | undefined;
         disabledClose?: boolean | undefined;
         disabledVeilClick?: boolean | undefined;
         hiddenFooter?: boolean | undefined;
-        modalName?: import("lkt-vue-kernel").ValidModalName;
-        modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
-        zIndex?: number | undefined;
         beforeClose?: import("lkt-vue-kernel").ValidBeforeCloseModal;
         item?: LktObject | undefined;
         confirmButton?: /*elided*/ any | undefined;
         cancelButton?: /*elided*/ any | undefined;
     } | undefined;
     confirmModal?: import("lkt-vue-kernel").ValidModalName;
-    confirmModalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+    confirmModalKey?: import("lkt-vue-kernel").ValidModalKey;
     confirmData?: {
         [x: string]: any;
         [x: number]: any;
+        modalName?: import("lkt-vue-kernel").ValidModalName;
+        modalKey?: import("lkt-vue-kernel").ValidModalKey;
+        zIndex?: number | undefined;
         type?: import("lkt-vue-kernel").ModalType | undefined;
         size?: string | undefined;
         preTitle?: string | undefined;
@@ -1108,14 +1189,11 @@ declare const safeCreateButton: import("vue").Ref<{
         title?: string | undefined;
         closeIcon?: string | undefined;
         closeConfirm?: import("lkt-vue-kernel").ValidModalName;
-        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey;
         showClose?: boolean | undefined;
         disabledClose?: boolean | undefined;
         disabledVeilClick?: boolean | undefined;
         hiddenFooter?: boolean | undefined;
-        modalName?: import("lkt-vue-kernel").ValidModalName;
-        modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
-        zIndex?: number | undefined;
         beforeClose?: import("lkt-vue-kernel").ValidBeforeCloseModal;
         item?: LktObject | undefined;
         confirmButton?: /*elided*/ any | undefined;
@@ -1123,7 +1201,7 @@ declare const safeCreateButton: import("vue").Ref<{
     } | undefined;
     modalCallbacks?: {
         modalName: import("lkt-vue-kernel").ValidModalName;
-        modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+        modalKey?: import("lkt-vue-kernel").ValidModalKey;
         action: import("lkt-vue-kernel").ModalCallbackAction;
         method?: string | undefined;
         args?: LktObject | undefined;
@@ -1142,6 +1220,10 @@ declare const safeCreateButton: import("vue").Ref<{
         referrer?: HTMLElement | undefined;
         locationY?: import("lkt-vue-kernel").TooltipLocationY | undefined;
         locationX?: import("lkt-vue-kernel").TooltipLocationX | undefined;
+        showOnReferrerHover?: boolean | undefined;
+        showOnReferrerHoverDelay?: number | undefined;
+        hideOnReferrerLeave?: boolean | undefined;
+        hideOnReferrerLeaveDelay?: number | undefined;
     } | undefined;
     splitIcon?: string | undefined;
     showTooltipOnHover?: boolean | undefined;
@@ -1151,7 +1233,9 @@ declare const safeCreateButton: import("vue").Ref<{
     tabindex?: import("lkt-vue-kernel").ValidTabIndex;
     prop?: LktObject | undefined;
     clickRef?: (Element | import("vue").VueElement) | undefined;
-    onClick?: Function | undefined;
+    events?: {
+        click?: Function | undefined;
+    } | undefined;
 }>, safeEditModeButton: import("vue").Ref<{
     type?: import("lkt-vue-kernel").ButtonType | undefined;
     name?: string | undefined;
@@ -1167,12 +1251,12 @@ declare const safeCreateButton: import("vue").Ref<{
     iconEnd?: string | undefined;
     img?: string | undefined;
     checked?: boolean | undefined;
-    textOn?: string | number | undefined | undefined;
-    textOff?: string | number | undefined | undefined;
-    iconOn?: string | number | undefined | undefined;
-    iconOff?: string | number | undefined | undefined;
-    iconEndOn?: string | number | undefined | undefined;
-    iconEndOff?: string | number | undefined | undefined;
+    textOn?: import("lkt-vue-kernel").ValidTextValue;
+    textOff?: import("lkt-vue-kernel").ValidTextValue;
+    iconOn?: import("lkt-vue-kernel").ValidTextValue;
+    iconOff?: import("lkt-vue-kernel").ValidTextValue;
+    iconEndOn?: import("lkt-vue-kernel").ValidTextValue;
+    iconEndOff?: import("lkt-vue-kernel").ValidTextValue;
     dot?: import("lkt-vue-kernel").ValidButtonDot | undefined;
     anchor?: {
         type?: import("lkt-vue-kernel").AnchorType | undefined;
@@ -1197,12 +1281,14 @@ declare const safeCreateButton: import("vue").Ref<{
         isActive?: boolean | undefined;
         downloadFileName?: string | undefined;
         disabled?: boolean | undefined;
-        onClick?: Function | undefined;
         confirmModal?: import("lkt-vue-kernel").ValidModalName;
-        confirmModalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+        confirmModalKey?: import("lkt-vue-kernel").ValidModalKey;
         confirmData?: {
             [x: string]: any;
             [x: number]: any;
+            modalName?: import("lkt-vue-kernel").ValidModalName;
+            modalKey?: import("lkt-vue-kernel").ValidModalKey;
+            zIndex?: number | undefined;
             type?: import("lkt-vue-kernel").ModalType | undefined;
             size?: string | undefined;
             preTitle?: string | undefined;
@@ -1210,14 +1296,11 @@ declare const safeCreateButton: import("vue").Ref<{
             title?: string | undefined;
             closeIcon?: string | undefined;
             closeConfirm?: import("lkt-vue-kernel").ValidModalName;
-            closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+            closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey;
             showClose?: boolean | undefined;
             disabledClose?: boolean | undefined;
             disabledVeilClick?: boolean | undefined;
             hiddenFooter?: boolean | undefined;
-            modalName?: import("lkt-vue-kernel").ValidModalName;
-            modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
-            zIndex?: number | undefined;
             beforeClose?: import("lkt-vue-kernel").ValidBeforeCloseModal;
             item?: LktObject | undefined;
             confirmButton?: /*elided*/ any | undefined;
@@ -1225,6 +1308,11 @@ declare const safeCreateButton: import("vue").Ref<{
         } | undefined;
         imposter?: boolean | undefined;
         external?: boolean | undefined;
+        text?: import("lkt-vue-kernel").ValidTextValue;
+        events?: {
+            click?: Function | undefined;
+        } | undefined;
+        onClick?: Function | undefined;
     } | {
         type: import("lkt-vue-kernel").AnchorType;
         to?: string | {
@@ -1254,6 +1342,10 @@ declare const safeCreateButton: import("vue").Ref<{
         confirmData: LktObject;
         imposter: boolean;
         external: boolean;
+        text?: import("lkt-vue-kernel").ValidTextValue;
+        events?: {
+            click?: Function | undefined;
+        } | undefined;
         getHref: () => string;
         feed: (data?: LktObject, target?: import("lkt-vue-kernel").Anchor | undefined) => void;
         assignProp: (key: string, value: any) => void;
@@ -1261,10 +1353,13 @@ declare const safeCreateButton: import("vue").Ref<{
     resource?: string | undefined;
     resourceData?: LktObject | undefined;
     modal?: import("lkt-vue-kernel").ValidModalName;
-    modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
-    modalData?: {
+    modalKey?: import("lkt-vue-kernel").ValidModalKey;
+    modalData?: Function | {
         [x: string]: any;
         [x: number]: any;
+        modalName?: import("lkt-vue-kernel").ValidModalName;
+        modalKey?: import("lkt-vue-kernel").ValidModalKey;
+        zIndex?: number | undefined;
         type?: import("lkt-vue-kernel").ModalType | undefined;
         size?: string | undefined;
         preTitle?: string | undefined;
@@ -1272,24 +1367,24 @@ declare const safeCreateButton: import("vue").Ref<{
         title?: string | undefined;
         closeIcon?: string | undefined;
         closeConfirm?: import("lkt-vue-kernel").ValidModalName;
-        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey;
         showClose?: boolean | undefined;
         disabledClose?: boolean | undefined;
         disabledVeilClick?: boolean | undefined;
         hiddenFooter?: boolean | undefined;
-        modalName?: import("lkt-vue-kernel").ValidModalName;
-        modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
-        zIndex?: number | undefined;
         beforeClose?: import("lkt-vue-kernel").ValidBeforeCloseModal;
         item?: LktObject | undefined;
         confirmButton?: /*elided*/ any | undefined;
         cancelButton?: /*elided*/ any | undefined;
     } | undefined;
     confirmModal?: import("lkt-vue-kernel").ValidModalName;
-    confirmModalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+    confirmModalKey?: import("lkt-vue-kernel").ValidModalKey;
     confirmData?: {
         [x: string]: any;
         [x: number]: any;
+        modalName?: import("lkt-vue-kernel").ValidModalName;
+        modalKey?: import("lkt-vue-kernel").ValidModalKey;
+        zIndex?: number | undefined;
         type?: import("lkt-vue-kernel").ModalType | undefined;
         size?: string | undefined;
         preTitle?: string | undefined;
@@ -1297,14 +1392,11 @@ declare const safeCreateButton: import("vue").Ref<{
         title?: string | undefined;
         closeIcon?: string | undefined;
         closeConfirm?: import("lkt-vue-kernel").ValidModalName;
-        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey;
         showClose?: boolean | undefined;
         disabledClose?: boolean | undefined;
         disabledVeilClick?: boolean | undefined;
         hiddenFooter?: boolean | undefined;
-        modalName?: import("lkt-vue-kernel").ValidModalName;
-        modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
-        zIndex?: number | undefined;
         beforeClose?: import("lkt-vue-kernel").ValidBeforeCloseModal;
         item?: LktObject | undefined;
         confirmButton?: /*elided*/ any | undefined;
@@ -1312,7 +1404,7 @@ declare const safeCreateButton: import("vue").Ref<{
     } | undefined;
     modalCallbacks?: {
         modalName: import("lkt-vue-kernel").ValidModalName;
-        modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+        modalKey?: import("lkt-vue-kernel").ValidModalKey;
         action: import("lkt-vue-kernel").ModalCallbackAction;
         method?: string | undefined;
         args?: LktObject | undefined;
@@ -1331,6 +1423,10 @@ declare const safeCreateButton: import("vue").Ref<{
         referrer?: HTMLElement | undefined;
         locationY?: import("lkt-vue-kernel").TooltipLocationY | undefined;
         locationX?: import("lkt-vue-kernel").TooltipLocationX | undefined;
+        showOnReferrerHover?: boolean | undefined;
+        showOnReferrerHoverDelay?: number | undefined;
+        hideOnReferrerLeave?: boolean | undefined;
+        hideOnReferrerLeaveDelay?: number | undefined;
     } | undefined;
     splitIcon?: string | undefined;
     showTooltipOnHover?: boolean | undefined;
@@ -1340,7 +1436,9 @@ declare const safeCreateButton: import("vue").Ref<{
     tabindex?: import("lkt-vue-kernel").ValidTabIndex;
     prop?: LktObject | undefined;
     clickRef?: (Element | import("vue").VueElement) | undefined;
-    onClick?: Function | undefined;
+    events?: {
+        click?: Function | undefined;
+    } | undefined;
 }, Partial<ButtonConfig> | {
     type?: import("lkt-vue-kernel").ButtonType | undefined;
     name?: string | undefined;
@@ -1356,12 +1454,12 @@ declare const safeCreateButton: import("vue").Ref<{
     iconEnd?: string | undefined;
     img?: string | undefined;
     checked?: boolean | undefined;
-    textOn?: string | number | undefined | undefined;
-    textOff?: string | number | undefined | undefined;
-    iconOn?: string | number | undefined | undefined;
-    iconOff?: string | number | undefined | undefined;
-    iconEndOn?: string | number | undefined | undefined;
-    iconEndOff?: string | number | undefined | undefined;
+    textOn?: import("lkt-vue-kernel").ValidTextValue;
+    textOff?: import("lkt-vue-kernel").ValidTextValue;
+    iconOn?: import("lkt-vue-kernel").ValidTextValue;
+    iconOff?: import("lkt-vue-kernel").ValidTextValue;
+    iconEndOn?: import("lkt-vue-kernel").ValidTextValue;
+    iconEndOff?: import("lkt-vue-kernel").ValidTextValue;
     dot?: import("lkt-vue-kernel").ValidButtonDot | undefined;
     anchor?: {
         type?: import("lkt-vue-kernel").AnchorType | undefined;
@@ -1386,12 +1484,14 @@ declare const safeCreateButton: import("vue").Ref<{
         isActive?: boolean | undefined;
         downloadFileName?: string | undefined;
         disabled?: boolean | undefined;
-        onClick?: Function | undefined;
         confirmModal?: import("lkt-vue-kernel").ValidModalName;
-        confirmModalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+        confirmModalKey?: import("lkt-vue-kernel").ValidModalKey;
         confirmData?: {
             [x: string]: any;
             [x: number]: any;
+            modalName?: import("lkt-vue-kernel").ValidModalName;
+            modalKey?: import("lkt-vue-kernel").ValidModalKey;
+            zIndex?: number | undefined;
             type?: import("lkt-vue-kernel").ModalType | undefined;
             size?: string | undefined;
             preTitle?: string | undefined;
@@ -1399,14 +1499,11 @@ declare const safeCreateButton: import("vue").Ref<{
             title?: string | undefined;
             closeIcon?: string | undefined;
             closeConfirm?: import("lkt-vue-kernel").ValidModalName;
-            closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+            closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey;
             showClose?: boolean | undefined;
             disabledClose?: boolean | undefined;
             disabledVeilClick?: boolean | undefined;
             hiddenFooter?: boolean | undefined;
-            modalName?: import("lkt-vue-kernel").ValidModalName;
-            modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
-            zIndex?: number | undefined;
             beforeClose?: import("lkt-vue-kernel").ValidBeforeCloseModal;
             item?: LktObject | undefined;
             confirmButton?: /*elided*/ any | undefined;
@@ -1414,6 +1511,11 @@ declare const safeCreateButton: import("vue").Ref<{
         } | undefined;
         imposter?: boolean | undefined;
         external?: boolean | undefined;
+        text?: import("lkt-vue-kernel").ValidTextValue;
+        events?: {
+            click?: Function | undefined;
+        } | undefined;
+        onClick?: Function | undefined;
     } | {
         type: import("lkt-vue-kernel").AnchorType;
         to?: string | {
@@ -1443,6 +1545,10 @@ declare const safeCreateButton: import("vue").Ref<{
         confirmData: LktObject;
         imposter: boolean;
         external: boolean;
+        text?: import("lkt-vue-kernel").ValidTextValue;
+        events?: {
+            click?: Function | undefined;
+        } | undefined;
         getHref: () => string;
         feed: (data?: LktObject, target?: import("lkt-vue-kernel").Anchor | undefined) => void;
         assignProp: (key: string, value: any) => void;
@@ -1450,10 +1556,13 @@ declare const safeCreateButton: import("vue").Ref<{
     resource?: string | undefined;
     resourceData?: LktObject | undefined;
     modal?: import("lkt-vue-kernel").ValidModalName;
-    modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
-    modalData?: {
+    modalKey?: import("lkt-vue-kernel").ValidModalKey;
+    modalData?: Function | {
         [x: string]: any;
         [x: number]: any;
+        modalName?: import("lkt-vue-kernel").ValidModalName;
+        modalKey?: import("lkt-vue-kernel").ValidModalKey;
+        zIndex?: number | undefined;
         type?: import("lkt-vue-kernel").ModalType | undefined;
         size?: string | undefined;
         preTitle?: string | undefined;
@@ -1461,24 +1570,24 @@ declare const safeCreateButton: import("vue").Ref<{
         title?: string | undefined;
         closeIcon?: string | undefined;
         closeConfirm?: import("lkt-vue-kernel").ValidModalName;
-        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey;
         showClose?: boolean | undefined;
         disabledClose?: boolean | undefined;
         disabledVeilClick?: boolean | undefined;
         hiddenFooter?: boolean | undefined;
-        modalName?: import("lkt-vue-kernel").ValidModalName;
-        modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
-        zIndex?: number | undefined;
         beforeClose?: import("lkt-vue-kernel").ValidBeforeCloseModal;
         item?: LktObject | undefined;
         confirmButton?: /*elided*/ any | undefined;
         cancelButton?: /*elided*/ any | undefined;
     } | undefined;
     confirmModal?: import("lkt-vue-kernel").ValidModalName;
-    confirmModalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+    confirmModalKey?: import("lkt-vue-kernel").ValidModalKey;
     confirmData?: {
         [x: string]: any;
         [x: number]: any;
+        modalName?: import("lkt-vue-kernel").ValidModalName;
+        modalKey?: import("lkt-vue-kernel").ValidModalKey;
+        zIndex?: number | undefined;
         type?: import("lkt-vue-kernel").ModalType | undefined;
         size?: string | undefined;
         preTitle?: string | undefined;
@@ -1486,14 +1595,11 @@ declare const safeCreateButton: import("vue").Ref<{
         title?: string | undefined;
         closeIcon?: string | undefined;
         closeConfirm?: import("lkt-vue-kernel").ValidModalName;
-        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey;
         showClose?: boolean | undefined;
         disabledClose?: boolean | undefined;
         disabledVeilClick?: boolean | undefined;
         hiddenFooter?: boolean | undefined;
-        modalName?: import("lkt-vue-kernel").ValidModalName;
-        modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
-        zIndex?: number | undefined;
         beforeClose?: import("lkt-vue-kernel").ValidBeforeCloseModal;
         item?: LktObject | undefined;
         confirmButton?: /*elided*/ any | undefined;
@@ -1501,7 +1607,7 @@ declare const safeCreateButton: import("vue").Ref<{
     } | undefined;
     modalCallbacks?: {
         modalName: import("lkt-vue-kernel").ValidModalName;
-        modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+        modalKey?: import("lkt-vue-kernel").ValidModalKey;
         action: import("lkt-vue-kernel").ModalCallbackAction;
         method?: string | undefined;
         args?: LktObject | undefined;
@@ -1520,6 +1626,10 @@ declare const safeCreateButton: import("vue").Ref<{
         referrer?: HTMLElement | undefined;
         locationY?: import("lkt-vue-kernel").TooltipLocationY | undefined;
         locationX?: import("lkt-vue-kernel").TooltipLocationX | undefined;
+        showOnReferrerHover?: boolean | undefined;
+        showOnReferrerHoverDelay?: number | undefined;
+        hideOnReferrerLeave?: boolean | undefined;
+        hideOnReferrerLeaveDelay?: number | undefined;
     } | undefined;
     splitIcon?: string | undefined;
     showTooltipOnHover?: boolean | undefined;
@@ -1529,7 +1639,9 @@ declare const safeCreateButton: import("vue").Ref<{
     tabindex?: import("lkt-vue-kernel").ValidTabIndex;
     prop?: LktObject | undefined;
     clickRef?: (Element | import("vue").VueElement) | undefined;
-    onClick?: Function | undefined;
+    events?: {
+        click?: Function | undefined;
+    } | undefined;
 }>;
 declare const slots: SetupContext['slots'];
 declare const saveButtonRef: import("vue").Ref<HTMLButtonElement | null, HTMLButtonElement | null>;

@@ -22,6 +22,9 @@
     import ButtonNav from '../components/ButtonNav.vue';
     import { openToast } from 'lkt-toast';
 
+    // defineOptions({
+    //     inheritAttrs: false
+    // })
 
     const props = withDefaults(defineProps<ItemCrudConfig>(), getDefaultValues(ItemCrud));
 
@@ -40,11 +43,9 @@
         'modified-data',
     ]);
 
-    let basePerms: string[] = [];
-
     const isLoading = ref(true),
         item = ref(props.modelValue),
-        perms = ref(basePerms),
+        perms = ref(props.perms),
         editMode = ref(props.editing),
         httpSuccessRead = ref(false),
         showStoreMessage = ref(false),
@@ -139,6 +140,14 @@
         // Fetch item
         if (props.readResource && !createMode.value) fetchItem();
         else if (createMode.value) {
+            httpSuccessRead.value = true;
+            editMode.value = true;
+            isLoading.value = false;
+            dataState.value.increment(item.value).turnStoredIntoOriginal();
+            dataChanged.value = dataState.value.changed();
+        }
+        // Offline mode
+        else {
             httpSuccessRead.value = true;
             editMode.value = true;
             isLoading.value = false;
@@ -310,8 +319,8 @@
                     },
                     ...props.modalConfig,
                     ...{
-                        'before-close': crudBeforeClose,
-                        'close-confirm': closeConfirm.value,
+                        beforeClose: crudBeforeClose,
+                        closeConfirm: closeConfirm.value,
                     },
                 };
             }
