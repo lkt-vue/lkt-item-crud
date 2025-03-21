@@ -37,6 +37,7 @@
         canUpdate?: boolean
         canDrop?: boolean
         canSwitchEditMode?: boolean
+        perms?: Array<string>
 
         httpSuccessRead?: boolean
 
@@ -114,7 +115,7 @@
 
 
     const ableToUpdate = computed(() => {
-            if (props.mode !== ItemCrudMode.Create && !props.canUpdate) return false;
+            if (props.mode !== ItemCrudMode.Update || !props.canUpdate) return false;
             if (!props.dataChanged) return false;
 
             if (typeof safeUpdateButton.value?.disabled === 'function') return !safeUpdateButton.value.disabled(props.item);
@@ -151,7 +152,9 @@
         showSaveButton = computed(() => {
             if (props.mode === ItemCrudMode.Create && props.createButton === false) return false;
             if (props.mode === ItemCrudMode.Update && props.updateButton === false) return false;
-            if (props.dataChanged) return true;
+            if (props.dataChanged) {
+                return ableToUpdate.value || ableToCreate.value;
+            }
             if (isLoading.value) return false;
 
             if (props.mode === ItemCrudMode.Create) {
@@ -188,11 +191,19 @@
     <div v-if="showButtons" class="lkt-item-crud-buttons">
 
         <div class="lkt-item-crud-buttons" v-if="slots['prev-buttons-ever']" v-show="!isLoading">
-            <slot name="prev-buttons-ever" />
+            <slot name="prev-buttons-ever"
+                  :can-update="canUpdate"
+                  :can-drop="canDrop"
+                  :perms="perms"
+            />
         </div>
 
         <div class="lkt-item-crud-buttons" v-if="slots['prev-buttons']" v-show="isEditing && !isLoading">
-            <slot name="prev-buttons" />
+            <slot name="prev-buttons"
+                  :can-update="canUpdate"
+                  :can-drop="canDrop"
+                  :perms="perms"
+            />
         </div>
 
         <lkt-button

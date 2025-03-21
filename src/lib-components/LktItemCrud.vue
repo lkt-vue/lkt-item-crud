@@ -362,15 +362,24 @@
                 :can-update="canUpdate"
                 :can-drop="canDrop"
                 :can-switch-edit-mode="canSwitchEditMode"
+                :perms="perms"
                 @create="onCreate"
                 @save="onUpdate"
                 @drop="onDrop"
             >
-                <template #prev-buttons-ever v-if="slots['prev-buttons-ever']">
-                    <slot name="prev-buttons-ever" />
+                <template #prev-buttons-ever="{canUpdate, canDrop, perms}" v-if="slots['prev-buttons-ever']">
+                    <slot name="prev-buttons-ever"
+                          :can-update="canUpdate"
+                          :can-drop="canDrop"
+                          :perms="perms"
+                    />
                 </template>
-                <template #prev-buttons-ever v-if="slots['prev-buttons']">
-                    <slot name="prev-buttons" />
+                <template #prev-buttons-ever="{canUpdate, canDrop, perms}" v-if="slots['prev-buttons']">
+                    <slot name="prev-buttons"
+                          :can-update="canUpdate"
+                          :can-drop="canDrop"
+                          :perms="perms"
+                    />
                 </template>
             </button-nav>
 

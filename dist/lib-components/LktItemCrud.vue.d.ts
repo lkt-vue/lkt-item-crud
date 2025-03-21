@@ -3,7 +3,7 @@ import { HTTPResponse } from 'lkt-http-client';
 import { ItemCrudButtonNavPosition, ItemCrudConfig, ItemCrudMode, ItemCrudView, LktObject, NotificationType } from 'lkt-vue-kernel';
 import ButtonNav from '../components/ButtonNav.vue';
 declare const slots: SetupContext['slots'];
-declare const isLoading: import("vue").Ref<boolean, boolean>, item: import("vue").Ref<LktObject, LktObject>, editMode: import("vue").Ref<boolean, boolean>, httpSuccessRead: import("vue").Ref<boolean, boolean>, showStoreMessage: import("vue").Ref<boolean, boolean>, httpStatus: import("vue").Ref<number, number>, dataChanged: import("vue").Ref<boolean, boolean>, createMode: import("vue").Ref<boolean, boolean>, itemBeingEdited: import("vue").Ref<boolean, boolean>, buttonNav: import("vue").Ref<null, null>, canUpdate: import("vue").ComputedRef<boolean>, canDrop: import("vue").ComputedRef<boolean>, canSwitchEditMode: import("vue").ComputedRef<boolean>;
+declare const isLoading: import("vue").Ref<boolean, boolean>, item: import("vue").Ref<LktObject, LktObject>, perms: import("vue").Ref<string[], string[]>, editMode: import("vue").Ref<boolean, boolean>, httpSuccessRead: import("vue").Ref<boolean, boolean>, showStoreMessage: import("vue").Ref<boolean, boolean>, httpStatus: import("vue").Ref<number, number>, dataChanged: import("vue").Ref<boolean, boolean>, createMode: import("vue").Ref<boolean, boolean>, itemBeingEdited: import("vue").Ref<boolean, boolean>, buttonNav: import("vue").Ref<null, null>, canUpdate: import("vue").ComputedRef<boolean>, canDrop: import("vue").ComputedRef<boolean>, canSwitchEditMode: import("vue").ComputedRef<boolean>;
 declare const onCreate: ($event: PointerEvent, r: HTTPResponse) => void, onUpdate: ($event: PointerEvent, r: HTTPResponse) => void, onDrop: ($event: PointerEvent, r: HTTPResponse) => void;
 declare const computedTitle: import("vue").ComputedRef<string>, displayHeader: import("vue").ComputedRef<boolean>, computedInsideModal: import("vue").ComputedRef<boolean>, computedContainerTag: import("vue").ComputedRef<"lkt-modal" | "section">, computedContainerAttrs: import("vue").ComputedRef<{}>;
 declare const __VLS_ctx: InstanceType<__VLS_PickNotAny<typeof __VLS_self, new () => {}>>;
@@ -13,7 +13,15 @@ declare var __VLS_6: {
 }, __VLS_8: {
     item: LktObject;
     loading: boolean;
-}, __VLS_21: {}, __VLS_23: {}, __VLS_33: {
+}, __VLS_21: {
+    canUpdate: boolean | undefined;
+    canDrop: boolean | undefined;
+    perms: string[] | undefined;
+}, __VLS_23: {
+    canUpdate: boolean | undefined;
+    canDrop: boolean | undefined;
+    perms: string[] | undefined;
+}, __VLS_33: {
     item: LktObject;
     loading: false;
     editMode: boolean;
@@ -44,6 +52,7 @@ declare const __VLS_self: import("vue").DefineComponent<ItemCrudConfig, {
     slots: typeof slots;
     isLoading: typeof isLoading;
     item: typeof item;
+    perms: typeof perms;
     editMode: typeof editMode;
     httpSuccessRead: typeof httpSuccessRead;
     showStoreMessage: typeof showStoreMessage;

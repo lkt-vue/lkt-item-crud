@@ -15,6 +15,7 @@ type __VLS_Props = {
     canUpdate?: boolean;
     canDrop?: boolean;
     canSwitchEditMode?: boolean;
+    perms?: Array<string>;
     httpSuccessRead?: boolean;
     buttonNavVisibility: ItemCrudButtonNavVisibility;
 };
@@ -1651,7 +1652,15 @@ declare const isEditing: import("vue").Ref<boolean, boolean>;
 declare const onButtonLoading: () => void, onButtonLoaded: () => void, onCreate: ($event: Event | undefined, r: HTTPResponse) => void, onSave: ($event: Event | undefined, r: HTTPResponse) => void, onDrop: ($event: Event | undefined, r: HTTPResponse) => void;
 declare const ableToUpdate: import("vue").ComputedRef<boolean>, ableToCreate: import("vue").ComputedRef<boolean>, ableToDrop: import("vue").ComputedRef<boolean>, showDropButton: import("vue").ComputedRef<boolean>, showSaveButton: import("vue").ComputedRef<boolean>, showSwitchButton: import("vue").ComputedRef<boolean>, showButtons: import("vue").ComputedRef<boolean>;
 declare const __VLS_ctx: InstanceType<__VLS_PickNotAny<typeof __VLS_self, new () => {}>>;
-declare var __VLS_1: {}, __VLS_3: {}, __VLS_17: {
+declare var __VLS_1: {
+    canUpdate: boolean | undefined;
+    canDrop: boolean | undefined;
+    perms: string[] | undefined;
+}, __VLS_3: {
+    canUpdate: boolean | undefined;
+    canDrop: boolean | undefined;
+    perms: string[] | undefined;
+}, __VLS_17: {
     item: LktObject;
     editMode: boolean;
     isCreate: boolean;
