@@ -1,6 +1,6 @@
 {
   "name": "lkt-item-crud",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "",
   "type": "module",
   "module": "./dist/build.js",
@@ -8,7 +8,9 @@
     ".": {
       "import": "./dist/build.js"
     },
-    "./styles": "./dist/build.css"
+    "./styles": "./dist/build.css",
+    "./theme": "./theme/default.css",
+    "./theme/default": "./theme/default.css"
   },
   "types": "./dist/build.d.ts",
   "files": [
@@ -37,7 +39,7 @@
     "vue-tsc": "^2.2.0"
   },
   "peerDependencies": {
-    "lkt-button": "^2.0.12",
+    "lkt-button": "^2.0.13",
     "lkt-data-state": "^1.0.11",
     "lkt-http-client": "^1.0.34",
     "lkt-http-info": "^1.1.1",
@@ -46,7 +48,7 @@
     "lkt-modal": "^2.0.5",
     "lkt-string-tools": "^1.1.0",
     "lkt-toast": "^1.1.1",
-    "lkt-vue-kernel": "^1.0.48",
+    "lkt-vue-kernel": "^1.0.51",
     "vue": "^3.3.0"
   }
 }
