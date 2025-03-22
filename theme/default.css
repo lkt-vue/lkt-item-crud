@@ -1,8 +1,8 @@
 .lkt-item-crud {
-    --lkt-item-crud-display: flex;
-    --lkt-item-crud-flex-direction: column;
-    --lkt-item-crud-gap: 15px;
-    --lkt-item-crud-text-align: left;
+    --lkt-item-crud--display: flex;
+    --lkt-item-crud--flex-direction: column;
+    --lkt-item-crud--gap: 15px;
+    --lkt-item-crud--text-align: left;
 
     --lkt-item-crud--content--display: flex;
     --lkt-item-crud--content--flex-direction: column;
@@ -13,6 +13,6 @@
     --lkt-item-crud--buttons--align-items: center;
     --lkt-item-crud--buttons--gap: 15px;
     --lkt-item-crud--buttons--transition: all linear .150s;
-    --lkt-item-crud--buttons--bg: transparent;
+    --lkt-item-crud--buttons--background: transparent;
     --lkt-item-crud--buttons--z-index: 2;
 }
