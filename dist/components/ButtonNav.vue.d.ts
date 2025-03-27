@@ -11,6 +11,7 @@ type __VLS_Props = {
     updateButton?: ButtonConfig | false;
     dropButton?: ButtonConfig | false;
     editModeButton?: ButtonConfig | false;
+    groupButton?: ButtonConfig | boolean;
     dataChanged: boolean;
     canUpdate?: boolean;
     canDrop?: boolean;
@@ -1643,6 +1644,412 @@ declare const safeCreateButton: import("vue").Ref<{
     events?: {
         click?: Function | undefined;
     } | undefined;
+}>, safeGroupButton: import("vue").Ref<{
+    type?: import("lkt-vue-kernel").ButtonType | undefined;
+    name?: string | undefined;
+    value?: string | undefined;
+    disabled?: import("lkt-vue-kernel").ValidIsDisabledValue;
+    openTooltip?: boolean | undefined;
+    loading?: boolean | undefined;
+    class?: string | undefined;
+    containerClass?: string | undefined;
+    wrapContent?: boolean | undefined;
+    text?: import("lkt-vue-kernel").ValidTextValue;
+    icon?: string | undefined;
+    iconEnd?: string | undefined;
+    img?: string | undefined;
+    checked?: boolean | undefined;
+    textOn?: import("lkt-vue-kernel").ValidTextValue;
+    textOff?: import("lkt-vue-kernel").ValidTextValue;
+    iconOn?: import("lkt-vue-kernel").ValidTextValue;
+    iconOff?: import("lkt-vue-kernel").ValidTextValue;
+    iconEndOn?: import("lkt-vue-kernel").ValidTextValue;
+    iconEndOff?: import("lkt-vue-kernel").ValidTextValue;
+    dot?: import("lkt-vue-kernel").ValidButtonDot | undefined;
+    anchor?: {
+        type?: import("lkt-vue-kernel").AnchorType | undefined;
+        to?: string | {
+            name?: import("vue-router").RouteRecordNameGeneric;
+            params?: import("vue-router").RouteParamsRawGeneric | undefined;
+            path?: undefined | undefined;
+            query?: import("vue-router").LocationQueryRaw | undefined;
+            hash?: string | undefined;
+            replace?: boolean | undefined;
+            force?: boolean | undefined;
+            state?: import("vue-router").HistoryState | undefined;
+        } | {
+            path: string;
+            query?: import("vue-router").LocationQueryRaw | undefined;
+            hash?: string | undefined;
+            replace?: boolean | undefined;
+            force?: boolean | undefined;
+            state?: import("vue-router").HistoryState | undefined;
+        } | undefined;
+        class?: string | undefined;
+        isActive?: boolean | undefined;
+        downloadFileName?: string | undefined;
+        disabled?: boolean | undefined;
+        confirmModal?: import("lkt-vue-kernel").ValidModalName;
+        confirmModalKey?: import("lkt-vue-kernel").ValidModalKey;
+        confirmData?: {
+            [x: string]: any;
+            [x: number]: any;
+            modalName?: import("lkt-vue-kernel").ValidModalName;
+            modalKey?: import("lkt-vue-kernel").ValidModalKey;
+            zIndex?: number | undefined;
+            type?: import("lkt-vue-kernel").ModalType | undefined;
+            size?: string | undefined;
+            preTitle?: string | undefined;
+            preTitleIcon?: string | undefined;
+            title?: string | undefined;
+            closeIcon?: string | undefined;
+            closeConfirm?: import("lkt-vue-kernel").ValidModalName;
+            closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey;
+            showClose?: boolean | undefined;
+            disabledClose?: boolean | undefined;
+            disabledVeilClick?: boolean | undefined;
+            hiddenFooter?: boolean | undefined;
+            beforeClose?: import("lkt-vue-kernel").ValidBeforeCloseModal;
+            item?: LktObject | undefined;
+            confirmButton?: /*elided*/ any | undefined;
+            cancelButton?: /*elided*/ any | undefined;
+        } | undefined;
+        imposter?: boolean | undefined;
+        external?: boolean | undefined;
+        text?: import("lkt-vue-kernel").ValidTextValue;
+        events?: {
+            click?: Function | undefined;
+        } | undefined;
+        onClick?: Function | undefined;
+    } | {
+        type: import("lkt-vue-kernel").AnchorType;
+        to?: string | {
+            name?: import("vue-router").RouteRecordNameGeneric;
+            params?: import("vue-router").RouteParamsRawGeneric | undefined;
+            path?: undefined | undefined;
+            query?: import("vue-router").LocationQueryRaw | undefined;
+            hash?: string | undefined;
+            replace?: boolean | undefined;
+            force?: boolean | undefined;
+            state?: import("vue-router").HistoryState | undefined;
+        } | {
+            path: string;
+            query?: import("vue-router").LocationQueryRaw | undefined;
+            hash?: string | undefined;
+            replace?: boolean | undefined;
+            force?: boolean | undefined;
+            state?: import("vue-router").HistoryState | undefined;
+        } | undefined;
+        class: string;
+        isActive: boolean;
+        downloadFileName: string;
+        disabled: boolean;
+        onClick: Function | undefined;
+        confirmModal: import("lkt-vue-kernel").ValidModalName;
+        confirmModalKey: import("lkt-vue-kernel").ValidModalKey;
+        confirmData: LktObject;
+        imposter: boolean;
+        external: boolean;
+        text?: import("lkt-vue-kernel").ValidTextValue;
+        events?: {
+            click?: Function | undefined;
+        } | undefined;
+        getHref: () => string;
+        feed: (data?: LktObject, target?: import("lkt-vue-kernel").Anchor | undefined) => void;
+        assignProp: (key: string, value: any) => void;
+    } | undefined;
+    resource?: string | undefined;
+    resourceData?: LktObject | undefined;
+    modal?: import("lkt-vue-kernel").ValidModalName;
+    modalKey?: import("lkt-vue-kernel").ValidModalKey;
+    modalData?: Function | {
+        [x: string]: any;
+        [x: number]: any;
+        modalName?: import("lkt-vue-kernel").ValidModalName;
+        modalKey?: import("lkt-vue-kernel").ValidModalKey;
+        zIndex?: number | undefined;
+        type?: import("lkt-vue-kernel").ModalType | undefined;
+        size?: string | undefined;
+        preTitle?: string | undefined;
+        preTitleIcon?: string | undefined;
+        title?: string | undefined;
+        closeIcon?: string | undefined;
+        closeConfirm?: import("lkt-vue-kernel").ValidModalName;
+        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey;
+        showClose?: boolean | undefined;
+        disabledClose?: boolean | undefined;
+        disabledVeilClick?: boolean | undefined;
+        hiddenFooter?: boolean | undefined;
+        beforeClose?: import("lkt-vue-kernel").ValidBeforeCloseModal;
+        item?: LktObject | undefined;
+        confirmButton?: /*elided*/ any | undefined;
+        cancelButton?: /*elided*/ any | undefined;
+    } | undefined;
+    confirmModal?: import("lkt-vue-kernel").ValidModalName;
+    confirmModalKey?: import("lkt-vue-kernel").ValidModalKey;
+    confirmData?: {
+        [x: string]: any;
+        [x: number]: any;
+        modalName?: import("lkt-vue-kernel").ValidModalName;
+        modalKey?: import("lkt-vue-kernel").ValidModalKey;
+        zIndex?: number | undefined;
+        type?: import("lkt-vue-kernel").ModalType | undefined;
+        size?: string | undefined;
+        preTitle?: string | undefined;
+        preTitleIcon?: string | undefined;
+        title?: string | undefined;
+        closeIcon?: string | undefined;
+        closeConfirm?: import("lkt-vue-kernel").ValidModalName;
+        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey;
+        showClose?: boolean | undefined;
+        disabledClose?: boolean | undefined;
+        disabledVeilClick?: boolean | undefined;
+        hiddenFooter?: boolean | undefined;
+        beforeClose?: import("lkt-vue-kernel").ValidBeforeCloseModal;
+        item?: LktObject | undefined;
+        confirmButton?: /*elided*/ any | undefined;
+        cancelButton?: /*elided*/ any | undefined;
+    } | undefined;
+    modalCallbacks?: {
+        modalName: import("lkt-vue-kernel").ValidModalName;
+        modalKey?: import("lkt-vue-kernel").ValidModalKey;
+        action: import("lkt-vue-kernel").ModalCallbackAction;
+        method?: string | undefined;
+        args?: LktObject | undefined;
+    }[] | undefined;
+    tooltip?: {
+        modelValue?: boolean | undefined;
+        alwaysOpen?: boolean | undefined;
+        class?: string | undefined;
+        text?: string | undefined;
+        icon?: string | undefined;
+        iconAtEnd?: boolean | undefined;
+        engine?: import("lkt-vue-kernel").TooltipPositionEngine | undefined;
+        referrerMargin?: number | string | undefined;
+        windowMargin?: number | string | undefined;
+        referrerWidth?: boolean | undefined;
+        referrer?: HTMLElement | undefined;
+        locationY?: import("lkt-vue-kernel").TooltipLocationY | undefined;
+        locationX?: import("lkt-vue-kernel").TooltipLocationX | undefined;
+        showOnReferrerHover?: boolean | undefined;
+        showOnReferrerHoverDelay?: number | undefined;
+        hideOnReferrerLeave?: boolean | undefined;
+        hideOnReferrerLeaveDelay?: number | undefined;
+    } | undefined;
+    splitIcon?: string | undefined;
+    showTooltipOnHover?: boolean | undefined;
+    showTooltipOnHoverDelay?: number | undefined;
+    hideTooltipOnLeave?: boolean | undefined;
+    splitClass?: string | undefined;
+    tabindex?: import("lkt-vue-kernel").ValidTabIndex;
+    prop?: LktObject | undefined;
+    clickRef?: (Element | import("vue").VueElement) | undefined;
+    events?: {
+        click?: Function | undefined;
+    } | undefined;
+}, Partial<ButtonConfig> | {
+    type?: import("lkt-vue-kernel").ButtonType | undefined;
+    name?: string | undefined;
+    value?: string | undefined;
+    disabled?: import("lkt-vue-kernel").ValidIsDisabledValue;
+    openTooltip?: boolean | undefined;
+    loading?: boolean | undefined;
+    class?: string | undefined;
+    containerClass?: string | undefined;
+    wrapContent?: boolean | undefined;
+    text?: import("lkt-vue-kernel").ValidTextValue;
+    icon?: string | undefined;
+    iconEnd?: string | undefined;
+    img?: string | undefined;
+    checked?: boolean | undefined;
+    textOn?: import("lkt-vue-kernel").ValidTextValue;
+    textOff?: import("lkt-vue-kernel").ValidTextValue;
+    iconOn?: import("lkt-vue-kernel").ValidTextValue;
+    iconOff?: import("lkt-vue-kernel").ValidTextValue;
+    iconEndOn?: import("lkt-vue-kernel").ValidTextValue;
+    iconEndOff?: import("lkt-vue-kernel").ValidTextValue;
+    dot?: import("lkt-vue-kernel").ValidButtonDot | undefined;
+    anchor?: {
+        type?: import("lkt-vue-kernel").AnchorType | undefined;
+        to?: string | {
+            name?: import("vue-router").RouteRecordNameGeneric;
+            params?: import("vue-router").RouteParamsRawGeneric | undefined;
+            path?: undefined | undefined;
+            query?: import("vue-router").LocationQueryRaw | undefined;
+            hash?: string | undefined;
+            replace?: boolean | undefined;
+            force?: boolean | undefined;
+            state?: import("vue-router").HistoryState | undefined;
+        } | {
+            path: string;
+            query?: import("vue-router").LocationQueryRaw | undefined;
+            hash?: string | undefined;
+            replace?: boolean | undefined;
+            force?: boolean | undefined;
+            state?: import("vue-router").HistoryState | undefined;
+        } | undefined;
+        class?: string | undefined;
+        isActive?: boolean | undefined;
+        downloadFileName?: string | undefined;
+        disabled?: boolean | undefined;
+        confirmModal?: import("lkt-vue-kernel").ValidModalName;
+        confirmModalKey?: import("lkt-vue-kernel").ValidModalKey;
+        confirmData?: {
+            [x: string]: any;
+            [x: number]: any;
+            modalName?: import("lkt-vue-kernel").ValidModalName;
+            modalKey?: import("lkt-vue-kernel").ValidModalKey;
+            zIndex?: number | undefined;
+            type?: import("lkt-vue-kernel").ModalType | undefined;
+            size?: string | undefined;
+            preTitle?: string | undefined;
+            preTitleIcon?: string | undefined;
+            title?: string | undefined;
+            closeIcon?: string | undefined;
+            closeConfirm?: import("lkt-vue-kernel").ValidModalName;
+            closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey;
+            showClose?: boolean | undefined;
+            disabledClose?: boolean | undefined;
+            disabledVeilClick?: boolean | undefined;
+            hiddenFooter?: boolean | undefined;
+            beforeClose?: import("lkt-vue-kernel").ValidBeforeCloseModal;
+            item?: LktObject | undefined;
+            confirmButton?: /*elided*/ any | undefined;
+            cancelButton?: /*elided*/ any | undefined;
+        } | undefined;
+        imposter?: boolean | undefined;
+        external?: boolean | undefined;
+        text?: import("lkt-vue-kernel").ValidTextValue;
+        events?: {
+            click?: Function | undefined;
+        } | undefined;
+        onClick?: Function | undefined;
+    } | {
+        type: import("lkt-vue-kernel").AnchorType;
+        to?: string | {
+            name?: import("vue-router").RouteRecordNameGeneric;
+            params?: import("vue-router").RouteParamsRawGeneric | undefined;
+            path?: undefined | undefined;
+            query?: import("vue-router").LocationQueryRaw | undefined;
+            hash?: string | undefined;
+            replace?: boolean | undefined;
+            force?: boolean | undefined;
+            state?: import("vue-router").HistoryState | undefined;
+        } | {
+            path: string;
+            query?: import("vue-router").LocationQueryRaw | undefined;
+            hash?: string | undefined;
+            replace?: boolean | undefined;
+            force?: boolean | undefined;
+            state?: import("vue-router").HistoryState | undefined;
+        } | undefined;
+        class: string;
+        isActive: boolean;
+        downloadFileName: string;
+        disabled: boolean;
+        onClick: Function | undefined;
+        confirmModal: import("lkt-vue-kernel").ValidModalName;
+        confirmModalKey: import("lkt-vue-kernel").ValidModalKey;
+        confirmData: LktObject;
+        imposter: boolean;
+        external: boolean;
+        text?: import("lkt-vue-kernel").ValidTextValue;
+        events?: {
+            click?: Function | undefined;
+        } | undefined;
+        getHref: () => string;
+        feed: (data?: LktObject, target?: import("lkt-vue-kernel").Anchor | undefined) => void;
+        assignProp: (key: string, value: any) => void;
+    } | undefined;
+    resource?: string | undefined;
+    resourceData?: LktObject | undefined;
+    modal?: import("lkt-vue-kernel").ValidModalName;
+    modalKey?: import("lkt-vue-kernel").ValidModalKey;
+    modalData?: Function | {
+        [x: string]: any;
+        [x: number]: any;
+        modalName?: import("lkt-vue-kernel").ValidModalName;
+        modalKey?: import("lkt-vue-kernel").ValidModalKey;
+        zIndex?: number | undefined;
+        type?: import("lkt-vue-kernel").ModalType | undefined;
+        size?: string | undefined;
+        preTitle?: string | undefined;
+        preTitleIcon?: string | undefined;
+        title?: string | undefined;
+        closeIcon?: string | undefined;
+        closeConfirm?: import("lkt-vue-kernel").ValidModalName;
+        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey;
+        showClose?: boolean | undefined;
+        disabledClose?: boolean | undefined;
+        disabledVeilClick?: boolean | undefined;
+        hiddenFooter?: boolean | undefined;
+        beforeClose?: import("lkt-vue-kernel").ValidBeforeCloseModal;
+        item?: LktObject | undefined;
+        confirmButton?: /*elided*/ any | undefined;
+        cancelButton?: /*elided*/ any | undefined;
+    } | undefined;
+    confirmModal?: import("lkt-vue-kernel").ValidModalName;
+    confirmModalKey?: import("lkt-vue-kernel").ValidModalKey;
+    confirmData?: {
+        [x: string]: any;
+        [x: number]: any;
+        modalName?: import("lkt-vue-kernel").ValidModalName;
+        modalKey?: import("lkt-vue-kernel").ValidModalKey;
+        zIndex?: number | undefined;
+        type?: import("lkt-vue-kernel").ModalType | undefined;
+        size?: string | undefined;
+        preTitle?: string | undefined;
+        preTitleIcon?: string | undefined;
+        title?: string | undefined;
+        closeIcon?: string | undefined;
+        closeConfirm?: import("lkt-vue-kernel").ValidModalName;
+        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey;
+        showClose?: boolean | undefined;
+        disabledClose?: boolean | undefined;
+        disabledVeilClick?: boolean | undefined;
+        hiddenFooter?: boolean | undefined;
+        beforeClose?: import("lkt-vue-kernel").ValidBeforeCloseModal;
+        item?: LktObject | undefined;
+        confirmButton?: /*elided*/ any | undefined;
+        cancelButton?: /*elided*/ any | undefined;
+    } | undefined;
+    modalCallbacks?: {
+        modalName: import("lkt-vue-kernel").ValidModalName;
+        modalKey?: import("lkt-vue-kernel").ValidModalKey;
+        action: import("lkt-vue-kernel").ModalCallbackAction;
+        method?: string | undefined;
+        args?: LktObject | undefined;
+    }[] | undefined;
+    tooltip?: {
+        modelValue?: boolean | undefined;
+        alwaysOpen?: boolean | undefined;
+        class?: string | undefined;
+        text?: string | undefined;
+        icon?: string | undefined;
+        iconAtEnd?: boolean | undefined;
+        engine?: import("lkt-vue-kernel").TooltipPositionEngine | undefined;
+        referrerMargin?: number | string | undefined;
+        windowMargin?: number | string | undefined;
+        referrerWidth?: boolean | undefined;
+        referrer?: HTMLElement | undefined;
+        locationY?: import("lkt-vue-kernel").TooltipLocationY | undefined;
+        locationX?: import("lkt-vue-kernel").TooltipLocationX | undefined;
+        showOnReferrerHover?: boolean | undefined;
+        showOnReferrerHoverDelay?: number | undefined;
+        hideOnReferrerLeave?: boolean | undefined;
+        hideOnReferrerLeaveDelay?: number | undefined;
+    } | undefined;
+    splitIcon?: string | undefined;
+    showTooltipOnHover?: boolean | undefined;
+    showTooltipOnHoverDelay?: number | undefined;
+    hideTooltipOnLeave?: boolean | undefined;
+    splitClass?: string | undefined;
+    tabindex?: import("lkt-vue-kernel").ValidTabIndex;
+    prop?: LktObject | undefined;
+    clickRef?: (Element | import("vue").VueElement) | undefined;
+    events?: {
+        click?: Function | undefined;
+    } | undefined;
 }>;
 declare const slots: SetupContext['slots'];
 declare const saveButtonRef: import("vue").Ref<HTMLButtonElement | null, HTMLButtonElement | null>;
@@ -1652,45 +2059,83 @@ declare const isEditing: import("vue").Ref<boolean, boolean>;
 declare const onButtonLoading: () => void, onButtonLoaded: () => void, onCreate: ($event: Event | undefined, r: HTTPResponse) => void, onSave: ($event: Event | undefined, r: HTTPResponse) => void, onDrop: ($event: Event | undefined, r: HTTPResponse) => void;
 declare const ableToUpdate: import("vue").ComputedRef<boolean>, ableToCreate: import("vue").ComputedRef<boolean>, ableToDrop: import("vue").ComputedRef<boolean>, showDropButton: import("vue").ComputedRef<boolean>, showSaveButton: import("vue").ComputedRef<boolean>, showSwitchButton: import("vue").ComputedRef<boolean>, showButtons: import("vue").ComputedRef<boolean>;
 declare const __VLS_ctx: InstanceType<__VLS_PickNotAny<typeof __VLS_self, new () => {}>>;
-declare var __VLS_1: {
+declare var __VLS_11: {
     canUpdate: boolean | undefined;
     canDrop: boolean | undefined;
     perms: string[] | undefined;
-}, __VLS_3: {
+}, __VLS_13: {
     canUpdate: boolean | undefined;
     canDrop: boolean | undefined;
     perms: string[] | undefined;
-}, __VLS_17: {
+}, __VLS_27: {
     item: LktObject;
     editMode: boolean;
     isCreate: boolean;
     canUpdate: boolean | undefined;
     canDrop: boolean | undefined;
-}, __VLS_31: {
+}, __VLS_41: {
     item: LktObject;
     editMode: boolean;
     isCreate: boolean;
     canUpdate: boolean | undefined;
     canDrop: boolean | undefined;
-}, __VLS_45: {
+}, __VLS_55: {
     item: LktObject;
     editMode: boolean;
     isCreate: boolean;
     canUpdate: boolean | undefined;
     canDrop: boolean | undefined;
-}, __VLS_47: {};
+}, __VLS_57: {}, __VLS_59: {
+    canUpdate: boolean | undefined;
+    canDrop: boolean | undefined;
+    perms: string[] | undefined;
+}, __VLS_61: {
+    canUpdate: boolean | undefined;
+    canDrop: boolean | undefined;
+    perms: string[] | undefined;
+}, __VLS_75: {
+    item: LktObject;
+    editMode: boolean;
+    isCreate: boolean;
+    canUpdate: boolean | undefined;
+    canDrop: boolean | undefined;
+}, __VLS_89: {
+    item: LktObject;
+    editMode: boolean;
+    isCreate: boolean;
+    canUpdate: boolean | undefined;
+    canDrop: boolean | undefined;
+}, __VLS_103: {
+    item: LktObject;
+    editMode: boolean;
+    isCreate: boolean;
+    canUpdate: boolean | undefined;
+    canDrop: boolean | undefined;
+}, __VLS_105: {};
 type __VLS_Slots = __VLS_PrettifyGlobal<__VLS_OmitStringIndex<typeof __VLS_ctx.$slots> & {
-    'prev-buttons-ever'?: (props: typeof __VLS_1) => any;
+    'prev-buttons-ever'?: (props: typeof __VLS_11) => any;
 } & {
-    'prev-buttons'?: (props: typeof __VLS_3) => any;
+    'prev-buttons'?: (props: typeof __VLS_13) => any;
 } & {
-    'button-save'?: (props: typeof __VLS_17) => any;
+    'button-save'?: (props: typeof __VLS_27) => any;
 } & {
-    'button-save'?: (props: typeof __VLS_31) => any;
+    'button-save'?: (props: typeof __VLS_41) => any;
 } & {
-    'button-drop'?: (props: typeof __VLS_45) => any;
+    'button-drop'?: (props: typeof __VLS_55) => any;
 } & {
-    buttons?: (props: typeof __VLS_47) => any;
+    buttons?: (props: typeof __VLS_57) => any;
+} & {
+    'prev-buttons-ever'?: (props: typeof __VLS_59) => any;
+} & {
+    'prev-buttons'?: (props: typeof __VLS_61) => any;
+} & {
+    'button-save'?: (props: typeof __VLS_75) => any;
+} & {
+    'button-save'?: (props: typeof __VLS_89) => any;
+} & {
+    'button-drop'?: (props: typeof __VLS_103) => any;
+} & {
+    buttons?: (props: typeof __VLS_105) => any;
 }>;
 declare const __VLS_self: import("vue").DefineComponent<__VLS_Props, {
     ItemCrudMode: typeof ItemCrudMode;
@@ -1698,6 +2143,7 @@ declare const __VLS_self: import("vue").DefineComponent<__VLS_Props, {
     safeUpdateButton: typeof safeUpdateButton;
     safeDropButton: typeof safeDropButton;
     safeEditModeButton: typeof safeEditModeButton;
+    safeGroupButton: typeof safeGroupButton;
     slots: typeof slots;
     saveButtonRef: typeof saveButtonRef;
     dropButtonRef: typeof dropButtonRef;

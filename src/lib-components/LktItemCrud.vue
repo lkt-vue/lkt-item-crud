@@ -357,6 +357,7 @@
                 :update-button="updateButton"
                 :drop-button="dropButton"
                 :edit-mode-button="editModeButton"
+                :group-button="groupButton"
                 :data-changed="dataChanged"
                 :http-success-read="httpSuccessRead"
                 :can-update="canUpdate"
@@ -374,7 +375,7 @@
                           :perms="perms"
                     />
                 </template>
-                <template #prev-buttons-ever="{canUpdate, canDrop, perms}" v-if="slots['prev-buttons']">
+                <template #prev-buttons="{canUpdate, canDrop, perms}" v-if="slots['prev-buttons']">
                     <slot name="prev-buttons"
                           :can-update="canUpdate"
                           :can-drop="canDrop"
@@ -415,6 +416,7 @@
                 :update-button="updateButton"
                 :drop-button="dropButton"
                 :edit-mode-button="editModeButton"
+                :group-button="groupButton"
                 :data-changed="dataChanged"
                 :http-success-read="httpSuccessRead"
                 :can-update="canUpdate"

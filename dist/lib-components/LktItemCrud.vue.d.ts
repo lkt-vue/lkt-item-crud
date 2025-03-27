@@ -105,6 +105,7 @@ declare const __VLS_self: import("vue").DefineComponent<ItemCrudConfig, {
     dropButton: import("lkt-vue-kernel").ButtonConfig | false;
     createButton: import("lkt-vue-kernel").ButtonConfig | false;
     updateButton: import("lkt-vue-kernel").ButtonConfig | false;
+    groupButton: import("lkt-vue-kernel").ButtonConfig | boolean;
     buttonNavPosition: ItemCrudButtonNavPosition;
     buttonNavVisibility: import("lkt-vue-kernel").ItemCrudButtonNavVisibility;
     modalConfig: import("lkt-vue-kernel").ModalConfig;
@@ -153,6 +154,7 @@ declare const __VLS_component: import("vue").DefineComponent<ItemCrudConfig, {
     dropButton: import("lkt-vue-kernel").ButtonConfig | false;
     createButton: import("lkt-vue-kernel").ButtonConfig | false;
     updateButton: import("lkt-vue-kernel").ButtonConfig | false;
+    groupButton: import("lkt-vue-kernel").ButtonConfig | boolean;
     buttonNavPosition: ItemCrudButtonNavPosition;
     buttonNavVisibility: import("lkt-vue-kernel").ItemCrudButtonNavVisibility;
     modalConfig: import("lkt-vue-kernel").ModalConfig;
