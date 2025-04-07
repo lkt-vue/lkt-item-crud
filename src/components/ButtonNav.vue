@@ -154,18 +154,15 @@
         showSaveButton = computed(() => {
             if (props.mode === ItemCrudMode.Create && props.createButton === false) return false;
             if (props.mode === ItemCrudMode.Update && props.updateButton === false) return false;
-            if (props.dataChanged) {
-                return ableToUpdate.value || ableToCreate.value;
-            }
             if (isLoading.value) return false;
 
-            if (props.mode === ItemCrudMode.Create) {
-                return true;
-            }
+            // if (props.dataChanged) {
+            //     return ableToUpdate.value || ableToCreate.value;
+            // }
 
-            if (props.buttonNavVisibility === ItemCrudButtonNavVisibility.Never) {
-                return false;
-            }
+            // if (props.buttonNavVisibility === ItemCrudButtonNavVisibility.Never) {
+            //     return false;
+            // }
 
             return props.editing
                 && props.httpSuccessRead;
@@ -181,7 +178,7 @@
                 && props.httpSuccessRead;
         }),
         showButtons = computed(() => {
-            if (props.buttonNavVisibility === ItemCrudButtonNavVisibility.Always && (ableToUpdate.value || ableToCreate.value || ableToDrop.value)) return true;
+            if (props.buttonNavVisibility === ItemCrudButtonNavVisibility.Always) return true;
             if (slots['prev-buttons-ever']) return true;
             if (props.buttonNavVisibility === ItemCrudButtonNavVisibility.Never) return false;
             return showSaveButton.value || showDropButton.value || showSwitchButton.value;
@@ -224,7 +221,7 @@
 
                     <lkt-button
                         ref="saveButtonRef"
-                        v-if="mode === ItemCrudMode.Update && showSaveButton"
+                        v-show="mode === ItemCrudMode.Update && showSaveButton"
                         v-bind="safeUpdateButton"
                         :disabled="!ableToUpdate"
                         @loading="onButtonLoading"
@@ -239,7 +236,7 @@
 
                     <lkt-button
                         ref="saveButtonRef"
-                        v-else-if="mode === ItemCrudMode.Create && showSaveButton"
+                        v-show="mode === ItemCrudMode.Create && showSaveButton"
                         v-bind="safeCreateButton"
                         :disabled="!ableToCreate"
                         @loading="onButtonLoading"
@@ -254,8 +251,7 @@
 
                     <lkt-button
                         ref="dropButtonRef"
-                        v-show="showDropButton"
-                        v-if="mode !== ItemCrudMode.Create"
+                        v-show="showDropButton && mode !== ItemCrudMode.Create"
                         v-bind="safeDropButton"
                         :disabled="!ableToDrop"
                         @loading="onButtonLoading"
@@ -295,7 +291,7 @@
 
             <lkt-button
                 ref="saveButtonRef"
-                v-if="mode === ItemCrudMode.Update && showSaveButton"
+                v-show="mode === ItemCrudMode.Update && showSaveButton"
                 v-bind="safeUpdateButton"
                 :disabled="!ableToUpdate"
                 @loading="onButtonLoading"
@@ -310,7 +306,7 @@
 
             <lkt-button
                 ref="saveButtonRef"
-                v-else-if="mode === ItemCrudMode.Create && showSaveButton"
+                v-show="mode === ItemCrudMode.Create && showSaveButton"
                 v-bind="safeCreateButton"
                 :disabled="!ableToCreate"
                 @loading="onButtonLoading"
@@ -325,8 +321,7 @@
 
             <lkt-button
                 ref="dropButtonRef"
-                v-show="showDropButton"
-                v-if="mode !== ItemCrudMode.Create"
+                v-show="showDropButton && mode !== ItemCrudMode.Create"
                 v-bind="safeDropButton"
                 :disabled="!ableToDrop"
                 @loading="onButtonLoading"

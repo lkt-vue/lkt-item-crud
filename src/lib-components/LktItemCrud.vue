@@ -171,8 +171,8 @@
             }
             return true;
         },
-        doAutoReloadId = (r: HTTPResponse) => {
-            if (!computedInsideModal.value && r.autoReloadId) {
+        doAutoReloadId = (r?: HTTPResponse) => {
+            if (!computedInsideModal.value && typeof r !== 'undefined' && r.autoReloadId) {
                 debug('doAutoReloadId -> autoReloadId detected: ', r.autoReloadId);
                 props.readData['id'] = r.autoReloadId;
                 debug('doAutoReloadId -> turning off create mode');
@@ -393,11 +393,16 @@
                         quick
                         can-close
                         v-on:close="showStoreMessage = false" />
-                    <slot name="item" :item="item" :loading="isLoading" :edit-mode="editMode"
+                    <slot name="item"
+                          :item="item"
+                          :loading="isLoading"
+                          :edit-mode="editMode"
                           :is-create="createMode"
                           :can-update="canUpdate"
                           :can-drop="canDrop"
-                          :item-being-edited="itemBeingEdited"></slot>
+                          :item-being-edited="itemBeingEdited"
+                          :perms="perms"
+                    />
                 </div>
                 <lkt-http-info :code="httpStatus" v-else-if="notificationType === NotificationType.Inline" />
             </div>
@@ -422,6 +427,7 @@
                 :can-update="canUpdate"
                 :can-drop="canDrop"
                 :can-switch-edit-mode="canSwitchEditMode"
+                :perms="perms"
                 @create="onCreate"
                 @save="onUpdate"
                 @drop="onDrop"

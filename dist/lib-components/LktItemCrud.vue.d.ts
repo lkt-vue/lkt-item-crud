@@ -29,6 +29,7 @@ declare var __VLS_6: {
     canUpdate: boolean;
     canDrop: boolean;
     itemBeingEdited: boolean;
+    perms: string[];
 }, __VLS_54: {}, __VLS_56: {};
 type __VLS_Slots = __VLS_PrettifyGlobal<__VLS_OmitStringIndex<typeof __VLS_ctx.$slots> & {
     'pre-title'?: (props: typeof __VLS_6) => any;
