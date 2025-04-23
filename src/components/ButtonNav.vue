@@ -316,7 +316,7 @@
                       :edit-mode="isEditing"
                       :is-create="true"
                       :can-update="canUpdate"
-                      :can-drop="canDrop" />
+                      :can-drop="false" />
             </lkt-button>
 
             <lkt-button

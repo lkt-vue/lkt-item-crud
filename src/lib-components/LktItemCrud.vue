@@ -17,7 +17,7 @@
         ToastConfig,
         ToastPositionX,
     } from 'lkt-vue-kernel';
-    import { closeModal } from 'lkt-modal';
+    import { closeModal, updateModalKey } from 'lkt-modal';
     import { __ } from 'lkt-i18n';
     import ButtonNav from '../components/ButtonNav.vue';
     import { openToast } from 'lkt-toast';
@@ -60,6 +60,10 @@
         canUpdate = computed(() => !createMode.value && Array.isArray(perms.value) && perms.value.includes(TablePermission.Update)),
         canDrop = computed(() => !createMode.value && Array.isArray(perms.value) && perms.value.includes(TablePermission.Drop)),
         canSwitchEditMode = computed(() => !createMode.value && Array.isArray(perms.value) && perms.value.includes(TablePermission.SwitchEditMode));
+
+    watch(() => props.mode, (v) => {
+        createMode.value = v === ItemCrudMode.Create;
+    })
 
     const fetchItem = async () => {
         debug('fetchItem');
@@ -172,12 +176,19 @@
             return true;
         },
         doAutoReloadId = (r?: HTTPResponse) => {
-            if (!computedInsideModal.value && typeof r !== 'undefined' && r.autoReloadId) {
+            debug('doAutoReloadId -> enter: ', r);
+            if (typeof r !== 'undefined' && r.autoReloadId) {
                 debug('doAutoReloadId -> autoReloadId detected: ', r.autoReloadId);
-                props.readData['id'] = r.autoReloadId;
-                debug('doAutoReloadId -> turning off create mode');
-                createMode.value = false;
-                fetchItem();
+                if (!computedInsideModal.value) {
+                    debug('doAutoReloadId -> outsideModal');
+                    props.readData['id'] = r.autoReloadId;
+                    debug('doAutoReloadId -> turning off create mode');
+                    createMode.value = false;
+                    fetchItem();
+                } else {
+                    debug('doAutoReloadId -> insideModal: ', props);
+                    updateModalKey(props.modalConfig.modalName, props.modalConfig.modalKey, r.autoReloadId);
+                }
             }
         },
         onCreate = ($event: PointerEvent, r: HTTPResponse) => {
@@ -205,6 +216,7 @@
                 });
             }
             doAutoReloadId(r);
+            debug('onCreate -> beforeEmitCreate');
             emit('create', r);
         },
         onUpdate = ($event: PointerEvent, r: HTTPResponse) => {
@@ -274,6 +286,9 @@
         doDrop,
         doRefresh: fetchItem,
         doSave,
+        turnStoredDataIntoOriginal: () => {
+            dataState.value.increment(item.value).turnStoredIntoOriginal();
+        },
         hasModifiedData: () => dataState.value.changed(),
     });
 
