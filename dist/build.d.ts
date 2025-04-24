@@ -1,7 +1,7 @@
-declare function ut(D?: boolean): void;
-declare namespace nt {
-    function install(D: any, ee?: {}): void;
+declare function at(R?: boolean): void;
+declare namespace ot {
+    function install(R: any, ue?: {}): void;
 }
-declare function rt(D: any): void;
-declare function dt(D: any): void;
-export { ut as debugLktItemCrud, nt as default, rt as setItemCrudDefaultDropIcon, dt as setItemCrudDefaultSaveIcon };
+declare function ut(R: any): void;
+declare function nt(R: any): void;
+export { at as debugLktItemCrud, ot as default, ut as setItemCrudDefaultDropIcon, nt as setItemCrudDefaultSaveIcon };

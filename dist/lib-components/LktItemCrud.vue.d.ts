@@ -1,19 +1,27 @@
 import { ItemCrudButtonNavPosition, ItemCrudConfig, ItemCrudMode, ItemCrudView, LktObject, NotificationType } from 'lkt-vue-kernel';
-declare var __VLS_6: {
-    item: LktObject;
-    loading: boolean;
-}, __VLS_8: {
-    item: LktObject;
-    loading: boolean;
+declare var __VLS_17: {
+    canUpdate: boolean | undefined;
+    canDrop: boolean | undefined;
+    perms: string[] | undefined;
+}, __VLS_19: {
+    canUpdate: boolean | undefined;
+    canDrop: boolean | undefined;
+    perms: string[] | undefined;
 }, __VLS_21: {
-    canUpdate: boolean | undefined;
-    canDrop: boolean | undefined;
-    perms: string[] | undefined;
+    item: LktObject;
+    loading: boolean;
 }, __VLS_23: {
+    item: LktObject;
+    loading: boolean;
+}, __VLS_36: {
     canUpdate: boolean | undefined;
     canDrop: boolean | undefined;
     perms: string[] | undefined;
-}, __VLS_33: {
+}, __VLS_38: {
+    canUpdate: boolean | undefined;
+    canDrop: boolean | undefined;
+    perms: string[] | undefined;
+}, __VLS_48: {
     item: LktObject;
     loading: false;
     editMode: boolean;
@@ -22,21 +30,25 @@ declare var __VLS_6: {
     canDrop: boolean;
     itemBeingEdited: boolean;
     perms: string[];
-}, __VLS_54: {}, __VLS_56: {};
+}, __VLS_69: {}, __VLS_71: {};
 type __VLS_Slots = {} & {
-    'pre-title'?: (props: typeof __VLS_6) => any;
+    'prev-buttons-ever'?: (props: typeof __VLS_17) => any;
 } & {
-    'post-title'?: (props: typeof __VLS_8) => any;
+    'prev-buttons'?: (props: typeof __VLS_19) => any;
 } & {
-    'prev-buttons-ever'?: (props: typeof __VLS_21) => any;
+    'pre-title'?: (props: typeof __VLS_21) => any;
 } & {
-    'prev-buttons'?: (props: typeof __VLS_23) => any;
+    'post-title'?: (props: typeof __VLS_23) => any;
 } & {
-    item?: (props: typeof __VLS_33) => any;
+    'prev-buttons-ever'?: (props: typeof __VLS_36) => any;
 } & {
-    'prev-buttons-ever'?: (props: typeof __VLS_54) => any;
+    'prev-buttons'?: (props: typeof __VLS_38) => any;
 } & {
-    'prev-buttons'?: (props: typeof __VLS_56) => any;
+    item?: (props: typeof __VLS_48) => any;
+} & {
+    'prev-buttons-ever'?: (props: typeof __VLS_69) => any;
+} & {
+    'prev-buttons'?: (props: typeof __VLS_71) => any;
 };
 declare const __VLS_component: import("vue").DefineComponent<ItemCrudConfig, {
     doDrop: () => void;
@@ -78,6 +90,7 @@ declare const __VLS_component: import("vue").DefineComponent<ItemCrudConfig, {
     createButton: import("lkt-vue-kernel").ButtonConfig | false;
     updateButton: import("lkt-vue-kernel").ButtonConfig | false;
     groupButton: import("lkt-vue-kernel").ButtonConfig | boolean;
+    groupButtonAsModalActions: boolean;
     buttonNavPosition: ItemCrudButtonNavPosition;
     buttonNavVisibility: import("lkt-vue-kernel").ItemCrudButtonNavVisibility;
     modalConfig: import("lkt-vue-kernel").ModalConfig;

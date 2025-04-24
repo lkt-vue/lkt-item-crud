@@ -10,6 +10,7 @@ type __VLS_Props = {
     dropButton?: ButtonConfig | false;
     editModeButton?: ButtonConfig | false;
     groupButton?: ButtonConfig | boolean;
+    groupButtonAsModalActions?: boolean;
     dataChanged: boolean;
     canUpdate?: boolean;
     canDrop?: boolean;
@@ -18,83 +19,121 @@ type __VLS_Props = {
     httpSuccessRead?: boolean;
     buttonNavVisibility: ItemCrudButtonNavVisibility;
 };
-declare var __VLS_11: {
+declare var __VLS_5: {
     canUpdate: boolean | undefined;
     canDrop: boolean | undefined;
     perms: string[] | undefined;
-}, __VLS_13: {
+}, __VLS_7: {
     canUpdate: boolean | undefined;
     canDrop: boolean | undefined;
     perms: string[] | undefined;
-}, __VLS_27: {
+}, __VLS_21: {
     item: LktObject;
     editMode: boolean;
     isCreate: boolean;
     canUpdate: boolean | undefined;
     canDrop: boolean | undefined;
-}, __VLS_41: {
+}, __VLS_35: {
     item: LktObject;
     editMode: boolean;
     isCreate: boolean;
     canUpdate: boolean | undefined;
     canDrop: boolean | undefined;
-}, __VLS_55: {
+}, __VLS_49: {
     item: LktObject;
     editMode: boolean;
     isCreate: boolean;
     canUpdate: boolean | undefined;
     canDrop: boolean | undefined;
-}, __VLS_57: {}, __VLS_59: {
+}, __VLS_51: {}, __VLS_63: {
     canUpdate: boolean | undefined;
     canDrop: boolean | undefined;
     perms: string[] | undefined;
-}, __VLS_61: {
+}, __VLS_65: {
     canUpdate: boolean | undefined;
     canDrop: boolean | undefined;
     perms: string[] | undefined;
-}, __VLS_75: {
+}, __VLS_79: {
     item: LktObject;
     editMode: boolean;
     isCreate: boolean;
     canUpdate: boolean | undefined;
     canDrop: boolean | undefined;
-}, __VLS_89: {
+}, __VLS_93: {
+    item: LktObject;
+    editMode: boolean;
+    isCreate: boolean;
+    canUpdate: boolean | undefined;
+    canDrop: boolean | undefined;
+}, __VLS_107: {
+    item: LktObject;
+    editMode: boolean;
+    isCreate: boolean;
+    canUpdate: boolean | undefined;
+    canDrop: boolean | undefined;
+}, __VLS_109: {}, __VLS_111: {
+    canUpdate: boolean | undefined;
+    canDrop: boolean | undefined;
+    perms: string[] | undefined;
+}, __VLS_113: {
+    canUpdate: boolean | undefined;
+    canDrop: boolean | undefined;
+    perms: string[] | undefined;
+}, __VLS_127: {
+    item: LktObject;
+    editMode: boolean;
+    isCreate: boolean;
+    canUpdate: boolean | undefined;
+    canDrop: boolean | undefined;
+}, __VLS_141: {
     item: LktObject;
     editMode: boolean;
     isCreate: boolean;
     canUpdate: boolean | undefined;
     canDrop: boolean;
-}, __VLS_103: {
+}, __VLS_155: {
     item: LktObject;
     editMode: boolean;
     isCreate: boolean;
     canUpdate: boolean | undefined;
     canDrop: boolean | undefined;
-}, __VLS_105: {};
+}, __VLS_157: {};
 type __VLS_Slots = {} & {
-    'prev-buttons-ever'?: (props: typeof __VLS_11) => any;
+    'prev-buttons-ever'?: (props: typeof __VLS_5) => any;
 } & {
-    'prev-buttons'?: (props: typeof __VLS_13) => any;
+    'prev-buttons'?: (props: typeof __VLS_7) => any;
 } & {
-    'button-save'?: (props: typeof __VLS_27) => any;
+    'button-save'?: (props: typeof __VLS_21) => any;
 } & {
-    'button-save'?: (props: typeof __VLS_41) => any;
+    'button-save'?: (props: typeof __VLS_35) => any;
 } & {
-    'button-drop'?: (props: typeof __VLS_55) => any;
+    'button-drop'?: (props: typeof __VLS_49) => any;
 } & {
-    buttons?: (props: typeof __VLS_57) => any;
+    buttons?: (props: typeof __VLS_51) => any;
 } & {
-    'prev-buttons-ever'?: (props: typeof __VLS_59) => any;
+    'prev-buttons-ever'?: (props: typeof __VLS_63) => any;
 } & {
-    'prev-buttons'?: (props: typeof __VLS_61) => any;
+    'prev-buttons'?: (props: typeof __VLS_65) => any;
 } & {
-    'button-save'?: (props: typeof __VLS_75) => any;
+    'button-save'?: (props: typeof __VLS_79) => any;
 } & {
-    'button-save'?: (props: typeof __VLS_89) => any;
+    'button-save'?: (props: typeof __VLS_93) => any;
 } & {
-    'button-drop'?: (props: typeof __VLS_103) => any;
+    'button-drop'?: (props: typeof __VLS_107) => any;
 } & {
-    buttons?: (props: typeof __VLS_105) => any;
+    buttons?: (props: typeof __VLS_109) => any;
+} & {
+    'prev-buttons-ever'?: (props: typeof __VLS_111) => any;
+} & {
+    'prev-buttons'?: (props: typeof __VLS_113) => any;
+} & {
+    'button-save'?: (props: typeof __VLS_127) => any;
+} & {
+    'button-save'?: (props: typeof __VLS_141) => any;
+} & {
+    'button-drop'?: (props: typeof __VLS_155) => any;
+} & {
+    buttons?: (props: typeof __VLS_157) => any;
 };
 declare const __VLS_component: import("vue").DefineComponent<__VLS_Props, {
     doSave: () => void;

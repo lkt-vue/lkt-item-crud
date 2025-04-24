@@ -32,6 +32,7 @@
         dropButton?: ButtonConfig|false
         editModeButton?: ButtonConfig|false
         groupButton?: ButtonConfig|boolean
+        groupButtonAsModalActions?: boolean
 
         dataChanged: boolean
 
@@ -189,7 +190,80 @@
 <template>
     <div v-if="showButtons" class="lkt-item-crud-buttons">
 
-        <template v-if="groupButton !== false">
+        <template v-if="groupButton !== false && groupButtonAsModalActions">
+            <lkt-button
+                v-if="showSwitchButton"
+                v-bind="safeEditModeButton"
+                v-model:checked="isEditing"
+                class="lkt-item-crud--switch-mode-button" />
+
+
+            <template v-if="slots['prev-buttons-ever']" v-show="!isLoading">
+                <slot name="prev-buttons-ever"
+                      :can-update="canUpdate"
+                      :can-drop="canDrop"
+                      :perms="perms"
+                />
+            </template>
+
+            <template v-if="slots['prev-buttons']" v-show="isEditing && !isLoading">
+                <slot name="prev-buttons"
+                      :can-update="canUpdate"
+                      :can-drop="canDrop"
+                      :perms="perms"
+                />
+            </template>
+
+            <lkt-button
+                ref="saveButtonRef"
+                v-show="mode === ItemCrudMode.Update && showSaveButton"
+                v-bind="safeUpdateButton"
+                :disabled="!ableToUpdate"
+                @loading="onButtonLoading"
+                @loaded="onButtonLoaded"
+                @click="onSave">
+                <slot v-if="!!slots['button-save']" name="button-save" :item="item"
+                      :edit-mode="isEditing"
+                      :is-create="false"
+                      :can-update="canUpdate"
+                      :can-drop="canDrop" />
+            </lkt-button>
+
+            <lkt-button
+                ref="saveButtonRef"
+                v-show="mode === ItemCrudMode.Create && showSaveButton"
+                v-bind="safeCreateButton"
+                :disabled="!ableToCreate"
+                @loading="onButtonLoading"
+                @loaded="onButtonLoaded"
+                @click="onCreate">
+                <slot v-if="!!slots['button-save']" name="button-save" :item="item"
+                      :edit-mode="isEditing"
+                      :is-create="true"
+                      :can-update="canUpdate"
+                      :can-drop="canDrop" />
+            </lkt-button>
+
+            <lkt-button
+                ref="dropButtonRef"
+                v-show="showDropButton && mode !== ItemCrudMode.Create"
+                v-bind="safeDropButton"
+                :disabled="!ableToDrop"
+                @loading="onButtonLoading"
+                @loaded="onButtonLoaded"
+                @click="onDrop">
+                <slot v-if="!!slots['button-drop']" name="button-drop" :item="item"
+                      :edit-mode="isEditing"
+                      :is-create="false"
+                      :can-update="canUpdate"
+                      :can-drop="canDrop" />
+            </lkt-button>
+
+            <template v-if="slots.buttons" v-show="isEditing && !isLoading">
+                <slot name="buttons" />
+            </template>
+        </template>
+        <template v-else-if="groupButton !== false">
             <lkt-button
                 ref="groupButton"
                 v-bind="safeGroupButton"

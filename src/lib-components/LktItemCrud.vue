@@ -347,7 +347,51 @@
     <component
         :is="computedContainerTag"
         v-bind="computedContainerAttrs"
+        class="lkt-item-crud"
     >
+        <template v-if="groupButton !== false && groupButtonAsModalActions" #header-actions>
+            <button-nav
+                ref="buttonNav"
+                v-if="buttonNavPosition === ItemCrudButtonNavPosition.Top"
+                v-model:loading="isLoading"
+                v-model:editing="editMode"
+                :item="item"
+                :mode="mode"
+                :view="view"
+                :button-nav-visibility="buttonNavVisibility"
+                :create-button="createButton"
+                :update-button="updateButton"
+                :drop-button="dropButton"
+                :edit-mode-button="editModeButton"
+                :group-button="groupButton"
+                :group-button-as-modal-actions="groupButtonAsModalActions"
+                :data-changed="dataChanged"
+                :http-success-read="httpSuccessRead"
+                :can-update="canUpdate"
+                :can-drop="canDrop"
+                :can-switch-edit-mode="canSwitchEditMode"
+                :perms="perms"
+                @create="onCreate"
+                @save="onUpdate"
+                @drop="onDrop"
+            >
+                <template #prev-buttons-ever="{canUpdate, canDrop, perms}" v-if="slots['prev-buttons-ever']">
+                    <slot name="prev-buttons-ever"
+                          :can-update="canUpdate"
+                          :can-drop="canDrop"
+                          :perms="perms"
+                    />
+                </template>
+                <template #prev-buttons="{canUpdate, canDrop, perms}" v-if="slots['prev-buttons']">
+                    <slot name="prev-buttons"
+                          :can-update="canUpdate"
+                          :can-drop="canDrop"
+                          :perms="perms"
+                    />
+                </template>
+            </button-nav>
+        </template>
+
         <article class="lkt-item-crud">
             <header class="lkt-item-crud_header" v-if="!computedInsideModal && displayHeader">
                 <div class="lkt-item-crud_header-slot" v-if="slots['pre-title']">
@@ -361,7 +405,7 @@
 
             <button-nav
                 ref="buttonNav"
-                v-if="buttonNavPosition === ItemCrudButtonNavPosition.Top"
+                v-if="buttonNavPosition === ItemCrudButtonNavPosition.Top && (groupButton === false || !groupButtonAsModalActions)"
                 v-model:loading="isLoading"
                 v-model:editing="editMode"
                 :item="item"
@@ -378,6 +422,7 @@
                 :can-update="canUpdate"
                 :can-drop="canDrop"
                 :can-switch-edit-mode="canSwitchEditMode"
+                :group-button-as-modal-actions="groupButtonAsModalActions"
                 :perms="perms"
                 @create="onCreate"
                 @save="onUpdate"
@@ -425,7 +470,7 @@
 
             <button-nav
                 ref="buttonNav"
-                v-if="buttonNavPosition === ItemCrudButtonNavPosition.Bottom"
+                v-if="buttonNavPosition === ItemCrudButtonNavPosition.Bottom && (groupButton === false || !groupButtonAsModalActions)"
                 v-model:loading="isLoading"
                 v-model:editing="editMode"
                 :item="item"
@@ -442,6 +487,7 @@
                 :can-update="canUpdate"
                 :can-drop="canDrop"
                 :can-switch-edit-mode="canSwitchEditMode"
+                :group-button-as-modal-actions="groupButtonAsModalActions"
                 :perms="perms"
                 @create="onCreate"
                 @save="onUpdate"
