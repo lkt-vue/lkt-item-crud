@@ -4,6 +4,8 @@
     import { DataState } from 'lkt-data-state';
     import { debug } from '../functions/debug';
     import {
+        ButtonConfig,
+        ensureButtonConfig,
         getDefaultValues,
         ItemCrud,
         ItemCrudButtonNavPosition,
@@ -11,7 +13,7 @@
         ItemCrudMode,
         ItemCrudView,
         LktObject,
-        LktSettings,
+        LktSettings, ModalConfig,
         NotificationType,
         TablePermission,
         ToastConfig,
@@ -64,6 +66,28 @@
     watch(() => props.mode, (v) => {
         createMode.value = v === ItemCrudMode.Create;
     })
+
+    const safeCreateButton = ref(ensureButtonConfig(props.createButton, LktSettings.defaultCreateButton)),
+        safeUpdateButton = ref(ensureButtonConfig(props.updateButton, LktSettings.defaultUpdateButton)),
+        safeDropButton = ref(ensureButtonConfig(props.dropButton, LktSettings.defaultDropButton)),
+        safeEditModeButton = ref(ensureButtonConfig(props.editModeButton, LktSettings.defaultEditModeButton)),
+        safeGroupButton = ref(ensureButtonConfig(props.groupButton, LktSettings.defaultGroupButton));
+
+    watch(() => props.createButton, v => {
+        safeCreateButton.value = ensureButtonConfig(v, LktSettings.defaultCreateButton);
+    }, { deep: true });
+
+    watch(() => props.updateButton, v => {
+        safeUpdateButton.value = ensureButtonConfig(v, LktSettings.defaultUpdateButton);
+    }, { deep: true });
+
+    watch(() => props.dropButton, v => {
+        safeDropButton.value = ensureButtonConfig(v, LktSettings.defaultDropButton);
+    }, { deep: true });
+
+    watch(() => props.editModeButton, v => {
+        safeEditModeButton.value = ensureButtonConfig(v, LktSettings.defaultEditModeButton);
+    }, { deep: true });
 
     const fetchItem = async () => {
         debug('fetchItem');
@@ -193,7 +217,7 @@
         },
         onCreate = ($event: PointerEvent, r: HTTPResponse) => {
             debug('onCreate');
-            if (!ensureValidResourceSave(r, props.createButton.resource)) {
+            if (!ensureValidResourceSave(r, safeCreateButton.value.resource)) {
                 if (props.notificationType === NotificationType.Toast) {
                     openToast(<ToastConfig>{
                         text: LktSettings.defaultCreateErrorText,
@@ -221,7 +245,7 @@
         },
         onUpdate = ($event: PointerEvent, r: HTTPResponse) => {
             debug('onUpdate');
-            if (!ensureValidResourceSave(r, props.updateButton.resource)) {
+            if (!ensureValidResourceSave(r, safeUpdateButton.value.resource)) {
                 if (props.notificationType === NotificationType.Toast) {
                     openToast(<ToastConfig>{
                         text: LktSettings.defaultUpdateErrorText,
@@ -247,7 +271,7 @@
         },
         onDrop = ($event: PointerEvent, r: HTTPResponse) => {
             debug('onDrop');
-            if (!ensureValidResourceSave(r, props.dropButton.resource)) {
+            if (!ensureValidResourceSave(r, safeDropButton.value.resource)) {
                 if (props.notificationType === NotificationType.Toast) {
                     openToast(<ToastConfig>{
                         text: LktSettings.defaultDropErrorText,
@@ -325,9 +349,36 @@
             if (computedInsideModal.value) return 'lkt-modal';
             return 'section';
         }),
+        ableToUpdate = computed(() => {
+            if (props.mode !== ItemCrudMode.Update || !canUpdate.value) return false;
+            if (!dataChanged.value) return false;
+
+            if (typeof safeUpdateButton.value?.disabled === 'function') return !safeUpdateButton.value.disabled(item.value);
+            if (typeof safeUpdateButton.value?.disabled === 'boolean') return !safeUpdateButton.value.disabled;
+
+            return true;
+        }),
+        ableToCreate = computed(() => {
+            if (props.mode !== ItemCrudMode.Create) return false;
+            if (!dataChanged.value) return false;
+
+            if (typeof safeCreateButton.value?.disabled === 'function') return !safeCreateButton.value.disabled(item.value);
+            if (typeof safeCreateButton.value?.disabled === 'boolean') return !safeCreateButton.value.disabled;
+
+            return true;
+        }),
+        ableToDrop = computed(() => {
+
+            if (!canDrop.value) return false;
+
+            if (typeof safeDropButton.value?.disabled === 'function') return !safeDropButton.value.disabled(item.value);
+            if (typeof safeDropButton.value?.disabled === 'boolean') return !safeDropButton.value.disabled;
+
+            return true;
+        }),
         computedContainerAttrs = computed(() => {
             if (computedContainerTag.value === 'lkt-modal') {
-                return {
+                return <ModalConfig>{
                     ...{
                         title: props.title,
                         item: item.value,
@@ -337,10 +388,13 @@
                         beforeClose: crudBeforeClose,
                         closeConfirm: closeConfirm.value,
                     },
+                    headerActionsButton: props.groupButton !== false ? <ButtonConfig>{
+                        dot: ableToCreate.value || ableToUpdate.value,
+                    } : false
                 };
             }
             return {};
-        });
+        })
 </script>
 
 <template>
@@ -358,18 +412,22 @@
                 :item="item"
                 :mode="mode"
                 :view="view"
+                :grouped="true"
                 :button-nav-visibility="buttonNavVisibility"
-                :create-button="createButton"
-                :update-button="updateButton"
-                :drop-button="dropButton"
-                :edit-mode-button="editModeButton"
-                :group-button="groupButton"
-                :group-button-as-modal-actions="groupButtonAsModalActions"
+                :create-button="safeCreateButton"
+                :update-button="safeUpdateButton"
+                :drop-button="safeDropButton"
+                :edit-mode-button="safeEditModeButton"
+                :group-button="safeGroupButton"
                 :data-changed="dataChanged"
                 :http-success-read="httpSuccessRead"
                 :can-update="canUpdate"
                 :can-drop="canDrop"
                 :can-switch-edit-mode="canSwitchEditMode"
+                :group-button-as-modal-actions="groupButtonAsModalActions"
+                :able-to-create="ableToCreate"
+                :able-to-update="ableToUpdate"
+                :able-to-drop="ableToDrop"
                 :perms="perms"
                 @create="onCreate"
                 @save="onUpdate"
@@ -411,18 +469,22 @@
                 :item="item"
                 :mode="mode"
                 :view="view"
+                :grouped="groupButton !== false"
                 :button-nav-visibility="buttonNavVisibility"
-                :create-button="createButton"
-                :update-button="updateButton"
-                :drop-button="dropButton"
-                :edit-mode-button="editModeButton"
-                :group-button="groupButton"
+                :create-button="safeCreateButton"
+                :update-button="safeUpdateButton"
+                :drop-button="safeDropButton"
+                :edit-mode-button="safeEditModeButton"
+                :group-button="safeGroupButton"
                 :data-changed="dataChanged"
                 :http-success-read="httpSuccessRead"
                 :can-update="canUpdate"
                 :can-drop="canDrop"
                 :can-switch-edit-mode="canSwitchEditMode"
                 :group-button-as-modal-actions="groupButtonAsModalActions"
+                :able-to-create="ableToCreate"
+                :able-to-update="ableToUpdate"
+                :able-to-drop="ableToDrop"
                 :perms="perms"
                 @create="onCreate"
                 @save="onUpdate"
@@ -476,18 +538,22 @@
                 :item="item"
                 :mode="mode"
                 :view="view"
+                :grouped="groupButton !== false"
                 :button-nav-visibility="buttonNavVisibility"
-                :create-button="createButton"
-                :update-button="updateButton"
-                :drop-button="dropButton"
-                :edit-mode-button="editModeButton"
-                :group-button="groupButton"
+                :create-button="safeCreateButton"
+                :update-button="safeUpdateButton"
+                :drop-button="safeDropButton"
+                :edit-mode-button="safeEditModeButton"
+                :group-button="safeGroupButton"
                 :data-changed="dataChanged"
                 :http-success-read="httpSuccessRead"
                 :can-update="canUpdate"
                 :can-drop="canDrop"
                 :can-switch-edit-mode="canSwitchEditMode"
                 :group-button-as-modal-actions="groupButtonAsModalActions"
+                :able-to-create="ableToCreate"
+                :able-to-update="ableToUpdate"
+                :able-to-drop="ableToDrop"
                 :perms="perms"
                 @create="onCreate"
                 @save="onUpdate"

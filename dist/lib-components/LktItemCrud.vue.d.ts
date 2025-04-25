@@ -1,4 +1,4 @@
-import { ItemCrudButtonNavPosition, ItemCrudConfig, ItemCrudMode, ItemCrudView, LktObject, NotificationType } from 'lkt-vue-kernel';
+import { ButtonConfig, ItemCrudButtonNavPosition, ItemCrudConfig, ItemCrudMode, ItemCrudView, LktObject, ModalConfig, NotificationType } from 'lkt-vue-kernel';
 declare var __VLS_17: {
     canUpdate: boolean | undefined;
     canDrop: boolean | undefined;
@@ -85,15 +85,15 @@ declare const __VLS_component: import("vue").DefineComponent<ItemCrudConfig, {
     modelValue: LktObject;
     editing: boolean;
     perms: import("lkt-vue-kernel").ValidTablePermission[];
-    editModeButton: import("lkt-vue-kernel").ButtonConfig | false;
-    dropButton: import("lkt-vue-kernel").ButtonConfig | false;
-    createButton: import("lkt-vue-kernel").ButtonConfig | false;
-    updateButton: import("lkt-vue-kernel").ButtonConfig | false;
-    groupButton: import("lkt-vue-kernel").ButtonConfig | boolean;
+    editModeButton: ButtonConfig | false;
+    dropButton: ButtonConfig | false;
+    createButton: ButtonConfig | false;
+    updateButton: ButtonConfig | false;
+    groupButton: ButtonConfig | boolean;
     groupButtonAsModalActions: boolean;
     buttonNavPosition: ItemCrudButtonNavPosition;
     buttonNavVisibility: import("lkt-vue-kernel").ItemCrudButtonNavVisibility;
-    modalConfig: import("lkt-vue-kernel").ModalConfig;
+    modalConfig: ModalConfig;
     saveConfig: import("lkt-vue-kernel").SaveConfig;
     dataStateConfig: import("lkt-data-state").DataStateConfig;
     readResource: string;

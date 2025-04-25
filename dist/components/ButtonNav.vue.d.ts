@@ -3,6 +3,7 @@ type __VLS_Props = {
     item: LktObject;
     editing?: boolean;
     loading?: boolean;
+    grouped?: boolean;
     view: ItemCrudView;
     mode: ItemCrudMode;
     createButton?: ButtonConfig | false;
@@ -12,6 +13,9 @@ type __VLS_Props = {
     groupButton?: ButtonConfig | boolean;
     groupButtonAsModalActions?: boolean;
     dataChanged: boolean;
+    ableToCreate?: boolean;
+    ableToUpdate?: boolean;
+    ableToDrop?: boolean;
     canUpdate?: boolean;
     canDrop?: boolean;
     canSwitchEditMode?: boolean;
