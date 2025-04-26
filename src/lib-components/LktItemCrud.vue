@@ -351,7 +351,7 @@
         }),
         ableToUpdate = computed(() => {
             if (props.mode !== ItemCrudMode.Update || !canUpdate.value) return false;
-            if (!dataChanged.value) return false;
+            if (!props.enabledSaveWithoutChanges && !dataChanged.value) return false;
 
             if (typeof safeUpdateButton.value?.disabled === 'function') return !safeUpdateButton.value.disabled(item.value);
             if (typeof safeUpdateButton.value?.disabled === 'boolean') return !safeUpdateButton.value.disabled;
@@ -360,7 +360,7 @@
         }),
         ableToCreate = computed(() => {
             if (props.mode !== ItemCrudMode.Create) return false;
-            if (!dataChanged.value) return false;
+            if (!props.enabledSaveWithoutChanges && !dataChanged.value) return false;
 
             if (typeof safeCreateButton.value?.disabled === 'function') return !safeCreateButton.value.disabled(item.value);
             if (typeof safeCreateButton.value?.disabled === 'boolean') return !safeCreateButton.value.disabled;
