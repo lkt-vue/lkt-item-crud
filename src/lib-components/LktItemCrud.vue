@@ -23,12 +23,15 @@
     import { __ } from 'lkt-i18n';
     import ButtonNav from '../components/ButtonNav.vue';
     import { openToast } from 'lkt-toast';
+    import { useRouter } from 'vue-router';
 
     // defineOptions({
     //     inheritAttrs: false
     // })
 
     const props = withDefaults(defineProps<ItemCrudConfig>(), getDefaultValues(ItemCrud));
+
+    const router = useRouter();
 
     const slots: SetupContext['slots'] = useSlots();
 
@@ -199,11 +202,16 @@
             }
             return true;
         },
-        doAutoReloadId = (r?: HTTPResponse) => {
+        doAutoReloadId = (r?: HTTPResponse, redirect?: string|Function) => {
             debug('doAutoReloadId -> enter: ', r);
             if (typeof r !== 'undefined' && r.autoReloadId) {
                 debug('doAutoReloadId -> autoReloadId detected: ', r.autoReloadId);
-                if (!computedInsideModal.value) {
+                if (typeof redirect !== 'undefined') {
+                    let route = redirect;
+                    if (typeof redirect === 'function') route = redirect(r.autoReloadId);
+                    router.push(route);
+                }
+                else if (!computedInsideModal.value) {
                     debug('doAutoReloadId -> outsideModal');
                     props.readData['id'] = r.autoReloadId;
                     debug('doAutoReloadId -> turning off create mode');
@@ -239,7 +247,7 @@
                     positionX: ToastPositionX.Right,
                 });
             }
-            doAutoReloadId(r);
+            doAutoReloadId(r, props.redirectOnCreate);
             debug('onCreate -> beforeEmitCreate');
             emit('create', r);
         },
@@ -295,6 +303,12 @@
                 debug('onDrop -> close modal');
                 //@ts-ignore
                 closeModal(props.modalConfig.modalName, props.modalConfig.modalKey);
+            }
+
+            if (typeof props.redirectOnDrop !== 'undefined') {
+                let route = props.redirectOnDrop;
+                if (typeof props.redirectOnDrop === 'function') route = props.redirectOnDrop();
+                router.push(route);
             }
         },
         doSave = () => {
