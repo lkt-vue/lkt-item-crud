@@ -65,6 +65,8 @@ declare const __VLS_component: import("vue").DefineComponent<ItemCrudConfig, {
     perms: (...args: any[]) => void;
     "update:editing": (...args: any[]) => void;
     "update:modelValue": (...args: any[]) => void;
+    "update:perms": (...args: any[]) => void;
+    "update:customData": (...args: any[]) => void;
     "before-save": (...args: any[]) => void;
     "modified-data": (...args: any[]) => void;
 }, string, import("vue").PublicProps, Readonly<ItemCrudConfig> & Readonly<{
@@ -76,6 +78,8 @@ declare const __VLS_component: import("vue").DefineComponent<ItemCrudConfig, {
     onPerms?: ((...args: any[]) => any) | undefined;
     "onUpdate:editing"?: ((...args: any[]) => any) | undefined;
     "onUpdate:modelValue"?: ((...args: any[]) => any) | undefined;
+    "onUpdate:perms"?: ((...args: any[]) => any) | undefined;
+    "onUpdate:customData"?: ((...args: any[]) => any) | undefined;
     "onBefore-save"?: ((...args: any[]) => any) | undefined;
     "onModified-data"?: ((...args: any[]) => any) | undefined;
 }>, {
@@ -83,8 +87,13 @@ declare const __VLS_component: import("vue").DefineComponent<ItemCrudConfig, {
     title: string;
     mode: ItemCrudMode;
     modelValue: LktObject;
+    events: {
+        httpStart?: undefined | Function;
+        httpEnd?: (data: import("lkt-vue-kernel").ClickEventArgs) => void | undefined;
+    };
     editing: boolean;
     perms: import("lkt-vue-kernel").ValidTablePermission[];
+    customData: LktObject;
     editModeButton: ButtonConfig | false;
     dropButton: ButtonConfig | false;
     createButton: ButtonConfig | false;

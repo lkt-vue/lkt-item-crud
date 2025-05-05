@@ -38,6 +38,8 @@
     const emit = defineEmits([
         'update:modelValue',
         'update:editing',
+        'update:perms',
+        'update:customData',
         'read',
         'create',
         'update',
@@ -50,7 +52,8 @@
 
     const isLoading = ref(true),
         item = ref(props.modelValue),
-        perms = ref(props.perms),
+        custom = ref(props.customData),
+        permissions = ref(props.perms),
         editMode = ref(props.editing),
         httpSuccessRead = ref(false),
         showStoreMessage = ref(false),
@@ -62,13 +65,19 @@
         itemBeingEdited = ref(false),
         itemCreated = ref(false),
         buttonNav = ref(null),
-        canUpdate = computed(() => !createMode.value && Array.isArray(perms.value) && perms.value.includes(TablePermission.Update)),
-        canDrop = computed(() => !createMode.value && Array.isArray(perms.value) && perms.value.includes(TablePermission.Drop)),
-        canSwitchEditMode = computed(() => !createMode.value && Array.isArray(perms.value) && perms.value.includes(TablePermission.SwitchEditMode));
+        canUpdate = computed(() => !createMode.value && Array.isArray(permissions.value) && permissions.value.includes(TablePermission.Update)),
+        canDrop = computed(() => !createMode.value && Array.isArray(permissions.value) && permissions.value.includes(TablePermission.Drop)),
+        canSwitchEditMode = computed(() => !createMode.value && Array.isArray(permissions.value) && permissions.value.includes(TablePermission.SwitchEditMode));
 
     watch(() => props.mode, (v) => {
         createMode.value = v === ItemCrudMode.Create;
     })
+
+    watch(() => props.perms, (v) => {permissions.value = v});
+    watch(permissions, (v) => {emit('update:perms', v)});
+
+    watch(() => props.customData, (v) => {custom.value = v});
+    watch(custom, (v) => {emit('update:customData', v)});
 
     const safeCreateButton = ref(ensureButtonConfig(props.createButton, LktSettings.defaultCreateButton)),
         safeUpdateButton = ref(ensureButtonConfig(props.updateButton, LktSettings.defaultUpdateButton)),
@@ -98,23 +107,40 @@
         httpStatus.value = -1;
         showStoreMessage.value = false;
 
+        if (typeof props.events?.httpStart === 'function') {
+            props.events.httpStart();
+        }
+
         try {
-            const r = await httpCall(props.readResource, props.readData);
+            const r: HTTPResponse = await httpCall(props.readResource, props.readData);
             debug('fetchItem -> response', r);
             isLoading.value = false;
             httpStatus.value = r.httpStatus;
+            custom.value = r.custom;
             if (!r.success) {
                 httpSuccessRead.value = false;
                 httpStatus.value = r.httpStatus;
+
+                if (typeof props.events?.httpEnd === 'function') {
+                    props.events.httpEnd({
+                        httpResponse: r,
+                    });
+                }
                 emit('error', r.httpStatus);
                 return;
             }
             httpSuccessRead.value = true;
             item.value = r.data;
-            perms.value = r.perms;
+            permissions.value = r.perms;
             dataState.value.increment(item.value).turnStoredIntoOriginal();
             dataChanged.value = dataState.value.changed();
             readDataState.value.turnStoredIntoOriginal();
+
+            if (typeof props.events?.httpEnd === 'function') {
+                props.events.httpEnd({
+                    httpResponse: r,
+                });
+            }
             emit('read', r);
 
         } catch (e) {
@@ -148,7 +174,7 @@
         nextTick(() => itemBeingEdited.value = false);
     }, { deep: true });
 
-    watch(perms, () => emit('perms', perms.value));
+    watch(permissions, () => emit('perms', permissions.value));
     watch(dataChanged, (v) => {
         emit('modified-data', v);
     });
@@ -367,7 +393,9 @@
             if (props.mode !== ItemCrudMode.Update || !canUpdate.value) return false;
             if (!props.enabledSaveWithoutChanges && !dataChanged.value) return false;
 
-            if (typeof safeUpdateButton.value?.disabled === 'function') return !safeUpdateButton.value.disabled(item.value);
+            if (typeof safeUpdateButton.value?.disabled === 'function') return !safeUpdateButton.value.disabled({
+                prop: item.value
+            });
             if (typeof safeUpdateButton.value?.disabled === 'boolean') return !safeUpdateButton.value.disabled;
 
             return true;
@@ -376,7 +404,9 @@
             if (props.mode !== ItemCrudMode.Create) return false;
             if (!props.enabledSaveWithoutChanges && !dataChanged.value) return false;
 
-            if (typeof safeCreateButton.value?.disabled === 'function') return !safeCreateButton.value.disabled(item.value);
+            if (typeof safeCreateButton.value?.disabled === 'function') return !safeCreateButton.value.disabled({
+                prop: item.value
+            });
             if (typeof safeCreateButton.value?.disabled === 'boolean') return !safeCreateButton.value.disabled;
 
             return true;
@@ -385,7 +415,9 @@
 
             if (!canDrop.value) return false;
 
-            if (typeof safeDropButton.value?.disabled === 'function') return !safeDropButton.value.disabled(item.value);
+            if (typeof safeDropButton.value?.disabled === 'function') return !safeDropButton.value.disabled({
+                prop: item.value
+            });
             if (typeof safeDropButton.value?.disabled === 'boolean') return !safeDropButton.value.disabled;
 
             return true;
@@ -442,7 +474,7 @@
                 :able-to-create="ableToCreate"
                 :able-to-update="ableToUpdate"
                 :able-to-drop="ableToDrop"
-                :perms="perms"
+                :perms="permissions"
                 @create="onCreate"
                 @save="onUpdate"
                 @drop="onDrop"
@@ -499,7 +531,7 @@
                 :able-to-create="ableToCreate"
                 :able-to-update="ableToUpdate"
                 :able-to-drop="ableToDrop"
-                :perms="perms"
+                :perms="permissions"
                 @create="onCreate"
                 @save="onUpdate"
                 @drop="onDrop"
@@ -537,7 +569,7 @@
                           :can-update="canUpdate"
                           :can-drop="canDrop"
                           :item-being-edited="itemBeingEdited"
-                          :perms="perms"
+                          :perms="permissions"
                     />
                 </div>
                 <lkt-http-info :code="httpStatus" v-else-if="notificationType === NotificationType.Inline" />
@@ -568,7 +600,7 @@
                 :able-to-create="ableToCreate"
                 :able-to-update="ableToUpdate"
                 :able-to-drop="ableToDrop"
-                :perms="perms"
+                :perms="permissions"
                 @create="onCreate"
                 @save="onUpdate"
                 @drop="onDrop"
