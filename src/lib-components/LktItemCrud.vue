@@ -40,6 +40,7 @@
         'update:editing',
         'update:perms',
         'update:customData',
+        'update:form',
         'read',
         'create',
         'update',
@@ -55,6 +56,7 @@
         custom = ref(props.customData),
         permissions = ref(props.perms),
         editMode = ref(props.editing),
+        validForm = ref(false),
         httpSuccessRead = ref(false),
         showStoreMessage = ref(false),
         httpStatus = ref(200),
@@ -392,6 +394,8 @@
         ableToUpdate = computed(() => {
             if (props.mode !== ItemCrudMode.Update || !canUpdate.value) return false;
             if (!props.enabledSaveWithoutChanges && !dataChanged.value) return false;
+            console.log('ableToUpdate', validForm.value);
+            if (computedHasForm.value && !validForm.value) return false;
 
             if (typeof safeUpdateButton.value?.disabled === 'function') return !safeUpdateButton.value.disabled({
                 prop: item.value
@@ -403,6 +407,7 @@
         ableToCreate = computed(() => {
             if (props.mode !== ItemCrudMode.Create) return false;
             if (!props.enabledSaveWithoutChanges && !dataChanged.value) return false;
+            if (computedHasForm.value && !validForm.value) return false;
 
             if (typeof safeCreateButton.value?.disabled === 'function') return !safeCreateButton.value.disabled({
                 prop: item.value
@@ -440,6 +445,9 @@
                 };
             }
             return {};
+        }),
+        computedHasForm = computed(() => {
+            return typeof props.form === 'object' && Object.keys(props.form).length > 0;
         })
 </script>
 
@@ -561,16 +569,26 @@
                         quick
                         can-close
                         v-on:close="showStoreMessage = false" />
-                    <slot name="item"
-                          :item="item"
-                          :loading="isLoading"
-                          :edit-mode="editMode"
-                          :is-create="createMode"
-                          :can-update="canUpdate"
-                          :can-drop="canDrop"
-                          :item-being-edited="itemBeingEdited"
-                          :perms="permissions"
+
+                    <lkt-form
+                        v-if="computedHasForm"
+                        v-model="item"
+                        v-model:form="form"
+                        v-model:valid="validForm"
                     />
+
+                    <template v-else>
+                        <slot name="item"
+                              :item="item"
+                              :loading="isLoading"
+                              :edit-mode="editMode"
+                              :is-create="createMode"
+                              :can-update="canUpdate"
+                              :can-drop="canDrop"
+                              :item-being-edited="itemBeingEdited"
+                              :perms="permissions"
+                        />
+                    </template>
                 </div>
                 <lkt-http-info :code="httpStatus" v-else-if="notificationType === NotificationType.Inline" />
             </div>

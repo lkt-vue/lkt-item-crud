@@ -21,7 +21,7 @@ declare var __VLS_17: {
     canUpdate: boolean | undefined;
     canDrop: boolean | undefined;
     perms: string[] | undefined;
-}, __VLS_48: {
+}, __VLS_52: {
     item: LktObject;
     loading: false;
     editMode: boolean;
@@ -30,7 +30,7 @@ declare var __VLS_17: {
     canDrop: boolean;
     itemBeingEdited: boolean;
     perms: string[];
-}, __VLS_69: {}, __VLS_71: {};
+}, __VLS_73: {}, __VLS_75: {};
 type __VLS_Slots = {} & {
     'prev-buttons-ever'?: (props: typeof __VLS_17) => any;
 } & {
@@ -44,11 +44,11 @@ type __VLS_Slots = {} & {
 } & {
     'prev-buttons'?: (props: typeof __VLS_38) => any;
 } & {
-    item?: (props: typeof __VLS_48) => any;
+    item?: (props: typeof __VLS_52) => any;
 } & {
-    'prev-buttons-ever'?: (props: typeof __VLS_69) => any;
+    'prev-buttons-ever'?: (props: typeof __VLS_73) => any;
 } & {
-    'prev-buttons'?: (props: typeof __VLS_71) => any;
+    'prev-buttons'?: (props: typeof __VLS_75) => any;
 };
 declare const __VLS_component: import("vue").DefineComponent<ItemCrudConfig, {
     doDrop: () => void;
@@ -67,6 +67,7 @@ declare const __VLS_component: import("vue").DefineComponent<ItemCrudConfig, {
     "update:modelValue": (...args: any[]) => void;
     "update:perms": (...args: any[]) => void;
     "update:customData": (...args: any[]) => void;
+    "update:form": (...args: any[]) => void;
     "before-save": (...args: any[]) => void;
     "modified-data": (...args: any[]) => void;
 }, string, import("vue").PublicProps, Readonly<ItemCrudConfig> & Readonly<{
@@ -80,10 +81,12 @@ declare const __VLS_component: import("vue").DefineComponent<ItemCrudConfig, {
     "onUpdate:modelValue"?: ((...args: any[]) => any) | undefined;
     "onUpdate:perms"?: ((...args: any[]) => any) | undefined;
     "onUpdate:customData"?: ((...args: any[]) => any) | undefined;
+    "onUpdate:form"?: ((...args: any[]) => any) | undefined;
     "onBefore-save"?: ((...args: any[]) => any) | undefined;
     "onModified-data"?: ((...args: any[]) => any) | undefined;
 }>, {
     view: ItemCrudView;
+    form: import("lkt-vue-kernel").FormConfig;
     title: string;
     mode: ItemCrudMode;
     modelValue: LktObject;
