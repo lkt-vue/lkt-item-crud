@@ -1,7 +1,7 @@
-declare function gt(T?: boolean): void;
-declare namespace yt {
-    function install(T: any, ae?: {}): void;
+declare function It(g?: boolean): void;
+declare namespace Tt {
+    function install(g: any, F?: {}): void;
 }
-declare function kt(T: any): void;
-declare function Bt(T: any): void;
-export { gt as debugLktItemCrud, yt as default, kt as setItemCrudDefaultDropIcon, Bt as setItemCrudDefaultSaveIcon };
+declare function Rt(g: any): void;
+declare function Vt(g: any): void;
+export { It as debugLktItemCrud, Tt as default, Rt as setItemCrudDefaultDropIcon, Vt as setItemCrudDefaultSaveIcon };

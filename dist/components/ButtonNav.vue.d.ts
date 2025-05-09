@@ -1,4 +1,4 @@
-import { ButtonConfig, ItemCrudButtonNavVisibility, ItemCrudMode, ItemCrudView, LktObject } from 'lkt-vue-kernel';
+import { ButtonConfig, ItemCrudButtonNavVisibility, ItemCrudMode, ItemCrudView, LktObject, ModificationView } from 'lkt-vue-kernel';
 type __VLS_Props = {
     item: LktObject;
     editing?: boolean;
@@ -22,6 +22,8 @@ type __VLS_Props = {
     perms?: Array<string>;
     httpSuccessRead?: boolean;
     buttonNavVisibility: ItemCrudButtonNavVisibility;
+    modificationView?: boolean | Array<ModificationView>;
+    pickedModificationView: string;
 };
 declare var __VLS_5: {
     canUpdate: boolean | undefined;
@@ -147,12 +149,14 @@ declare const __VLS_component: import("vue").DefineComponent<__VLS_Props, {
     create: (...args: any[]) => void;
     "update:loading": (...args: any[]) => void;
     "update:editing": (...args: any[]) => void;
+    "update:pickedModificationView": (...args: any[]) => void;
     save: (...args: any[]) => void;
 }, string, import("vue").PublicProps, Readonly<__VLS_Props> & Readonly<{
     onDrop?: ((...args: any[]) => any) | undefined;
     onCreate?: ((...args: any[]) => any) | undefined;
     "onUpdate:loading"?: ((...args: any[]) => any) | undefined;
     "onUpdate:editing"?: ((...args: any[]) => any) | undefined;
+    "onUpdate:pickedModificationView"?: ((...args: any[]) => any) | undefined;
     onSave?: ((...args: any[]) => any) | undefined;
 }>, {
     item: LktObject;

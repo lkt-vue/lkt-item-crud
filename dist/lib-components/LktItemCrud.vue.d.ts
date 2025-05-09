@@ -1,4 +1,4 @@
-import { ButtonConfig, ItemCrudButtonNavPosition, ItemCrudConfig, ItemCrudMode, ItemCrudView, LktObject, ModalConfig, NotificationType } from 'lkt-vue-kernel';
+import { ButtonConfig, FormConfig, ItemCrudButtonNavPosition, ItemCrudConfig, ItemCrudMode, ItemCrudView, LktObject, ModalConfig, ModificationView, NotificationType } from 'lkt-vue-kernel';
 declare var __VLS_17: {
     canUpdate: boolean | undefined;
     canDrop: boolean | undefined;
@@ -67,7 +67,7 @@ declare const __VLS_component: import("vue").DefineComponent<ItemCrudConfig, {
     "update:modelValue": (...args: any[]) => void;
     "update:perms": (...args: any[]) => void;
     "update:customData": (...args: any[]) => void;
-    "update:form": (...args: any[]) => void;
+    "update:modifications": (...args: any[]) => void;
     "before-save": (...args: any[]) => void;
     "modified-data": (...args: any[]) => void;
 }, string, import("vue").PublicProps, Readonly<ItemCrudConfig> & Readonly<{
@@ -81,14 +81,15 @@ declare const __VLS_component: import("vue").DefineComponent<ItemCrudConfig, {
     "onUpdate:modelValue"?: ((...args: any[]) => any) | undefined;
     "onUpdate:perms"?: ((...args: any[]) => any) | undefined;
     "onUpdate:customData"?: ((...args: any[]) => any) | undefined;
-    "onUpdate:form"?: ((...args: any[]) => any) | undefined;
+    "onUpdate:modifications"?: ((...args: any[]) => any) | undefined;
     "onBefore-save"?: ((...args: any[]) => any) | undefined;
     "onModified-data"?: ((...args: any[]) => any) | undefined;
 }>, {
     view: ItemCrudView;
-    form: import("lkt-vue-kernel").FormConfig;
+    form: FormConfig;
     title: string;
     mode: ItemCrudMode;
+    modifications: LktObject;
     modelValue: LktObject;
     events: {
         httpStart?: undefined | Function;
@@ -97,6 +98,7 @@ declare const __VLS_component: import("vue").DefineComponent<ItemCrudConfig, {
     editing: boolean;
     perms: import("lkt-vue-kernel").ValidTablePermission[];
     customData: LktObject;
+    modificationView: boolean | Array<ModificationView>;
     editModeButton: ButtonConfig | false;
     dropButton: ButtonConfig | false;
     createButton: ButtonConfig | false;

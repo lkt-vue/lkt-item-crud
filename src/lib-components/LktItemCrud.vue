@@ -5,7 +5,7 @@
     import { debug } from '../functions/debug';
     import {
         ButtonConfig,
-        ensureButtonConfig,
+        ensureButtonConfig, FormConfig, FormItemConfig,
         getDefaultValues,
         ItemCrud,
         ItemCrudButtonNavPosition,
@@ -13,7 +13,7 @@
         ItemCrudMode,
         ItemCrudView,
         LktObject,
-        LktSettings, ModalConfig,
+        LktSettings, ModalConfig, ModificationView,
         NotificationType,
         TablePermission,
         ToastConfig,
@@ -24,6 +24,7 @@
     import ButtonNav from '../components/ButtonNav.vue';
     import { openToast } from 'lkt-toast';
     import { useRouter } from 'vue-router';
+    import { getModificationsDataState } from '@/functions/modifications-functions';
 
     // defineOptions({
     //     inheritAttrs: false
@@ -40,7 +41,7 @@
         'update:editing',
         'update:perms',
         'update:customData',
-        'update:form',
+        'update:modifications',
         'read',
         'create',
         'update',
@@ -53,6 +54,7 @@
 
     const isLoading = ref(true),
         item = ref(props.modelValue),
+        itemModifications = ref(props.modifications),
         custom = ref(props.customData),
         permissions = ref(props.perms),
         editMode = ref(props.editing),
@@ -71,6 +73,8 @@
         canDrop = computed(() => !createMode.value && Array.isArray(permissions.value) && permissions.value.includes(TablePermission.Drop)),
         canSwitchEditMode = computed(() => !createMode.value && Array.isArray(permissions.value) && permissions.value.includes(TablePermission.SwitchEditMode));
 
+    const pickedModificationView = ref(ModificationView.Current);
+
     watch(() => props.mode, (v) => {
         createMode.value = v === ItemCrudMode.Create;
     })
@@ -80,6 +84,12 @@
 
     watch(() => props.customData, (v) => {custom.value = v});
     watch(custom, (v) => {emit('update:customData', v)});
+
+    watch(() => props.modifications, (v) => {itemModifications.value = v});
+    watch(itemModifications, (v) => {
+        resetFormDifferencesChecker();
+        emit('update:modifications', v)
+    });
 
     const safeCreateButton = ref(ensureButtonConfig(props.createButton, LktSettings.defaultCreateButton)),
         safeUpdateButton = ref(ensureButtonConfig(props.updateButton, LktSettings.defaultUpdateButton)),
@@ -133,6 +143,7 @@
             }
             httpSuccessRead.value = true;
             item.value = r.data;
+            itemModifications.value = r.modifications;
             permissions.value = r.perms;
             dataState.value.increment(item.value).turnStoredIntoOriginal();
             dataChanged.value = dataState.value.changed();
@@ -169,6 +180,7 @@
             debug('item updated -> override with: ', override);
             if (typeof override === 'object') item.value = override;
         }
+        resetFormDifferencesChecker();
         emit('update:modelValue', item.value);
         debug('item updated -> update dataState');
         dataState.value.increment(v);
@@ -194,6 +206,13 @@
         debug('editMode updated -> emit update', v);
         emit('update:editing', v);
     });
+
+    const formDifferencesChecker = ref(undefined);
+    const resetFormDifferencesChecker = () => {
+        if (computedHasForm.value) {
+            formDifferencesChecker.value = getModificationsDataState(item.value, itemModifications.value, props.form);
+        }
+    }
 
     onMounted(() => {
         // Fetch item
@@ -394,7 +413,6 @@
         ableToUpdate = computed(() => {
             if (props.mode !== ItemCrudMode.Update || !canUpdate.value) return false;
             if (!props.enabledSaveWithoutChanges && !dataChanged.value) return false;
-            console.log('ableToUpdate', validForm.value);
             if (computedHasForm.value && !validForm.value) return false;
 
             if (typeof safeUpdateButton.value?.disabled === 'function') return !safeUpdateButton.value.disabled({
@@ -448,7 +466,25 @@
         }),
         computedHasForm = computed(() => {
             return typeof props.form === 'object' && Object.keys(props.form).length > 0;
-        })
+        }),
+        computedModificationViews = computed(() => {
+            if (Object.keys(itemModifications.value).length === 0) return [];
+            return props.modificationView;
+        });
+
+    const filterFormItems = (formItem: FormItemConfig) => {
+        return typeof formItem.supportedModifications === 'undefined'
+            || formItem.supportedModifications === true
+            || Array.isArray(formItem.supportedModifications) && formItem.supportedModifications.includes(pickedModificationView.value);
+    }
+
+    const computedCurrentDataForm = computed(() => {
+        if (!computedHasForm.value) return {};
+        return {
+            ...props.form,
+            items: props.form.items.filter(filterFormItems)
+        }
+    })
 </script>
 
 <template>
@@ -463,6 +499,7 @@
                 v-if="buttonNavPosition === ItemCrudButtonNavPosition.Top"
                 v-model:loading="isLoading"
                 v-model:editing="editMode"
+                v-model:picked-modification-view="pickedModificationView"
                 :item="item"
                 :mode="mode"
                 :view="view"
@@ -483,6 +520,7 @@
                 :able-to-update="ableToUpdate"
                 :able-to-drop="ableToDrop"
                 :perms="permissions"
+                :modification-view="computedModificationViews"
                 @create="onCreate"
                 @save="onUpdate"
                 @drop="onDrop"
@@ -520,6 +558,7 @@
                 v-if="buttonNavPosition === ItemCrudButtonNavPosition.Top && (groupButton === false || !groupButtonAsModalActions)"
                 v-model:loading="isLoading"
                 v-model:editing="editMode"
+                v-model:picked-modification-view="pickedModificationView"
                 :item="item"
                 :mode="mode"
                 :view="view"
@@ -540,6 +579,7 @@
                 :able-to-update="ableToUpdate"
                 :able-to-drop="ableToDrop"
                 :perms="permissions"
+                :modification-view="computedModificationViews"
                 @create="onCreate"
                 @save="onUpdate"
                 @drop="onDrop"
@@ -570,12 +610,16 @@
                         can-close
                         v-on:close="showStoreMessage = false" />
 
-                    <lkt-form
-                        v-if="computedHasForm"
-                        v-model="item"
-                        v-model:form="form"
-                        v-model:valid="validForm"
-                    />
+                    <template v-if="computedHasForm">
+                        <lkt-form
+                            v-model="item"
+                            v-model:modifications="itemModifications"
+                            v-model:valid="validForm"
+                            :form="form"
+                            :modification-view="pickedModificationView"
+                            :modification-data-state="formDifferencesChecker"
+                        />
+                    </template>
 
                     <template v-else>
                         <slot name="item"
@@ -599,6 +643,7 @@
                 v-if="buttonNavPosition === ItemCrudButtonNavPosition.Bottom && (groupButton === false || !groupButtonAsModalActions)"
                 v-model:loading="isLoading"
                 v-model:editing="editMode"
+                v-model:picked-modification-view="pickedModificationView"
                 :item="item"
                 :mode="mode"
                 :view="view"
@@ -619,6 +664,7 @@
                 :able-to-update="ableToUpdate"
                 :able-to-drop="ableToDrop"
                 :perms="permissions"
+                :modification-view="computedModificationViews"
                 @create="onCreate"
                 @save="onUpdate"
                 @drop="onDrop"

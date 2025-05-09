@@ -1,11 +1,20 @@
 <script setup lang="ts">
     import { computed, ref, SetupContext, useSlots, watch } from 'vue';
-    import { ButtonConfig, ItemCrudButtonNavVisibility, ItemCrudMode, ItemCrudView, LktObject } from 'lkt-vue-kernel';
+    import {
+        ButtonConfig,
+        ButtonType,
+        ItemCrudButtonNavVisibility,
+        ItemCrudMode,
+        ItemCrudView,
+        LktObject,
+        ModificationView,
+    } from 'lkt-vue-kernel';
     import { HTTPResponse } from 'lkt-http-client';
 
     const emit = defineEmits([
         'update:loading',
         'update:editing',
+        'update:pickedModificationView',
         'create',
         'save',
         'drop',
@@ -20,11 +29,11 @@
         view: ItemCrudView
         mode: ItemCrudMode
 
-        createButton?: ButtonConfig|false
-        updateButton?: ButtonConfig|false
-        dropButton?: ButtonConfig|false
-        editModeButton?: ButtonConfig|false
-        groupButton?: ButtonConfig|boolean
+        createButton?: ButtonConfig | false
+        updateButton?: ButtonConfig | false
+        dropButton?: ButtonConfig | false
+        editModeButton?: ButtonConfig | false
+        groupButton?: ButtonConfig | boolean
         groupButtonAsModalActions?: boolean
 
         dataChanged: boolean
@@ -40,11 +49,18 @@
         httpSuccessRead?: boolean
 
         buttonNavVisibility: ItemCrudButtonNavVisibility
+        modificationView?: boolean | Array<ModificationView>
+        pickedModificationView: string
     }>(), {
         item: () => ({}),
         editing: false,
         isLoading: false,
     });
+
+    const selectedModificationView = ref(props.pickedModificationView);
+
+    watch(() => props.pickedModificationView, v => selectedModificationView.value = v);
+    watch(selectedModificationView, v => emit('update:pickedModificationView', v));
 
     const slots: SetupContext['slots'] = useSlots();
 
@@ -65,15 +81,15 @@
         onButtonLoaded = () => {
             isLoading.value = false;
         },
-        onCreate = ($event: Event|undefined, r: HTTPResponse) => {
+        onCreate = ($event: Event | undefined, r: HTTPResponse) => {
             if (typeof $event === 'undefined') return;
             emit('create', $event, r);
         },
-        onSave = ($event: Event|undefined, r: HTTPResponse) => {
+        onSave = ($event: Event | undefined, r: HTTPResponse) => {
             if (typeof $event === 'undefined') return;
             emit('save', $event, r);
         },
-        onDrop = ($event: Event|undefined, r: HTTPResponse) => {
+        onDrop = ($event: Event | undefined, r: HTTPResponse) => {
             if (typeof $event === 'undefined') return;
             emit('drop', $event, r);
         };
@@ -122,6 +138,77 @@
             if (slots['prev-buttons-ever']) return true;
             if (props.buttonNavVisibility === ItemCrudButtonNavVisibility.Never) return false;
             return showSaveButton.value || showDropButton.value || showSwitchButton.value;
+        });
+
+    const computedModificationView = computed(() => {
+            if (props.modificationView === false) return [];
+            if (props.modificationView === true) return [
+                ModificationView.Current,
+                ModificationView.Modifications,
+                ModificationView.SplitView,
+                ModificationView.Differences,
+            ];
+            if (Array.isArray(props.modificationView)) return props.modificationView;
+            return [];
+        }),
+        computedModificationSplitButtons = computed(() => {
+
+            let r = [];
+
+            if (computedModificationView.value.includes(ModificationView.Current)) {
+                r.push({
+                    text: 'Current',
+                    icon: 'lkt-icn-see',
+                    disabled: selectedModificationView.value === ModificationView.Current,
+                    events: {
+                        click: () => {
+                            selectedModificationView.value = ModificationView.Current;
+                        }
+                    }
+                });
+            }
+
+            if (computedModificationView.value.includes(ModificationView.Modifications)) {
+                r.push({
+                    text: 'Modifications',
+                    icon: 'lkt-icn-edit',
+                    disabled: selectedModificationView.value === ModificationView.Modifications,
+                    events: {
+                        click: () => {
+                            selectedModificationView.value = ModificationView.Modifications;
+                        }
+                    }
+                });
+            }
+
+            if (computedModificationView.value.includes(ModificationView.SplitView)) {
+                r.push({
+                    text: 'Split View',
+                    icon: 'lkt-icn-columns',
+                    disabled: selectedModificationView.value === ModificationView.SplitView,
+                    events: {
+                        click: () => {
+                            selectedModificationView.value = ModificationView.SplitView;
+                        }
+                    }
+                });
+            }
+
+            if (computedModificationView.value.includes(ModificationView.Differences)) {
+
+                r.push({
+                    text: 'Differences',
+                    icon: 'lkt-icn-search',
+                    disabled: selectedModificationView.value === ModificationView.Differences,
+                    events: {
+                        click: () => {
+                            selectedModificationView.value = ModificationView.Differences;
+                        }
+                    }
+                });
+            }
+
+            return r;
         });
 
 </script>
@@ -356,6 +443,19 @@
                 v-bind="editModeButton"
                 v-model:checked="isEditing"
                 class="lkt-item-crud--switch-mode-button" />
+
+            <lkt-button
+                v-if="computedModificationView.length > 0"
+                v-bind="<ButtonConfig>{
+                    type: ButtonType.Tooltip,
+                    icon: 'lkt-icn-column-sort',
+                    class: 'lkt-item-crud--modifications-button',
+                    splitButtons: computedModificationSplitButtons,
+                    tooltip: {
+                        contentClass: 'lkt-flex-column',
+                    }
+                }"
+            />
 
         </template>
     </div>
