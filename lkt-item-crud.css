@@ -22,8 +22,16 @@
     z-index: var(--lkt-item-crud--buttons--z-index);
 }
 
-.lkt-item-crud-buttons > :last-child {
+.lkt-item-crud-buttons .lkt-item-crud--switch-mode-button {
     margin-left: auto;
+}
+
+.lkt-item-crud-buttons .lkt-item-crud--modifications-button {
+    margin-left: auto;
+}
+
+.lkt-item-crud-buttons .lkt-item-crud--modifications-button + .lkt-item-crud--switch-mode-button{
+    margin-left: initial;
 }
 
 .lkt-item-crud-buttons > .lkt-item-crud-buttons {

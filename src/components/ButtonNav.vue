@@ -22,6 +22,7 @@
 
     const props = withDefaults(defineProps<{
         item: LktObject,
+        modifications: LktObject,
         editing?: boolean
         loading?: boolean
         grouped?: boolean
@@ -51,8 +52,10 @@
         buttonNavVisibility: ItemCrudButtonNavVisibility
         modificationView?: boolean | Array<ModificationView>
         pickedModificationView: string
+        editableView: ModificationView
     }>(), {
         item: () => ({}),
+        modifications: () => ({}),
         editing: false,
         isLoading: false,
     });
@@ -93,6 +96,11 @@
             if (typeof $event === 'undefined') return;
             emit('drop', $event, r);
         };
+
+    const computedUpdateData = computed(() => {
+        if (props.editableView === ModificationView.Modifications) return props.modifications;
+        return props.item;
+    })
 
     const doSave = () => {
             if (saveButtonRef.value && typeof saveButtonRef.value.click === 'function') saveButtonRef.value.click();
@@ -243,7 +251,13 @@
             <lkt-button
                 ref="saveButtonRef"
                 v-show="mode === ItemCrudMode.Update && showSaveButton"
-                v-bind="updateButton"
+                v-bind="{
+                    ...updateButton,
+                    modalData: {
+                        ...updateButton?.modalData,
+                        ...computedUpdateData
+                    }
+                }"
                 :disabled="!ableToUpdate"
                 @loading="onButtonLoading"
                 @loaded="onButtonLoaded"
@@ -258,7 +272,13 @@
             <lkt-button
                 ref="saveButtonRef"
                 v-show="mode === ItemCrudMode.Create && showSaveButton"
-                v-bind="createButton"
+                v-bind="{
+                    ...createButton,
+                    modalData: {
+                        ...createButton?.modalData,
+                        ...computedUpdateData
+                    }
+                }"
                 :disabled="!ableToCreate"
                 @loading="onButtonLoading"
                 @loaded="onButtonLoaded"
@@ -439,12 +459,6 @@
             </div>
 
             <lkt-button
-                v-if="showSwitchButton"
-                v-bind="editModeButton"
-                v-model:checked="isEditing"
-                class="lkt-item-crud--switch-mode-button" />
-
-            <lkt-button
                 v-if="computedModificationView.length > 0"
                 v-bind="<ButtonConfig>{
                     type: ButtonType.Tooltip,
@@ -456,6 +470,12 @@
                     }
                 }"
             />
+
+            <lkt-button
+                v-if="showSwitchButton"
+                v-bind="editModeButton"
+                v-model:checked="isEditing"
+                class="lkt-item-crud--switch-mode-button" />
 
         </template>
     </div>

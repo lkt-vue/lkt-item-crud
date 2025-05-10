@@ -1,4 +1,4 @@
-import { ButtonConfig, FormConfig, ItemCrudButtonNavPosition, ItemCrudConfig, ItemCrudMode, ItemCrudView, LktObject, ModalConfig, ModificationView, NotificationType } from 'lkt-vue-kernel';
+import { ButtonConfig, ItemCrudButtonNavPosition, ItemCrudConfig, ItemCrudMode, ItemCrudView, LktObject, ModalConfig, ModificationView, NotificationType } from 'lkt-vue-kernel';
 declare var __VLS_17: {
     canUpdate: boolean | undefined;
     canDrop: boolean | undefined;
@@ -86,7 +86,7 @@ declare const __VLS_component: import("vue").DefineComponent<ItemCrudConfig, {
     "onModified-data"?: ((...args: any[]) => any) | undefined;
 }>, {
     view: ItemCrudView;
-    form: FormConfig;
+    form: import("lkt-vue-kernel").FormConfig;
     title: string;
     mode: ItemCrudMode;
     modifications: LktObject;

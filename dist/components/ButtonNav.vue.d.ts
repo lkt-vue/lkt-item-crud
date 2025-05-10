@@ -1,6 +1,7 @@
 import { ButtonConfig, ItemCrudButtonNavVisibility, ItemCrudMode, ItemCrudView, LktObject, ModificationView } from 'lkt-vue-kernel';
 type __VLS_Props = {
     item: LktObject;
+    modifications: LktObject;
     editing?: boolean;
     loading?: boolean;
     grouped?: boolean;
@@ -24,6 +25,7 @@ type __VLS_Props = {
     buttonNavVisibility: ItemCrudButtonNavVisibility;
     modificationView?: boolean | Array<ModificationView>;
     pickedModificationView: string;
+    editableView: ModificationView;
 };
 declare var __VLS_5: {
     canUpdate: boolean | undefined;
@@ -160,6 +162,7 @@ declare const __VLS_component: import("vue").DefineComponent<__VLS_Props, {
     onSave?: ((...args: any[]) => any) | undefined;
 }>, {
     item: LktObject;
+    modifications: LktObject;
     editing: boolean;
 }, {}, {}, {}, string, import("vue").ComponentProvideOptions, false, {}, any>;
 declare const _default: __VLS_WithSlots<typeof __VLS_component, __VLS_Slots>;

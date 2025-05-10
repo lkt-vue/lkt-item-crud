@@ -5,7 +5,7 @@
     import { debug } from '../functions/debug';
     import {
         ButtonConfig,
-        ensureButtonConfig, FormConfig, FormItemConfig,
+        ensureButtonConfig,
         getDefaultValues,
         ItemCrud,
         ItemCrudButtonNavPosition,
@@ -13,7 +13,9 @@
         ItemCrudMode,
         ItemCrudView,
         LktObject,
-        LktSettings, ModalConfig, ModificationView,
+        LktSettings,
+        ModalConfig,
+        ModificationView,
         NotificationType,
         TablePermission,
         ToastConfig,
@@ -472,18 +474,9 @@
             return props.modificationView;
         });
 
-    const filterFormItems = (formItem: FormItemConfig) => {
-        return typeof formItem.supportedModifications === 'undefined'
-            || formItem.supportedModifications === true
-            || Array.isArray(formItem.supportedModifications) && formItem.supportedModifications.includes(pickedModificationView.value);
-    }
-
-    const computedCurrentDataForm = computed(() => {
-        if (!computedHasForm.value) return {};
-        return {
-            ...props.form,
-            items: props.form.items.filter(filterFormItems)
-        }
+    const computedEditableView = computed(() => {
+        if (Object.keys(itemModifications.value).length === 0) return [ModificationView.Current];
+        return [ModificationView.Modifications];
     })
 </script>
 
@@ -501,6 +494,7 @@
                 v-model:editing="editMode"
                 v-model:picked-modification-view="pickedModificationView"
                 :item="item"
+                :modifications="itemModifications"
                 :mode="mode"
                 :view="view"
                 :grouped="true"
@@ -521,6 +515,7 @@
                 :able-to-drop="ableToDrop"
                 :perms="permissions"
                 :modification-view="computedModificationViews"
+                :editable-view="computedEditableView[0]"
                 @create="onCreate"
                 @save="onUpdate"
                 @drop="onDrop"
@@ -560,6 +555,7 @@
                 v-model:editing="editMode"
                 v-model:picked-modification-view="pickedModificationView"
                 :item="item"
+                :modifications="itemModifications"
                 :mode="mode"
                 :view="view"
                 :grouped="groupButton !== false"
@@ -580,6 +576,7 @@
                 :able-to-drop="ableToDrop"
                 :perms="permissions"
                 :modification-view="computedModificationViews"
+                :editable-view="computedEditableView[0]"
                 @create="onCreate"
                 @save="onUpdate"
                 @drop="onDrop"
@@ -618,6 +615,8 @@
                             :form="form"
                             :modification-view="pickedModificationView"
                             :modification-data-state="formDifferencesChecker"
+                            :editable-views="computedEditableView"
+                            :disabled="!editMode"
                         />
                     </template>
 
@@ -645,6 +644,7 @@
                 v-model:editing="editMode"
                 v-model:picked-modification-view="pickedModificationView"
                 :item="item"
+                :modifications="itemModifications"
                 :mode="mode"
                 :view="view"
                 :grouped="groupButton !== false"
@@ -665,6 +665,7 @@
                 :able-to-drop="ableToDrop"
                 :perms="permissions"
                 :modification-view="computedModificationViews"
+                :editable-view="computedEditableView[0]"
                 @create="onCreate"
                 @save="onUpdate"
                 @drop="onDrop"
