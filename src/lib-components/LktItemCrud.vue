@@ -65,6 +65,7 @@
         showStoreMessage = ref(false),
         httpStatus = ref(200),
         dataState = ref(new DataState(item.value, props.dataStateConfig)),
+        modificationsDataState = ref(new DataState(itemModifications.value, props.dataStateConfig)),
         dataChanged = ref(false),
         readDataState = ref(new DataState(props.readData)),
         createMode = ref(props.mode === ItemCrudMode.Create),
@@ -87,11 +88,20 @@
     watch(() => props.customData, (v) => {custom.value = v});
     watch(custom, (v) => {emit('update:customData', v)});
 
-    watch(() => props.modifications, (v) => {itemModifications.value = v});
+    watch(() => props.modifications, (v) => {
+        modificationsDataState.value.increment(v);
+        itemModifications.value = v
+    }, {deep: true});
+
     watch(itemModifications, (v) => {
         resetFormDifferencesChecker();
+        modificationsDataState.value.increment(v);
+
+        if (computedEditableView.value === ModificationView.Modifications) {
+            dataChanged.value = modificationsDataState.value.changed();
+        }
         emit('update:modifications', v)
-    });
+    }, {deep: true});
 
     const safeCreateButton = ref(ensureButtonConfig(props.createButton, LktSettings.defaultCreateButton)),
         safeUpdateButton = ref(ensureButtonConfig(props.updateButton, LktSettings.defaultUpdateButton)),
@@ -148,6 +158,7 @@
             itemModifications.value = r.modifications;
             permissions.value = r.perms;
             dataState.value.increment(item.value).turnStoredIntoOriginal();
+            modificationsDataState.value.increment(itemModifications.value).turnStoredIntoOriginal();
             dataChanged.value = dataState.value.changed();
             readDataState.value.turnStoredIntoOriginal();
 
@@ -186,7 +197,9 @@
         emit('update:modelValue', item.value);
         debug('item updated -> update dataState');
         dataState.value.increment(v);
-        dataChanged.value = dataState.value.changed();
+        if (computedEditableView.value === ModificationView.Current) {
+            dataChanged.value = dataState.value.changed();
+        }
         nextTick(() => itemBeingEdited.value = false);
     }, { deep: true });
 
@@ -475,8 +488,8 @@
         });
 
     const computedEditableView = computed(() => {
-        if (Object.keys(itemModifications.value).length === 0) return [ModificationView.Current];
-        return [ModificationView.Modifications];
+        if (Object.keys(itemModifications.value).length === 0) return ModificationView.Current;
+        return ModificationView.Modifications;
     })
 </script>
 
@@ -515,7 +528,7 @@
                 :able-to-drop="ableToDrop"
                 :perms="permissions"
                 :modification-view="computedModificationViews"
-                :editable-view="computedEditableView[0]"
+                :editable-view="computedEditableView"
                 @create="onCreate"
                 @save="onUpdate"
                 @drop="onDrop"
@@ -576,7 +589,7 @@
                 :able-to-drop="ableToDrop"
                 :perms="permissions"
                 :modification-view="computedModificationViews"
-                :editable-view="computedEditableView[0]"
+                :editable-view="computedEditableView"
                 @create="onCreate"
                 @save="onUpdate"
                 @drop="onDrop"
@@ -615,7 +628,7 @@
                             :form="form"
                             :modification-view="pickedModificationView"
                             :modification-data-state="formDifferencesChecker"
-                            :editable-views="computedEditableView"
+                            :editable-views="[computedEditableView]"
                             :disabled="!editMode"
                         />
                     </template>
@@ -665,7 +678,7 @@
                 :able-to-drop="ableToDrop"
                 :perms="permissions"
                 :modification-view="computedModificationViews"
-                :editable-view="computedEditableView[0]"
+                :editable-view="computedEditableView"
                 @create="onCreate"
                 @save="onUpdate"
                 @drop="onDrop"
