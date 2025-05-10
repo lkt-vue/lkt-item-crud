@@ -162,6 +162,10 @@
             dataChanged.value = dataState.value.changed();
             readDataState.value.turnStoredIntoOriginal();
 
+            if (Object.keys(itemModifications.value).length > 0) {
+                pickedModificationView.value = ModificationView.Modifications;
+            }
+
             if (typeof props.events?.httpEnd === 'function') {
                 props.events.httpEnd({
                     httpResponse: r,
@@ -626,7 +630,7 @@
                             v-model:modifications="itemModifications"
                             v-model:valid="validForm"
                             :form="form"
-                            :modification-view="pickedModificationView"
+                            :visible-view="pickedModificationView"
                             :modification-data-state="formDifferencesChecker"
                             :editable-views="[computedEditableView]"
                             :disabled="!editMode"

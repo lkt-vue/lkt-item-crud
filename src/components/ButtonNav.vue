@@ -206,7 +206,7 @@
 
                 r.push({
                     text: 'Differences',
-                    icon: 'lkt-icn-search',
+                    icon: 'lkt-icn-balance',
                     disabled: selectedModificationView.value === ModificationView.Differences,
                     events: {
                         click: () => {
@@ -462,7 +462,7 @@
                 v-if="computedModificationView.length > 0"
                 v-bind="<ButtonConfig>{
                     type: ButtonType.Tooltip,
-                    icon: 'lkt-icn-column-sort',
+                    icon: 'lkt-icn-cross-arrows',
                     class: 'lkt-item-crud--modifications-button',
                     splitButtons: computedModificationSplitButtons,
                     tooltip: {
