@@ -1,6 +1,6 @@
 declare function Vt(C?: boolean): void;
 declare namespace Tt {
-    function install(C: any, X?: {}): void;
+    function install(C: any, K?: {}): void;
 }
 declare function At(C: any): void;
 declare function Rt(C: any): void;

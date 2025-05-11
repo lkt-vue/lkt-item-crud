@@ -253,12 +253,12 @@
                 v-show="mode === ItemCrudMode.Update && showSaveButton"
                 v-bind="{
                     ...updateButton,
-                    modalData: {
-                        ...updateButton?.modalData,
+                    resourceData: {
+                        ...updateButton?.resourceData,
                         ...computedUpdateData
-                    }
+                    },
+                    disabled: !ableToUpdate
                 }"
-                :disabled="!ableToUpdate"
                 @loading="onButtonLoading"
                 @loaded="onButtonLoaded"
                 @click="onSave">
@@ -274,12 +274,12 @@
                 v-show="mode === ItemCrudMode.Create && showSaveButton"
                 v-bind="{
                     ...createButton,
-                    modalData: {
-                        ...createButton?.modalData,
+                    resourceData: {
+                        ...createButton?.resourceData,
                         ...computedUpdateData
-                    }
+                    },
+                    disabled: !ableToCreate
                 }"
-                :disabled="!ableToCreate"
                 @loading="onButtonLoading"
                 @loaded="onButtonLoaded"
                 @click="onCreate">
@@ -342,8 +342,14 @@
                     <lkt-button
                         ref="saveButtonRef"
                         v-show="mode === ItemCrudMode.Update && showSaveButton"
-                        v-bind="updateButton"
-                        :disabled="!ableToUpdate"
+                        v-bind="{
+                            ...updateButton,
+                            resourceData: {
+                                ...updateButton?.resourceData,
+                                ...computedUpdateData
+                            },
+                            disabled: !ableToUpdate
+                        }"
                         @loading="onButtonLoading"
                         @loaded="onButtonLoaded"
                         @click="onSave">
@@ -357,7 +363,14 @@
                     <lkt-button
                         ref="saveButtonRef"
                         v-show="mode === ItemCrudMode.Create && showSaveButton"
-                        v-bind="createButton"
+                        v-bind="{
+                            ...createButton,
+                            resourceData: {
+                                ...createButton?.resourceData,
+                                ...computedUpdateData
+                            },
+                            disabled: !ableToCreate
+                        }"
                         :disabled="!ableToCreate"
                         @loading="onButtonLoading"
                         @loaded="onButtonLoaded"
@@ -412,8 +425,14 @@
             <lkt-button
                 ref="saveButtonRef"
                 v-show="mode === ItemCrudMode.Update && showSaveButton"
-                v-bind="updateButton"
-                :disabled="!ableToUpdate"
+                v-bind="{
+                    ...updateButton,
+                    resourceData: {
+                        ...updateButton?.resourceData,
+                        ...computedUpdateData
+                    },
+                    disabled: !ableToUpdate
+                }"
                 @loading="onButtonLoading"
                 @loaded="onButtonLoaded"
                 @click="onSave">
@@ -427,8 +446,14 @@
             <lkt-button
                 ref="saveButtonRef"
                 v-show="mode === ItemCrudMode.Create && showSaveButton"
-                v-bind="createButton"
-                :disabled="!ableToCreate"
+                v-bind="{
+                    ...createButton,
+                    resourceData: {
+                        ...createButton?.resourceData,
+                        ...computedUpdateData
+                    },
+                    disabled: !ableToCreate
+                }"
                 @loading="onButtonLoading"
                 @loaded="onButtonLoaded"
                 @click="onCreate">
