@@ -231,6 +231,19 @@
                 v-model:checked="isEditing"
                 class="lkt-item-crud--switch-mode-button" />
 
+            <lkt-button
+                v-if="computedModificationView.length > 0"
+                v-bind="<ButtonConfig>{
+                    type: ButtonType.Tooltip,
+                    icon: 'lkt-icn-cross-arrows',
+                    class: 'lkt-item-crud--modifications-button',
+                    splitButtons: computedModificationSplitButtons,
+                    tooltip: {
+                        contentClass: 'lkt-flex-column',
+                    }
+                }"
+            />
+
 
             <template v-if="slots['prev-buttons-ever']" v-show="!isLoading">
                 <slot name="prev-buttons-ever"
@@ -261,13 +274,8 @@
                 }"
                 @loading="onButtonLoading"
                 @loaded="onButtonLoaded"
-                @click="onSave">
-                <slot v-if="!!slots['button-save']" name="button-save" :item="item"
-                      :edit-mode="isEditing"
-                      :is-create="false"
-                      :can-update="canUpdate"
-                      :can-drop="canDrop" />
-            </lkt-button>
+                @click="onSave"
+            />
 
             <lkt-button
                 ref="saveButtonRef"
@@ -282,13 +290,8 @@
                 }"
                 @loading="onButtonLoading"
                 @loaded="onButtonLoaded"
-                @click="onCreate">
-                <slot v-if="!!slots['button-save']" name="button-save" :item="item"
-                      :edit-mode="isEditing"
-                      :is-create="true"
-                      :can-update="canUpdate"
-                      :can-drop="canDrop" />
-            </lkt-button>
+                @click="onCreate"
+            />
 
             <lkt-button
                 ref="dropButtonRef"
@@ -297,13 +300,8 @@
                 :disabled="!ableToDrop"
                 @loading="onButtonLoading"
                 @loaded="onButtonLoaded"
-                @click="onDrop">
-                <slot v-if="!!slots['button-drop']" name="button-drop" :item="item"
-                      :edit-mode="isEditing"
-                      :is-create="false"
-                      :can-update="canUpdate"
-                      :can-drop="canDrop" />
-            </lkt-button>
+                @click="onDrop"
+            />
 
             <template v-if="slots.buttons" v-show="isEditing && !isLoading">
                 <slot name="buttons" />
@@ -322,6 +320,18 @@
                         v-model:checked="isEditing"
                         class="lkt-item-crud--switch-mode-button" />
 
+                    <lkt-button
+                        v-if="computedModificationView.length > 0"
+                        v-bind="<ButtonConfig>{
+                            type: ButtonType.Tooltip,
+                            icon: 'lkt-icn-cross-arrows',
+                            class: 'lkt-item-crud--modifications-button',
+                            splitButtons: computedModificationSplitButtons,
+                            tooltip: {
+                                contentClass: 'lkt-flex-column',
+                            }
+                        }"
+                    />
 
                     <template v-if="slots['prev-buttons-ever']" v-show="!isLoading">
                         <slot name="prev-buttons-ever"
@@ -352,13 +362,8 @@
                         }"
                         @loading="onButtonLoading"
                         @loaded="onButtonLoaded"
-                        @click="onSave">
-                        <slot v-if="!!slots['button-save']" name="button-save" :item="item"
-                              :edit-mode="isEditing"
-                              :is-create="false"
-                              :can-update="canUpdate"
-                              :can-drop="canDrop" />
-                    </lkt-button>
+                        @click="onSave"
+                    />
 
                     <lkt-button
                         ref="saveButtonRef"
@@ -374,13 +379,8 @@
                         :disabled="!ableToCreate"
                         @loading="onButtonLoading"
                         @loaded="onButtonLoaded"
-                        @click="onCreate">
-                        <slot v-if="!!slots['button-save']" name="button-save" :item="item"
-                              :edit-mode="isEditing"
-                              :is-create="true"
-                              :can-update="canUpdate"
-                              :can-drop="canDrop" />
-                    </lkt-button>
+                        @click="onCreate"
+                    />
 
                     <lkt-button
                         ref="dropButtonRef"
@@ -389,13 +389,8 @@
                         :disabled="!ableToDrop"
                         @loading="onButtonLoading"
                         @loaded="onButtonLoaded"
-                        @click="onDrop">
-                        <slot v-if="!!slots['button-drop']" name="button-drop" :item="item"
-                              :edit-mode="isEditing"
-                              :is-create="false"
-                              :can-update="canUpdate"
-                              :can-drop="canDrop" />
-                    </lkt-button>
+                        @click="onDrop"
+                    />
 
                     <template v-if="slots.buttons" v-show="isEditing && !isLoading">
                         <slot name="buttons" />
@@ -435,13 +430,8 @@
                 }"
                 @loading="onButtonLoading"
                 @loaded="onButtonLoaded"
-                @click="onSave">
-                <slot v-if="!!slots['button-save']" name="button-save" :item="item"
-                      :edit-mode="isEditing"
-                      :is-create="false"
-                      :can-update="canUpdate"
-                      :can-drop="canDrop" />
-            </lkt-button>
+                @click="onSave"
+            />
 
             <lkt-button
                 ref="saveButtonRef"
@@ -456,13 +446,8 @@
                 }"
                 @loading="onButtonLoading"
                 @loaded="onButtonLoaded"
-                @click="onCreate">
-                <slot v-if="!!slots['button-save']" name="button-save" :item="item"
-                      :edit-mode="isEditing"
-                      :is-create="true"
-                      :can-update="canUpdate"
-                      :can-drop="false" />
-            </lkt-button>
+                @click="onCreate"
+            />
 
             <lkt-button
                 ref="dropButtonRef"
@@ -471,13 +456,8 @@
                 :disabled="!ableToDrop"
                 @loading="onButtonLoading"
                 @loaded="onButtonLoaded"
-                @click="onDrop">
-                <slot v-if="!!slots['button-drop']" name="button-drop" :item="item"
-                      :edit-mode="isEditing"
-                      :is-create="false"
-                      :can-update="canUpdate"
-                      :can-drop="canDrop" />
-            </lkt-button>
+                @click="onDrop"
+            />
 
             <div class="lkt-item-crud-buttons" v-if="slots.buttons" v-show="isEditing && !isLoading">
                 <slot name="buttons" />

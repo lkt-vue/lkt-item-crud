@@ -5,7 +5,7 @@
     import { debug } from '../functions/debug';
     import {
         ButtonConfig,
-        ensureButtonConfig,
+        ensureButtonConfig, FormUiConfig,
         getDefaultValues,
         ItemCrud,
         ItemCrudButtonNavPosition,
@@ -629,11 +629,14 @@
                             v-model="item"
                             v-model:modifications="itemModifications"
                             v-model:valid="validForm"
-                            :form="form"
-                            :visible-view="pickedModificationView"
-                            :modification-data-state="formDifferencesChecker"
-                            :editable-views="[computedEditableView]"
-                            :disabled="!editMode"
+                            v-bind="<FormUiConfig>{
+                                form,
+                                differencesTableConfig,
+                                visibleView: pickedModificationView,
+                                modificationDataState: formDifferencesChecker,
+                                editableViews: [computedEditableView],
+                                disabled: !editMode,
+                            }"
                         />
                     </template>
 
