@@ -1,7 +1,7 @@
-import { defineComponent as Pe, ref as d, watch as b, useSlots as Fe, computed as k, resolveComponent as ge, createElementBlock as X, createCommentVNode as p, openBlock as v, createBlock as A, Fragment as Le, renderSlot as U, withDirectives as P, mergeProps as S, normalizeProps as Me, unref as i, createVNode as Y, vShow as F, withCtx as _, mergeDefaults as qe, nextTick as ze, onMounted as Qe, resolveDynamicComponent as Ye, createSlots as be, createElementVNode as Ze, toDisplayString as _e } from "vue";
+import { defineComponent as Pe, ref as d, watch as f, useSlots as Fe, computed as k, resolveComponent as ge, createElementBlock as J, createCommentVNode as p, openBlock as v, createBlock as A, Fragment as Le, renderSlot as U, withDirectives as F, mergeProps as S, normalizeProps as Me, unref as i, createVNode as Y, vShow as X, withCtx as _, mergeDefaults as qe, nextTick as ze, onMounted as Qe, resolveDynamicComponent as Ye, createSlots as be, createElementVNode as Ze, toDisplayString as _e } from "vue";
 import { httpCall as xe } from "lkt-http-client";
 import { DataState as ye } from "lkt-data-state";
-import { ModificationView as g, ItemCrudMode as T, ItemCrudButtonNavVisibility as $e, ButtonType as Te, TablePermission as Ve, ensureButtonConfig as Z, LktSettings as s, ItemCrudView as je, ItemCrudButtonNavPosition as Ie, NotificationType as ee, getDefaultValues as et, ItemCrud as tt, ToastPositionX as le } from "lkt-vue-kernel";
+import { ModificationView as g, ItemCrudMode as V, ItemCrudButtonNavVisibility as $e, ButtonType as Ve, TablePermission as Te, ensureButtonConfig as Z, LktSettings as s, ItemCrudView as je, ItemCrudButtonNavPosition as Ie, NotificationType as ee, getDefaultValues as et, ItemCrud as tt, ToastPositionX as le } from "lkt-vue-kernel";
 import { closeModal as ot, updateModalKey as at } from "lkt-modal";
 import { __ as nt } from "lkt-i18n";
 import { openToast as de } from "lkt-toast";
@@ -12,7 +12,7 @@ ve.debugEnabled = !1, ve.defaultSaveIcon = "", ve.defaultDropIcon = "";
 let re = ve;
 const C = (...B) => {
   re.debugEnabled && console.info("[LktItemCrud] ", ...B);
-}, Vt = (B = !0) => {
+}, Tt = (B = !0) => {
   re.debugEnabled = B;
 }, ut = {
   key: 0,
@@ -64,25 +64,25 @@ const C = (...B) => {
     "save",
     "drop"
   ],
-  setup(B, { expose: J, emit: te }) {
+  setup(B, { expose: K, emit: te }) {
     const o = te, n = B, D = d(n.pickedModificationView);
-    b(() => n.pickedModificationView, (t) => D.value = t), b(D, (t) => o("update:pickedModificationView", t));
-    const c = Fe(), r = d(null), u = d(null), f = d(n.loading);
-    b(() => n.loading, (t) => f.value = t), b(f, (t) => o("update:loading", t));
+    f(() => n.pickedModificationView, (t) => D.value = t), f(D, (t) => o("update:pickedModificationView", t));
+    const c = Fe(), r = d(null), u = d(null), m = d(n.loading);
+    f(() => n.loading, (t) => m.value = t), f(m, (t) => o("update:loading", t));
     const O = d(n.editing);
-    b(() => n.editing, (t) => O.value = t), b(O, (t) => o("update:editing", t));
-    const m = () => {
-      f.value = !0;
+    f(() => n.editing, (t) => O.value = t), f(O, (t) => o("update:editing", t));
+    const b = () => {
+      m.value = !0;
     }, y = () => {
-      f.value = !1;
+      m.value = !1;
     }, x = (t, w) => {
       typeof t > "u" || o("create", t, w);
     }, E = (t, w) => {
       typeof t > "u" || o("save", t, w);
     }, Q = (t, w) => {
       typeof t > "u" || o("drop", t, w);
-    }, V = k(() => n.editableView === g.Modifications ? n.modifications : n.item);
-    J({
+    }, T = k(() => n.editableView === g.Modifications ? n.modifications : n.item);
+    K({
       doSave: () => {
         r.value && typeof r.value.click == "function" && r.value.click();
       },
@@ -90,12 +90,12 @@ const C = (...B) => {
         u.value && typeof u.value.click == "function" && u.value.click();
       }
     });
-    const M = k(() => !n.canDrop || n.dropButton === !1 ? !1 : !n.canUpdate && n.canDrop ? !0 : !f.value && n.editing && n.httpSuccessRead), K = k(() => n.mode === T.Create && n.createButton === !1 || n.mode === T.Update && n.updateButton === !1 || f.value ? !1 : n.editing && n.httpSuccessRead), N = k(() => n.editModeButton === !1 || !n.canSwitchEditMode || !n.canUpdate && !n.canDrop || !n.canUpdate && n.canDrop ? !1 : !f.value && n.mode !== T.Create && n.httpSuccessRead), pe = k(() => n.buttonNavVisibility === $e.Always || c["prev-buttons-ever"] ? !0 : n.buttonNavVisibility === $e.Never ? !1 : K.value || M.value || N.value), z = k(() => n.modificationView === !1 ? [] : n.modificationView === !0 ? [
+    const M = k(() => !n.canDrop || n.dropButton === !1 ? !1 : !n.canUpdate && n.canDrop ? !0 : !m.value && n.editing && n.httpSuccessRead), W = k(() => n.mode === V.Create && n.createButton === !1 || n.mode === V.Update && n.updateButton === !1 || m.value ? !1 : n.editing && n.httpSuccessRead), N = k(() => n.editModeButton === !1 || !n.canSwitchEditMode || !n.canUpdate && !n.canDrop || !n.canUpdate && n.canDrop ? !1 : !m.value && n.mode !== V.Create && n.httpSuccessRead), pe = k(() => n.buttonNavVisibility === $e.Always || c["prev-buttons-ever"] ? !0 : n.buttonNavVisibility === $e.Never ? !1 : W.value || M.value || N.value), z = k(() => n.modificationView === !1 ? [] : n.modificationView === !0 ? [
       g.Current,
       g.Modifications,
       g.SplitView,
       g.Differences
-    ] : Array.isArray(n.modificationView) ? n.modificationView : []), W = k(() => {
+    ] : Array.isArray(n.modificationView) ? n.modificationView : []), G = k(() => {
       let t = [];
       return z.value.includes(g.Current) && t.push({
         text: "Current",
@@ -136,20 +136,20 @@ const C = (...B) => {
       }), t;
     });
     return (t, w) => {
-      var G, L, $, j;
+      var L, $, j, P;
       const h = ge("lkt-button");
-      return pe.value ? (v(), X("div", ut, [
-        t.grouped && t.groupButtonAsModalActions ? (v(), X(Le, { key: 0 }, [
+      return pe.value ? (v(), J("div", ut, [
+        t.grouped && t.groupButtonAsModalActions ? (v(), J(Le, { key: 0 }, [
           N.value ? (v(), A(h, S({ key: 0 }, t.editModeButton, {
             checked: O.value,
             "onUpdate:checked": w[0] || (w[0] = (H) => O.value = H),
             class: "lkt-item-crud--switch-mode-button"
           }), null, 16, ["checked"])) : p("", !0),
           z.value.length > 0 ? (v(), A(h, Me(S({ key: 1 }, {
-            type: i(Te).Tooltip,
+            type: i(Ve).Tooltip,
             icon: "lkt-icn-cross-arrows",
             class: "lkt-item-crud--modifications-button",
-            splitButtons: W.value,
+            splitButtons: G.value,
             tooltip: {
               contentClass: "lkt-flex-column"
             }
@@ -166,50 +166,50 @@ const C = (...B) => {
             canDrop: t.canDrop,
             perms: t.perms
           }) : p("", !0),
-          P(Y(h, S({
+          F(Y(h, S({
             ref_key: "saveButtonRef",
             ref: r
           }, {
             ...t.updateButton,
             resourceData: {
-              ...(G = t.updateButton) == null ? void 0 : G.resourceData,
-              ...V.value
+              ...(L = t.updateButton) == null ? void 0 : L.resourceData,
+              ...T.value
             },
             disabled: !t.ableToUpdate
           }, {
-            onLoading: m,
+            onLoading: b,
             onLoaded: y,
             onClick: E
           }), null, 16), [
-            [F, t.mode === i(T).Update && K.value]
+            [X, t.mode === i(V).Update && W.value]
           ]),
-          P(Y(h, S({
+          F(Y(h, S({
             ref_key: "saveButtonRef",
             ref: r
           }, {
             ...t.createButton,
             resourceData: {
-              ...(L = t.createButton) == null ? void 0 : L.resourceData,
-              ...V.value
+              ...($ = t.createButton) == null ? void 0 : $.resourceData,
+              ...T.value
             },
             disabled: !t.ableToCreate
           }, {
-            onLoading: m,
+            onLoading: b,
             onLoaded: y,
             onClick: x
           }), null, 16), [
-            [F, t.mode === i(T).Create && K.value]
+            [X, t.mode === i(V).Create && W.value]
           ]),
-          P(Y(h, S({
+          F(Y(h, S({
             ref_key: "dropButtonRef",
             ref: u
           }, t.dropButton, {
             disabled: !t.ableToDrop,
-            onLoading: m,
+            onLoading: b,
             onLoaded: y,
             onClick: Q
           }), null, 16, ["disabled"]), [
-            [F, M.value && t.mode !== i(T).Create]
+            [X, M.value && t.mode !== i(V).Create]
           ]),
           i(c).buttons ? U(t.$slots, "buttons", { key: 4 }) : p("", !0)
         ], 64)) : t.grouped ? (v(), A(h, S({
@@ -225,10 +225,10 @@ const C = (...B) => {
                 class: "lkt-item-crud--switch-mode-button"
               }), null, 16, ["checked"])) : p("", !0),
               z.value.length > 0 ? (v(), A(h, Me(S({ key: 1 }, {
-                type: i(Te).Tooltip,
+                type: i(Ve).Tooltip,
                 icon: "lkt-icn-cross-arrows",
                 class: "lkt-item-crud--modifications-button",
-                splitButtons: W.value,
+                splitButtons: G.value,
                 tooltip: {
                   contentClass: "lkt-flex-column"
                 }
@@ -245,130 +245,130 @@ const C = (...B) => {
                 canDrop: t.canDrop,
                 perms: t.perms
               }) : p("", !0),
-              P(Y(h, S({
+              F(Y(h, S({
                 ref_key: "saveButtonRef",
                 ref: r
               }, {
                 ...t.updateButton,
                 resourceData: {
                   ...(H = t.updateButton) == null ? void 0 : H.resourceData,
-                  ...V.value
+                  ...T.value
                 },
                 disabled: !t.ableToUpdate
               }, {
-                onLoading: m,
+                onLoading: b,
                 onLoaded: y,
                 onClick: E
               }), null, 16), [
-                [F, t.mode === i(T).Update && K.value]
+                [X, t.mode === i(V).Update && W.value]
               ]),
-              P(Y(h, S({
+              F(Y(h, S({
                 ref_key: "saveButtonRef",
                 ref: r
               }, {
                 ...t.createButton,
                 resourceData: {
                   ...(ne = t.createButton) == null ? void 0 : ne.resourceData,
-                  ...V.value
+                  ...T.value
                 },
                 disabled: !t.ableToCreate
               }, {
                 disabled: !t.ableToCreate,
-                onLoading: m,
+                onLoading: b,
                 onLoaded: y,
                 onClick: x
               }), null, 16, ["disabled"]), [
-                [F, t.mode === i(T).Create && K.value]
+                [X, t.mode === i(V).Create && W.value]
               ]),
-              P(Y(h, S({
+              F(Y(h, S({
                 ref_key: "dropButtonRef",
                 ref: u
               }, t.dropButton, {
                 disabled: !t.ableToDrop,
-                onLoading: m,
+                onLoading: b,
                 onLoaded: y,
                 onClick: Q
               }), null, 16, ["disabled"]), [
-                [F, M.value && t.mode !== i(T).Create]
+                [X, M.value && t.mode !== i(V).Create]
               ]),
               i(c).buttons ? U(t.$slots, "buttons", { key: 4 }) : p("", !0)
             ];
           }),
           _: 3
-        }, 16)) : (v(), X(Le, { key: 2 }, [
-          i(c)["prev-buttons-ever"] ? P((v(), X("div", lt, [
+        }, 16)) : (v(), J(Le, { key: 2 }, [
+          i(c)["prev-buttons-ever"] ? F((v(), J("div", lt, [
             U(t.$slots, "prev-buttons-ever", {
               canUpdate: t.canUpdate,
               canDrop: t.canDrop,
               perms: t.perms
             })
           ], 512)), [
-            [F, !f.value]
+            [X, !m.value]
           ]) : p("", !0),
-          i(c)["prev-buttons"] ? P((v(), X("div", dt, [
+          i(c)["prev-buttons"] ? F((v(), J("div", dt, [
             U(t.$slots, "prev-buttons", {
               canUpdate: t.canUpdate,
               canDrop: t.canDrop,
               perms: t.perms
             })
           ], 512)), [
-            [F, O.value && !f.value]
+            [X, O.value && !m.value]
           ]) : p("", !0),
-          P(Y(h, S({
+          F(Y(h, S({
             ref_key: "saveButtonRef",
             ref: r
           }, {
             ...t.updateButton,
             resourceData: {
-              ...($ = t.updateButton) == null ? void 0 : $.resourceData,
-              ...V.value
+              ...(j = t.updateButton) == null ? void 0 : j.resourceData,
+              ...T.value
             },
             disabled: !t.ableToUpdate
           }, {
-            onLoading: m,
+            onLoading: b,
             onLoaded: y,
             onClick: E
           }), null, 16), [
-            [F, t.mode === i(T).Update && K.value]
+            [X, t.mode === i(V).Update && W.value]
           ]),
-          P(Y(h, S({
+          F(Y(h, S({
             ref_key: "saveButtonRef",
             ref: r
           }, {
             ...t.createButton,
             resourceData: {
-              ...(j = t.createButton) == null ? void 0 : j.resourceData,
-              ...V.value
+              ...(P = t.createButton) == null ? void 0 : P.resourceData,
+              ...T.value
             },
             disabled: !t.ableToCreate
           }, {
-            onLoading: m,
+            onLoading: b,
             onLoaded: y,
             onClick: x
           }), null, 16), [
-            [F, t.mode === i(T).Create && K.value]
+            [X, t.mode === i(V).Create && W.value]
           ]),
-          P(Y(h, S({
+          F(Y(h, S({
             ref_key: "dropButtonRef",
             ref: u
           }, t.dropButton, {
             disabled: !t.ableToDrop,
-            onLoading: m,
+            onLoading: b,
             onLoaded: y,
             onClick: Q
           }), null, 16, ["disabled"]), [
-            [F, M.value && t.mode !== i(T).Create]
+            [X, M.value && t.mode !== i(V).Create]
           ]),
-          i(c).buttons ? P((v(), X("div", rt, [
+          i(c).buttons ? F((v(), J("div", rt, [
             U(t.$slots, "buttons")
           ], 512)), [
-            [F, O.value && !f.value]
+            [X, O.value && !m.value]
           ]) : p("", !0),
           z.value.length > 0 ? (v(), A(h, Me(S({ key: 3 }, {
-            type: i(Te).Tooltip,
+            type: i(Ve).Tooltip,
             icon: "lkt-icn-cross-arrows",
             class: "lkt-item-crud--modifications-button",
-            splitButtons: W.value,
+            splitButtons: G.value,
             tooltip: {
               contentClass: "lkt-flex-column"
             }
@@ -382,28 +382,28 @@ const C = (...B) => {
       ])) : p("", !0);
     };
   }
-}), st = (B, J, te) => {
+}), st = (B, K, te) => {
   let o = new ye(JSON.parse(JSON.stringify(B)), {
     onlyProps: Xe(te),
     recursiveOnlyProps: !1
   });
-  return o.increment(JSON.parse(JSON.stringify(J))), o;
+  return o.increment(JSON.parse(JSON.stringify(K))), o;
 }, Xe = (B) => {
   if (B.items === void 0) return [];
   if (B.items.length === 0) return [];
-  let J = [];
+  let K = [];
   for (let te in B.items) {
     let o = B.items[te];
     switch (o.type) {
       case "field":
-        o.key !== void 0 && J.push(o.key);
+        o.key !== void 0 && K.push(o.key);
         break;
       case "form":
-        o.form && (J = [...J, ...Xe(o.form)]);
+        o.form && (K = [...K, ...Xe(o.form)]);
         break;
     }
   }
-  return J;
+  return K;
 }, pt = { class: "lkt-item-crud" }, vt = {
   key: 0,
   class: "lkt-item-crud_header"
@@ -433,7 +433,8 @@ const C = (...B) => {
     form: {},
     mode: {},
     view: {},
-    modificationView: { type: [Boolean, Array] },
+    visibleView: {},
+    modificationViews: { type: [Boolean, Array] },
     editModeButton: { type: [Object, Boolean] },
     dropButton: { type: [Object, Boolean] },
     createButton: { type: [Object, Boolean] },
@@ -462,6 +463,7 @@ const C = (...B) => {
     "update:perms",
     "update:customData",
     "update:modifications",
+    "update:modificationView",
     "read",
     "create",
     "update",
@@ -471,79 +473,83 @@ const C = (...B) => {
     "error",
     "modified-data"
   ],
-  setup(B, { expose: J, emit: te }) {
-    const o = B, n = it(), D = Fe(), c = te, r = d(!0), u = d(o.modelValue), f = d(o.modifications), O = d(o.customData), m = d(o.perms), y = d(o.editing), x = d(!1), E = d(!1), Q = d(!1), V = d(200), I = d(new ye(u.value, o.dataStateConfig)), se = d(new ye(f.value, o.dataStateConfig)), M = d(!1), K = d(new ye(o.readData)), N = d(o.mode === T.Create), pe = d(!1), z = d(!1), W = d(null), t = k(() => !N.value && Array.isArray(m.value) && m.value.includes(Ve.Update)), w = k(() => !N.value && Array.isArray(m.value) && m.value.includes(Ve.Drop)), h = k(() => !N.value && Array.isArray(m.value) && m.value.includes(Ve.SwitchEditMode)), G = d(g.Current);
-    b(() => o.mode, (e) => {
-      N.value = e === T.Create;
-    }), b(() => o.perms, (e) => {
-      m.value = e;
-    }), b(m, (e) => {
+  setup(B, { expose: K, emit: te }) {
+    const o = B, n = it(), D = Fe(), c = te, r = d(!0), u = d(o.modelValue), m = d(o.modifications), O = d(o.customData), b = d(o.perms), y = d(o.editing), x = d(!1), E = d(!1), Q = d(!1), T = d(200), I = d(new ye(u.value, o.dataStateConfig)), se = d(new ye(m.value, o.dataStateConfig)), M = d(!1), W = d(new ye(o.readData)), N = d(o.mode === V.Create), pe = d(!1), z = d(!1), G = d(null), t = k(() => !N.value && Array.isArray(b.value) && b.value.includes(Te.Update)), w = k(() => !N.value && Array.isArray(b.value) && b.value.includes(Te.Drop)), h = k(() => !N.value && Array.isArray(b.value) && b.value.includes(Te.SwitchEditMode)), L = d(o.visibleView);
+    f(() => o.visibleView, (e) => {
+      L.value = e === !0 ? g.Current : e;
+    }), f(L, (e) => {
+      c("update:modificationView", e);
+    }), f(() => o.mode, (e) => {
+      N.value = e === V.Create;
+    }), f(() => o.perms, (e) => {
+      b.value = e;
+    }), f(b, (e) => {
       c("update:perms", e);
-    }), b(() => o.customData, (e) => {
+    }), f(() => o.customData, (e) => {
       O.value = e;
-    }), b(O, (e) => {
+    }), f(O, (e) => {
       c("update:customData", e);
-    }), b(() => o.modifications, (e) => {
-      se.value.increment(e), f.value = e;
-    }, { deep: !0 }), b(f, (e) => {
+    }), f(() => o.modifications, (e) => {
+      se.value.increment(e), m.value = e;
+    }, { deep: !0 }), f(m, (e) => {
       Oe(), se.value.increment(e), ue.value === g.Modifications && (M.value = se.value.changed()), c("update:modifications", e);
     }, { deep: !0 });
-    const L = d(Z(o.createButton, s.defaultCreateButton)), $ = d(Z(o.updateButton, s.defaultUpdateButton)), j = d(Z(o.dropButton, s.defaultDropButton)), H = d(Z(o.editModeButton, s.defaultEditModeButton)), ne = d(Z(o.groupButton, s.defaultGroupButton));
-    b(() => o.createButton, (e) => {
-      L.value = Z(e, s.defaultCreateButton);
-    }, { deep: !0 }), b(() => o.updateButton, (e) => {
-      $.value = Z(e, s.defaultUpdateButton);
-    }, { deep: !0 }), b(() => o.dropButton, (e) => {
-      j.value = Z(e, s.defaultDropButton);
-    }, { deep: !0 }), b(() => o.editModeButton, (e) => {
+    const $ = d(Z(o.createButton, s.defaultCreateButton)), j = d(Z(o.updateButton, s.defaultUpdateButton)), P = d(Z(o.dropButton, s.defaultDropButton)), H = d(Z(o.editModeButton, s.defaultEditModeButton)), ne = d(Z(o.groupButton, s.defaultGroupButton));
+    f(() => o.createButton, (e) => {
+      $.value = Z(e, s.defaultCreateButton);
+    }, { deep: !0 }), f(() => o.updateButton, (e) => {
+      j.value = Z(e, s.defaultUpdateButton);
+    }, { deep: !0 }), f(() => o.dropButton, (e) => {
+      P.value = Z(e, s.defaultDropButton);
+    }, { deep: !0 }), f(() => o.editModeButton, (e) => {
       H.value = Z(e, s.defaultEditModeButton);
     }, { deep: !0 });
     const ie = async () => {
       var e, a, q;
-      C("fetchItem"), r.value = !0, V.value = -1, Q.value = !1, typeof ((e = o.events) == null ? void 0 : e.httpStart) == "function" && o.events.httpStart();
+      C("fetchItem"), r.value = !0, T.value = -1, Q.value = !1, typeof ((e = o.events) == null ? void 0 : e.httpStart) == "function" && o.events.httpStart();
       try {
         const R = await xe(o.readResource, o.readData);
-        if (C("fetchItem -> response", R), r.value = !1, V.value = R.httpStatus, O.value = R.custom, !R.success) {
-          E.value = !1, V.value = R.httpStatus, typeof ((a = o.events) == null ? void 0 : a.httpEnd) == "function" && o.events.httpEnd({
+        if (C("fetchItem -> response", R), r.value = !1, T.value = R.httpStatus, O.value = R.custom, !R.success) {
+          E.value = !1, T.value = R.httpStatus, typeof ((a = o.events) == null ? void 0 : a.httpEnd) == "function" && o.events.httpEnd({
             httpResponse: R
           }), c("error", R.httpStatus);
           return;
         }
-        E.value = !0, u.value = R.data, f.value = R.modifications, m.value = R.perms, I.value.increment(u.value).turnStoredIntoOriginal(), se.value.increment(f.value).turnStoredIntoOriginal(), M.value = I.value.changed(), K.value.turnStoredIntoOriginal(), Object.keys(f.value).length > 0 && (G.value = g.Modifications), typeof ((q = o.events) == null ? void 0 : q.httpEnd) == "function" && o.events.httpEnd({
+        E.value = !0, u.value = R.data, m.value = R.modifications, b.value = R.perms, I.value.increment(u.value).turnStoredIntoOriginal(), se.value.increment(m.value).turnStoredIntoOriginal(), M.value = I.value.changed(), W.value.turnStoredIntoOriginal(), Object.keys(m.value).length > 0 && (L.value = g.Modifications), typeof ((q = o.events) == null ? void 0 : q.httpEnd) == "function" && o.events.httpEnd({
           httpResponse: R
         }), c("read", R);
       } catch {
-        r.value = !1, E.value = !1, V.value = 404, c("error", 404);
+        r.value = !1, E.value = !1, T.value = 404, c("error", 404);
         return;
       }
     };
-    b(() => o.modelValue, (e) => {
+    f(() => o.modelValue, (e) => {
       u.value = e, I.value.increment(e);
-    }, { deep: !0 }), b(u, (e) => {
+    }, { deep: !0 }), f(u, (e) => {
       if (pe.value = !0, C("item updated ->", u.value), typeof o.beforeEmitUpdate == "function") {
         C("item updated -> has beforeEmitUpdate");
         let a = o.beforeEmitUpdate(u.value);
         C("item updated -> override with: ", a), typeof a == "object" && (u.value = a);
       }
       Oe(), c("update:modelValue", u.value), C("item updated -> update dataState"), I.value.increment(e), ue.value === g.Current && (M.value = I.value.changed()), ze(() => pe.value = !1);
-    }, { deep: !0 }), b(m, () => c("perms", m.value)), b(M, (e) => {
+    }, { deep: !0 }), f(b, () => c("perms", b.value)), f(M, (e) => {
       c("modified-data", e);
-    }), b(() => o.readData, (e) => {
-      K.value.increment(e), K.value.changed() && ie();
-    }), b(() => o.editing, (e) => {
+    }), f(() => o.readData, (e) => {
+      W.value.increment(e), W.value.changed() && ie();
+    }), f(() => o.editing, (e) => {
       C("editing updated -> updating editMode", e), y.value = e;
-    }), b(y, (e) => {
+    }), f(y, (e) => {
       C("editMode updated -> emit update", e), c("update:editing", e);
     });
     const Ae = d(void 0), Oe = () => {
-      me.value && (Ae.value = st(u.value, f.value, o.form));
+      me.value && (Ae.value = st(u.value, m.value, o.form));
     };
     Qe(() => {
       o.readResource && !N.value ? ie() : (N.value, E.value = !0, y.value = !0, r.value = !1, I.value.increment(u.value).turnStoredIntoOriginal(), M.value = I.value.changed());
     });
     const ke = (e, a) => {
       if (a) {
-        if (r.value = !1, typeof e < "u" && (V.value = e.httpStatus, !e.success))
+        if (r.value = !1, typeof e < "u" && (T.value = e.httpStatus, !e.success))
           return Q.value = !0, c("error", e.httpStatus), !1;
         Q.value = !0;
       }
@@ -555,7 +561,7 @@ const C = (...B) => {
           typeof a == "function" && (q = a(e.autoReloadId)), n.push(q);
         } else we.value ? (C("doAutoReloadId -> insideModal: ", o), at(o.modalConfig.modalName, o.modalConfig.modalKey, e.autoReloadId)) : (C("doAutoReloadId -> outsideModal"), o.readData.id = e.autoReloadId, C("doAutoReloadId -> turning off create mode"), N.value = !1, ie());
     }, Be = (e, a) => {
-      if (C("onCreate"), !ke(a, L.value.resource)) {
+      if (C("onCreate"), !ke(a, $.value.resource)) {
         o.notificationType === ee.Toast && de({
           text: s.defaultCreateErrorText,
           details: s.defaultCreateErrorDetails,
@@ -571,7 +577,7 @@ const C = (...B) => {
         positionX: le.Right
       }), Ee(a, o.redirectOnCreate), C("onCreate -> beforeEmitCreate"), c("create", a);
     }, De = (e, a) => {
-      if (C("onUpdate"), !ke(a, $.value.resource)) {
+      if (C("onUpdate"), !ke(a, j.value.resource)) {
         o.notificationType === ee.Toast && de({
           text: s.defaultUpdateErrorText,
           details: s.defaultUpdateErrorDetails,
@@ -587,7 +593,7 @@ const C = (...B) => {
         positionX: le.Right
       }), Ee(a), c("update", a);
     }, he = (e, a) => {
-      if (C("onDrop"), !ke(a, j.value.resource)) {
+      if (C("onDrop"), !ke(a, P.value.resource)) {
         o.notificationType === ee.Toast && de({
           text: s.defaultDropErrorText,
           details: s.defaultDropErrorDetails,
@@ -606,13 +612,13 @@ const C = (...B) => {
         typeof o.redirectOnDrop == "function" && (q = o.redirectOnDrop()), n.push(q);
       }
     };
-    J({
+    K({
       doDrop: () => {
-        W.value && W.value.doDrop();
+        G.value && G.value.doDrop();
       },
       doRefresh: ie,
       doSave: () => {
-        W.value && W.value.doSave();
+        G.value && G.value.doSave();
       },
       turnStoredDataIntoOriginal: () => {
         I.value.increment(u.value).turnStoredIntoOriginal();
@@ -631,19 +637,19 @@ const C = (...B) => {
         });
     }, Ce = k(() => o.title.startsWith("__:") ? String(nt(o.title.substring(3))) : o.title), We = k(() => r.value ? !1 : Ce.value.length > 0 || !!D["post-title"]), we = k(() => o.view === je.Modal), Ne = k(() => we.value ? "lkt-modal" : "section"), ce = k(() => {
       var e, a;
-      return o.mode !== T.Update || !t.value || !o.enabledSaveWithoutChanges && !M.value || me.value && !x.value ? !1 : typeof ((e = $.value) == null ? void 0 : e.disabled) == "function" ? !$.value.disabled({
+      return o.mode !== V.Update || !t.value || !o.enabledSaveWithoutChanges && !M.value || me.value && !x.value ? !1 : typeof ((e = j.value) == null ? void 0 : e.disabled) == "function" ? !j.value.disabled({
         prop: u.value
-      }) : typeof ((a = $.value) == null ? void 0 : a.disabled) == "boolean" ? !$.value.disabled : !0;
+      }) : typeof ((a = j.value) == null ? void 0 : a.disabled) == "boolean" ? !j.value.disabled : !0;
     }), fe = k(() => {
       var e, a;
-      return o.mode !== T.Create || !o.enabledSaveWithoutChanges && !M.value || me.value && !x.value ? !1 : typeof ((e = L.value) == null ? void 0 : e.disabled) == "function" ? !L.value.disabled({
+      return o.mode !== V.Create || !o.enabledSaveWithoutChanges && !M.value || me.value && !x.value ? !1 : typeof ((e = $.value) == null ? void 0 : e.disabled) == "function" ? !$.value.disabled({
         prop: u.value
-      }) : typeof ((a = L.value) == null ? void 0 : a.disabled) == "boolean" ? !L.value.disabled : !0;
+      }) : typeof ((a = $.value) == null ? void 0 : a.disabled) == "boolean" ? !$.value.disabled : !0;
     }), Se = k(() => {
       var e, a;
-      return w.value ? typeof ((e = j.value) == null ? void 0 : e.disabled) == "function" ? !j.value.disabled({
+      return w.value ? typeof ((e = P.value) == null ? void 0 : e.disabled) == "function" ? !P.value.disabled({
         prop: u.value
-      }) : typeof ((a = j.value) == null ? void 0 : a.disabled) == "boolean" ? !j.value.disabled : !0 : !1;
+      }) : typeof ((a = P.value) == null ? void 0 : a.disabled) == "boolean" ? !P.value.disabled : !0 : !1;
     }), Ge = k(() => Ne.value === "lkt-modal" ? {
       title: o.title,
       item: u.value,
@@ -653,21 +659,21 @@ const C = (...B) => {
       headerActionsButton: o.groupButton !== !1 ? {
         dot: fe.value || ce.value
       } : !1
-    } : {}), me = k(() => typeof o.form == "object" && Object.keys(o.form).length > 0), Ue = k(() => Object.keys(f.value).length === 0 ? [] : o.modificationView), ue = k(() => Object.keys(f.value).length === 0 ? g.Current : g.Modifications);
+    } : {}), me = k(() => typeof o.form == "object" && Object.keys(o.form).length > 0), Ue = k(() => Object.keys(m.value).length === 0 ? [] : o.modificationViews), ue = k(() => Object.keys(m.value).length === 0 ? g.Current : g.Modifications);
     return (e, a) => {
       const q = ge("lkt-http-info"), R = ge("lkt-form"), He = ge("lkt-loader");
       return v(), A(Ye(Ne.value), S(Ge.value, { class: "lkt-item-crud" }), be({
         default: _(() => [
           Ze("article", pt, [
-            !we.value && We.value ? (v(), X("header", vt, [
-              i(D)["pre-title"] ? (v(), X("div", ct, [
+            !we.value && We.value ? (v(), J("header", vt, [
+              i(D)["pre-title"] ? (v(), J("div", ct, [
                 U(e.$slots, "pre-title", {
                   item: u.value,
                   loading: r.value
                 })
               ])) : p("", !0),
-              Ce.value.length > 0 ? (v(), X("h1", ft, _e(Ce.value), 1)) : p("", !0),
-              i(D)["post-title"] ? (v(), X("div", mt, [
+              Ce.value.length > 0 ? (v(), J("h1", ft, _e(Ce.value), 1)) : p("", !0),
+              i(D)["post-title"] ? (v(), J("div", mt, [
                 U(e.$slots, "post-title", {
                   item: u.value,
                   loading: r.value
@@ -677,22 +683,22 @@ const C = (...B) => {
             e.buttonNavPosition === i(Ie).Top && (e.groupButton === !1 || !e.groupButtonAsModalActions) ? (v(), A(Re, {
               key: 1,
               ref_key: "buttonNav",
-              ref: W,
+              ref: G,
               loading: r.value,
               "onUpdate:loading": a[3] || (a[3] = (l) => r.value = l),
               editing: y.value,
               "onUpdate:editing": a[4] || (a[4] = (l) => y.value = l),
-              "picked-modification-view": G.value,
-              "onUpdate:pickedModificationView": a[5] || (a[5] = (l) => G.value = l),
+              "picked-modification-view": L.value,
+              "onUpdate:pickedModificationView": a[5] || (a[5] = (l) => L.value = l),
               item: u.value,
-              modifications: f.value,
+              modifications: m.value,
               mode: e.mode,
               view: e.view,
               grouped: e.groupButton !== !1,
               "button-nav-visibility": e.buttonNavVisibility,
-              "create-button": L.value,
-              "update-button": $.value,
-              "drop-button": j.value,
+              "create-button": $.value,
+              "update-button": j.value,
+              "drop-button": P.value,
               "edit-mode-button": H.value,
               "group-button": ne.value,
               "data-changed": M.value,
@@ -704,7 +710,7 @@ const C = (...B) => {
               "able-to-create": fe.value,
               "able-to-update": ce.value,
               "able-to-drop": Se.value,
-              perms: m.value,
+              perms: b.value,
               "modification-view": Ue.value,
               "editable-view": ue.value,
               onCreate: Be,
@@ -734,12 +740,12 @@ const C = (...B) => {
                 key: "1"
               } : void 0
             ]), 1032, ["loading", "editing", "picked-modification-view", "item", "modifications", "mode", "view", "grouped", "button-nav-visibility", "create-button", "update-button", "drop-button", "edit-mode-button", "group-button", "data-changed", "http-success-read", "can-update", "can-drop", "can-switch-edit-mode", "group-button-as-modal-actions", "able-to-create", "able-to-update", "able-to-drop", "perms", "modification-view", "editable-view"])) : p("", !0),
-            r.value ? p("", !0) : (v(), X("div", bt, [
-              E.value ? (v(), X("div", gt, [
+            r.value ? p("", !0) : (v(), J("div", bt, [
+              E.value ? (v(), J("div", gt, [
                 Q.value && e.notificationType === i(ee).Inline ? (v(), A(q, {
                   key: 0,
-                  code: V.value,
-                  palette: V.value === 200 ? "success" : "danger",
+                  code: T.value,
+                  palette: T.value === 200 ? "success" : "danger",
                   quick: "",
                   "can-close": "",
                   onClose: a[6] || (a[6] = (l) => Q.value = !1)
@@ -748,14 +754,14 @@ const C = (...B) => {
                   key: 1,
                   modelValue: u.value,
                   "onUpdate:modelValue": a[7] || (a[7] = (l) => u.value = l),
-                  modifications: f.value,
-                  "onUpdate:modifications": a[8] || (a[8] = (l) => f.value = l),
+                  modifications: m.value,
+                  "onUpdate:modifications": a[8] || (a[8] = (l) => m.value = l),
                   valid: x.value,
                   "onUpdate:valid": a[9] || (a[9] = (l) => x.value = l)
                 }, {
                   form: e.form,
                   differencesTableConfig: e.differencesTableConfig,
-                  visibleView: G.value,
+                  visibleView: L.value,
                   modificationDataState: Ae.value,
                   editableViews: [ue.value],
                   disabled: !y.value
@@ -768,33 +774,33 @@ const C = (...B) => {
                   canUpdate: t.value,
                   canDrop: w.value,
                   itemBeingEdited: pe.value,
-                  perms: m.value
+                  perms: b.value
                 })
               ])) : e.notificationType === i(ee).Inline ? (v(), A(q, {
                 key: 1,
-                code: V.value
+                code: T.value
               }, null, 8, ["code"])) : p("", !0)
             ])),
             r.value ? (v(), A(He, { key: 3 })) : p("", !0),
             e.buttonNavPosition === i(Ie).Bottom && (e.groupButton === !1 || !e.groupButtonAsModalActions) ? (v(), A(Re, {
               key: 4,
               ref_key: "buttonNav",
-              ref: W,
+              ref: G,
               loading: r.value,
               "onUpdate:loading": a[10] || (a[10] = (l) => r.value = l),
               editing: y.value,
               "onUpdate:editing": a[11] || (a[11] = (l) => y.value = l),
-              "picked-modification-view": G.value,
-              "onUpdate:pickedModificationView": a[12] || (a[12] = (l) => G.value = l),
+              "picked-modification-view": L.value,
+              "onUpdate:pickedModificationView": a[12] || (a[12] = (l) => L.value = l),
               item: u.value,
-              modifications: f.value,
+              modifications: m.value,
               mode: e.mode,
               view: e.view,
               grouped: e.groupButton !== !1,
               "button-nav-visibility": e.buttonNavVisibility,
-              "create-button": L.value,
-              "update-button": $.value,
-              "drop-button": j.value,
+              "create-button": $.value,
+              "update-button": j.value,
+              "drop-button": P.value,
               "edit-mode-button": H.value,
               "group-button": ne.value,
               "data-changed": M.value,
@@ -806,7 +812,7 @@ const C = (...B) => {
               "able-to-create": fe.value,
               "able-to-update": ce.value,
               "able-to-drop": Se.value,
-              perms: m.value,
+              perms: b.value,
               "modification-view": Ue.value,
               "editable-view": ue.value,
               onCreate: Be,
@@ -838,22 +844,22 @@ const C = (...B) => {
             e.buttonNavPosition === i(Ie).Top ? (v(), A(Re, {
               key: 0,
               ref_key: "buttonNav",
-              ref: W,
+              ref: G,
               loading: r.value,
               "onUpdate:loading": a[0] || (a[0] = (l) => r.value = l),
               editing: y.value,
               "onUpdate:editing": a[1] || (a[1] = (l) => y.value = l),
-              "picked-modification-view": G.value,
-              "onUpdate:pickedModificationView": a[2] || (a[2] = (l) => G.value = l),
+              "picked-modification-view": L.value,
+              "onUpdate:pickedModificationView": a[2] || (a[2] = (l) => L.value = l),
               item: u.value,
-              modifications: f.value,
+              modifications: m.value,
               mode: e.mode,
               view: e.view,
               grouped: !0,
               "button-nav-visibility": e.buttonNavVisibility,
-              "create-button": L.value,
-              "update-button": $.value,
-              "drop-button": j.value,
+              "create-button": $.value,
+              "update-button": j.value,
+              "drop-button": P.value,
               "edit-mode-button": H.value,
               "group-button": ne.value,
               "data-changed": M.value,
@@ -865,7 +871,7 @@ const C = (...B) => {
               "able-to-create": fe.value,
               "able-to-update": ce.value,
               "able-to-drop": Se.value,
-              perms: m.value,
+              perms: b.value,
               "modification-view": Ue.value,
               "editable-view": ue.value,
               onCreate: Be,
@@ -902,7 +908,7 @@ const C = (...B) => {
     };
   }
 }), It = {
-  install: (B, J = {}) => {
+  install: (B, K = {}) => {
     B.component("lkt-item-crud") === void 0 && B.component("lkt-item-crud", yt);
   }
 }, Rt = (B) => {
@@ -911,7 +917,7 @@ const C = (...B) => {
   re.defaultDropIcon = B;
 };
 export {
-  Vt as debugLktItemCrud,
+  Tt as debugLktItemCrud,
   It as default,
   At as setItemCrudDefaultDropIcon,
   Rt as setItemCrudDefaultSaveIcon

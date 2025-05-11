@@ -68,6 +68,7 @@ declare const __VLS_component: import("vue").DefineComponent<ItemCrudConfig, {
     "update:perms": (...args: any[]) => void;
     "update:customData": (...args: any[]) => void;
     "update:modifications": (...args: any[]) => void;
+    "update:modificationView": (...args: any[]) => void;
     "before-save": (...args: any[]) => void;
     "modified-data": (...args: any[]) => void;
 }, string, import("vue").PublicProps, Readonly<ItemCrudConfig> & Readonly<{
@@ -82,6 +83,7 @@ declare const __VLS_component: import("vue").DefineComponent<ItemCrudConfig, {
     "onUpdate:perms"?: ((...args: any[]) => any) | undefined;
     "onUpdate:customData"?: ((...args: any[]) => any) | undefined;
     "onUpdate:modifications"?: ((...args: any[]) => any) | undefined;
+    "onUpdate:modificationView"?: ((...args: any[]) => any) | undefined;
     "onBefore-save"?: ((...args: any[]) => any) | undefined;
     "onModified-data"?: ((...args: any[]) => any) | undefined;
 }>, {
@@ -98,7 +100,8 @@ declare const __VLS_component: import("vue").DefineComponent<ItemCrudConfig, {
     editing: boolean;
     perms: import("lkt-vue-kernel").ValidTablePermission[];
     customData: LktObject;
-    modificationView: boolean | Array<ModificationView>;
+    visibleView: ModificationView;
+    modificationViews: boolean | Array<ModificationView>;
     editModeButton: ButtonConfig | false;
     dropButton: ButtonConfig | false;
     createButton: ButtonConfig | false;

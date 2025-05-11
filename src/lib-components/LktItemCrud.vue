@@ -44,6 +44,7 @@
         'update:perms',
         'update:customData',
         'update:modifications',
+        'update:modificationView',
         'read',
         'create',
         'update',
@@ -76,7 +77,15 @@
         canDrop = computed(() => !createMode.value && Array.isArray(permissions.value) && permissions.value.includes(TablePermission.Drop)),
         canSwitchEditMode = computed(() => !createMode.value && Array.isArray(permissions.value) && permissions.value.includes(TablePermission.SwitchEditMode));
 
-    const pickedModificationView = ref(ModificationView.Current);
+    const pickedModificationView = ref(props.visibleView);
+
+    watch(() => props.visibleView, (v) => {
+        pickedModificationView.value = v
+    });
+
+    watch(pickedModificationView, (v) => {
+        emit('update:modificationView', v);
+    })
 
     watch(() => props.mode, (v) => {
         createMode.value = v === ItemCrudMode.Create;
@@ -488,7 +497,7 @@
         }),
         computedModificationViews = computed(() => {
             if (Object.keys(itemModifications.value).length === 0) return [];
-            return props.modificationView;
+            return props.modificationViews;
         });
 
     const computedEditableView = computed(() => {
