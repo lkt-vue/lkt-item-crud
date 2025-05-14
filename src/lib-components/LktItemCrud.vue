@@ -26,7 +26,7 @@
     import ButtonNav from '../components/ButtonNav.vue';
     import { openToast } from 'lkt-toast';
     import { useRouter } from 'vue-router';
-    import { getModificationsDataState } from '@/functions/modifications-functions';
+    import { getModificationsDataState } from '../functions/modifications-functions';
 
     // defineOptions({
     //     inheritAttrs: false

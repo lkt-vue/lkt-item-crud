@@ -1,7 +1,7 @@
 import { defineComponent as Pe, ref as d, watch as f, useSlots as Fe, computed as k, resolveComponent as ge, createElementBlock as J, createCommentVNode as p, openBlock as v, createBlock as A, Fragment as Le, renderSlot as U, withDirectives as F, mergeProps as S, normalizeProps as Me, unref as i, createVNode as Y, vShow as X, withCtx as _, mergeDefaults as qe, nextTick as ze, onMounted as Qe, resolveDynamicComponent as Ye, createSlots as be, createElementVNode as Ze, toDisplayString as _e } from "vue";
 import { httpCall as xe } from "lkt-http-client";
 import { DataState as ye } from "lkt-data-state";
-import { ModificationView as g, ItemCrudMode as V, ItemCrudButtonNavVisibility as $e, ButtonType as Ve, TablePermission as Te, ensureButtonConfig as Z, LktSettings as s, ItemCrudView as je, ItemCrudButtonNavPosition as Ie, NotificationType as ee, getDefaultValues as et, ItemCrud as tt, ToastPositionX as le } from "lkt-vue-kernel";
+import { ModificationView as y, ItemCrudMode as V, ItemCrudButtonNavVisibility as $e, ButtonType as Ve, TablePermission as Te, ensureButtonConfig as Z, LktSettings as s, ItemCrudView as je, ItemCrudButtonNavPosition as Ie, NotificationType as ee, getDefaultValues as et, ItemCrud as tt, ToastPositionX as le } from "lkt-vue-kernel";
 import { closeModal as ot, updateModalKey as at } from "lkt-modal";
 import { __ as nt } from "lkt-i18n";
 import { openToast as de } from "lkt-toast";
@@ -73,7 +73,7 @@ const C = (...B) => {
     f(() => n.editing, (t) => O.value = t), f(O, (t) => o("update:editing", t));
     const b = () => {
       m.value = !0;
-    }, y = () => {
+    }, g = () => {
       m.value = !1;
     }, x = (t, w) => {
       typeof t > "u" || o("create", t, w);
@@ -81,7 +81,7 @@ const C = (...B) => {
       typeof t > "u" || o("save", t, w);
     }, Q = (t, w) => {
       typeof t > "u" || o("drop", t, w);
-    }, T = k(() => n.editableView === g.Modifications ? n.modifications : n.item);
+    }, T = k(() => n.editableView === y.Modifications ? n.modifications : n.item);
     K({
       doSave: () => {
         r.value && typeof r.value.click == "function" && r.value.click();
@@ -91,46 +91,46 @@ const C = (...B) => {
       }
     });
     const M = k(() => !n.canDrop || n.dropButton === !1 ? !1 : !n.canUpdate && n.canDrop ? !0 : !m.value && n.editing && n.httpSuccessRead), W = k(() => n.mode === V.Create && n.createButton === !1 || n.mode === V.Update && n.updateButton === !1 || m.value ? !1 : n.editing && n.httpSuccessRead), N = k(() => n.editModeButton === !1 || !n.canSwitchEditMode || !n.canUpdate && !n.canDrop || !n.canUpdate && n.canDrop ? !1 : !m.value && n.mode !== V.Create && n.httpSuccessRead), pe = k(() => n.buttonNavVisibility === $e.Always || c["prev-buttons-ever"] ? !0 : n.buttonNavVisibility === $e.Never ? !1 : W.value || M.value || N.value), z = k(() => n.modificationView === !1 ? [] : n.modificationView === !0 ? [
-      g.Current,
-      g.Modifications,
-      g.SplitView,
-      g.Differences
+      y.Current,
+      y.Modifications,
+      y.SplitView,
+      y.Differences
     ] : Array.isArray(n.modificationView) ? n.modificationView : []), G = k(() => {
       let t = [];
-      return z.value.includes(g.Current) && t.push({
+      return z.value.includes(y.Current) && t.push({
         text: "Current",
         icon: "lkt-icn-see",
-        disabled: D.value === g.Current,
+        disabled: D.value === y.Current,
         events: {
           click: () => {
-            D.value = g.Current;
+            D.value = y.Current;
           }
         }
-      }), z.value.includes(g.Modifications) && t.push({
+      }), z.value.includes(y.Modifications) && t.push({
         text: "Modifications",
         icon: "lkt-icn-edit",
-        disabled: D.value === g.Modifications,
+        disabled: D.value === y.Modifications,
         events: {
           click: () => {
-            D.value = g.Modifications;
+            D.value = y.Modifications;
           }
         }
-      }), z.value.includes(g.SplitView) && t.push({
+      }), z.value.includes(y.SplitView) && t.push({
         text: "Split View",
         icon: "lkt-icn-columns",
-        disabled: D.value === g.SplitView,
+        disabled: D.value === y.SplitView,
         events: {
           click: () => {
-            D.value = g.SplitView;
+            D.value = y.SplitView;
           }
         }
-      }), z.value.includes(g.Differences) && t.push({
+      }), z.value.includes(y.Differences) && t.push({
         text: "Differences",
         icon: "lkt-icn-balance",
-        disabled: D.value === g.Differences,
+        disabled: D.value === y.Differences,
         events: {
           click: () => {
-            D.value = g.Differences;
+            D.value = y.Differences;
           }
         }
       }), t;
@@ -178,7 +178,7 @@ const C = (...B) => {
             disabled: !t.ableToUpdate
           }, {
             onLoading: b,
-            onLoaded: y,
+            onLoaded: g,
             onClick: E
           }), null, 16), [
             [X, t.mode === i(V).Update && W.value]
@@ -195,7 +195,7 @@ const C = (...B) => {
             disabled: !t.ableToCreate
           }, {
             onLoading: b,
-            onLoaded: y,
+            onLoaded: g,
             onClick: x
           }), null, 16), [
             [X, t.mode === i(V).Create && W.value]
@@ -206,7 +206,7 @@ const C = (...B) => {
           }, t.dropButton, {
             disabled: !t.ableToDrop,
             onLoading: b,
-            onLoaded: y,
+            onLoaded: g,
             onClick: Q
           }), null, 16, ["disabled"]), [
             [X, M.value && t.mode !== i(V).Create]
@@ -257,7 +257,7 @@ const C = (...B) => {
                 disabled: !t.ableToUpdate
               }, {
                 onLoading: b,
-                onLoaded: y,
+                onLoaded: g,
                 onClick: E
               }), null, 16), [
                 [X, t.mode === i(V).Update && W.value]
@@ -275,7 +275,7 @@ const C = (...B) => {
               }, {
                 disabled: !t.ableToCreate,
                 onLoading: b,
-                onLoaded: y,
+                onLoaded: g,
                 onClick: x
               }), null, 16, ["disabled"]), [
                 [X, t.mode === i(V).Create && W.value]
@@ -286,7 +286,7 @@ const C = (...B) => {
               }, t.dropButton, {
                 disabled: !t.ableToDrop,
                 onLoading: b,
-                onLoaded: y,
+                onLoaded: g,
                 onClick: Q
               }), null, 16, ["disabled"]), [
                 [X, M.value && t.mode !== i(V).Create]
@@ -326,7 +326,7 @@ const C = (...B) => {
             disabled: !t.ableToUpdate
           }, {
             onLoading: b,
-            onLoaded: y,
+            onLoaded: g,
             onClick: E
           }), null, 16), [
             [X, t.mode === i(V).Update && W.value]
@@ -343,7 +343,7 @@ const C = (...B) => {
             disabled: !t.ableToCreate
           }, {
             onLoading: b,
-            onLoaded: y,
+            onLoaded: g,
             onClick: x
           }), null, 16), [
             [X, t.mode === i(V).Create && W.value]
@@ -354,7 +354,7 @@ const C = (...B) => {
           }, t.dropButton, {
             disabled: !t.ableToDrop,
             onLoading: b,
-            onLoaded: y,
+            onLoaded: g,
             onClick: Q
           }), null, 16, ["disabled"]), [
             [X, M.value && t.mode !== i(V).Create]
@@ -474,9 +474,9 @@ const C = (...B) => {
     "modified-data"
   ],
   setup(B, { expose: K, emit: te }) {
-    const o = B, n = it(), D = Fe(), c = te, r = d(!0), u = d(o.modelValue), m = d(o.modifications), O = d(o.customData), b = d(o.perms), y = d(o.editing), x = d(!1), E = d(!1), Q = d(!1), T = d(200), I = d(new ye(u.value, o.dataStateConfig)), se = d(new ye(m.value, o.dataStateConfig)), M = d(!1), W = d(new ye(o.readData)), N = d(o.mode === V.Create), pe = d(!1), z = d(!1), G = d(null), t = k(() => !N.value && Array.isArray(b.value) && b.value.includes(Te.Update)), w = k(() => !N.value && Array.isArray(b.value) && b.value.includes(Te.Drop)), h = k(() => !N.value && Array.isArray(b.value) && b.value.includes(Te.SwitchEditMode)), L = d(o.visibleView);
+    const o = B, n = it(), D = Fe(), c = te, r = d(!0), u = d(o.modelValue), m = d(o.modifications), O = d(o.customData), b = d(o.perms), g = d(o.editing), x = d(!1), E = d(!1), Q = d(!1), T = d(200), I = d(new ye(u.value, o.dataStateConfig)), se = d(new ye(m.value, o.dataStateConfig)), M = d(!1), W = d(new ye(o.readData)), N = d(o.mode === V.Create), pe = d(!1), z = d(!1), G = d(null), t = k(() => !N.value && Array.isArray(b.value) && b.value.includes(Te.Update)), w = k(() => !N.value && Array.isArray(b.value) && b.value.includes(Te.Drop)), h = k(() => !N.value && Array.isArray(b.value) && b.value.includes(Te.SwitchEditMode)), L = d(o.visibleView);
     f(() => o.visibleView, (e) => {
-      L.value = e === !0 ? g.Current : e;
+      L.value = e;
     }), f(L, (e) => {
       c("update:modificationView", e);
     }), f(() => o.mode, (e) => {
@@ -492,7 +492,7 @@ const C = (...B) => {
     }), f(() => o.modifications, (e) => {
       se.value.increment(e), m.value = e;
     }, { deep: !0 }), f(m, (e) => {
-      Oe(), se.value.increment(e), ue.value === g.Modifications && (M.value = se.value.changed()), c("update:modifications", e);
+      Oe(), se.value.increment(e), ue.value === y.Modifications && (M.value = se.value.changed()), c("update:modifications", e);
     }, { deep: !0 });
     const $ = d(Z(o.createButton, s.defaultCreateButton)), j = d(Z(o.updateButton, s.defaultUpdateButton)), P = d(Z(o.dropButton, s.defaultDropButton)), H = d(Z(o.editModeButton, s.defaultEditModeButton)), ne = d(Z(o.groupButton, s.defaultGroupButton));
     f(() => o.createButton, (e) => {
@@ -515,7 +515,7 @@ const C = (...B) => {
           }), c("error", R.httpStatus);
           return;
         }
-        E.value = !0, u.value = R.data, m.value = R.modifications, b.value = R.perms, I.value.increment(u.value).turnStoredIntoOriginal(), se.value.increment(m.value).turnStoredIntoOriginal(), M.value = I.value.changed(), W.value.turnStoredIntoOriginal(), Object.keys(m.value).length > 0 && (L.value = g.Modifications), typeof ((q = o.events) == null ? void 0 : q.httpEnd) == "function" && o.events.httpEnd({
+        E.value = !0, u.value = R.data, m.value = R.modifications, b.value = R.perms, I.value.increment(u.value).turnStoredIntoOriginal(), se.value.increment(m.value).turnStoredIntoOriginal(), M.value = I.value.changed(), W.value.turnStoredIntoOriginal(), Object.keys(m.value).length > 0 && (L.value = y.Modifications), typeof ((q = o.events) == null ? void 0 : q.httpEnd) == "function" && o.events.httpEnd({
           httpResponse: R
         }), c("read", R);
       } catch {
@@ -531,21 +531,21 @@ const C = (...B) => {
         let a = o.beforeEmitUpdate(u.value);
         C("item updated -> override with: ", a), typeof a == "object" && (u.value = a);
       }
-      Oe(), c("update:modelValue", u.value), C("item updated -> update dataState"), I.value.increment(e), ue.value === g.Current && (M.value = I.value.changed()), ze(() => pe.value = !1);
+      Oe(), c("update:modelValue", u.value), C("item updated -> update dataState"), I.value.increment(e), ue.value === y.Current && (M.value = I.value.changed()), ze(() => pe.value = !1);
     }, { deep: !0 }), f(b, () => c("perms", b.value)), f(M, (e) => {
       c("modified-data", e);
     }), f(() => o.readData, (e) => {
       W.value.increment(e), W.value.changed() && ie();
     }), f(() => o.editing, (e) => {
-      C("editing updated -> updating editMode", e), y.value = e;
-    }), f(y, (e) => {
+      C("editing updated -> updating editMode", e), g.value = e;
+    }), f(g, (e) => {
       C("editMode updated -> emit update", e), c("update:editing", e);
     });
     const Ae = d(void 0), Oe = () => {
       me.value && (Ae.value = st(u.value, m.value, o.form));
     };
     Qe(() => {
-      o.readResource && !N.value ? ie() : (N.value, E.value = !0, y.value = !0, r.value = !1, I.value.increment(u.value).turnStoredIntoOriginal(), M.value = I.value.changed());
+      o.readResource && !N.value ? ie() : (N.value, E.value = !0, g.value = !0, r.value = !1, I.value.increment(u.value).turnStoredIntoOriginal(), M.value = I.value.changed());
     });
     const ke = (e, a) => {
       if (a) {
@@ -659,7 +659,7 @@ const C = (...B) => {
       headerActionsButton: o.groupButton !== !1 ? {
         dot: fe.value || ce.value
       } : !1
-    } : {}), me = k(() => typeof o.form == "object" && Object.keys(o.form).length > 0), Ue = k(() => Object.keys(m.value).length === 0 ? [] : o.modificationViews), ue = k(() => Object.keys(m.value).length === 0 ? g.Current : g.Modifications);
+    } : {}), me = k(() => typeof o.form == "object" && Object.keys(o.form).length > 0), Ue = k(() => Object.keys(m.value).length === 0 ? [] : o.modificationViews), ue = k(() => Object.keys(m.value).length === 0 ? y.Current : y.Modifications);
     return (e, a) => {
       const q = ge("lkt-http-info"), R = ge("lkt-form"), He = ge("lkt-loader");
       return v(), A(Ye(Ne.value), S(Ge.value, { class: "lkt-item-crud" }), be({
@@ -686,8 +686,8 @@ const C = (...B) => {
               ref: G,
               loading: r.value,
               "onUpdate:loading": a[3] || (a[3] = (l) => r.value = l),
-              editing: y.value,
-              "onUpdate:editing": a[4] || (a[4] = (l) => y.value = l),
+              editing: g.value,
+              "onUpdate:editing": a[4] || (a[4] = (l) => g.value = l),
               "picked-modification-view": L.value,
               "onUpdate:pickedModificationView": a[5] || (a[5] = (l) => L.value = l),
               item: u.value,
@@ -764,12 +764,12 @@ const C = (...B) => {
                   visibleView: L.value,
                   modificationDataState: Ae.value,
                   editableViews: [ue.value],
-                  disabled: !y.value
+                  disabled: !g.value
                 }), null, 16, ["modelValue", "modifications", "valid"])) : U(e.$slots, "item", {
                   key: 2,
                   item: u.value,
                   loading: r.value,
-                  editMode: y.value,
+                  editMode: g.value,
                   isCreate: N.value,
                   canUpdate: t.value,
                   canDrop: w.value,
@@ -788,8 +788,8 @@ const C = (...B) => {
               ref: G,
               loading: r.value,
               "onUpdate:loading": a[10] || (a[10] = (l) => r.value = l),
-              editing: y.value,
-              "onUpdate:editing": a[11] || (a[11] = (l) => y.value = l),
+              editing: g.value,
+              "onUpdate:editing": a[11] || (a[11] = (l) => g.value = l),
               "picked-modification-view": L.value,
               "onUpdate:pickedModificationView": a[12] || (a[12] = (l) => L.value = l),
               item: u.value,
@@ -847,8 +847,8 @@ const C = (...B) => {
               ref: G,
               loading: r.value,
               "onUpdate:loading": a[0] || (a[0] = (l) => r.value = l),
-              editing: y.value,
-              "onUpdate:editing": a[1] || (a[1] = (l) => y.value = l),
+              editing: g.value,
+              "onUpdate:editing": a[1] || (a[1] = (l) => g.value = l),
               "picked-modification-view": L.value,
               "onUpdate:pickedModificationView": a[2] || (a[2] = (l) => L.value = l),
               item: u.value,
