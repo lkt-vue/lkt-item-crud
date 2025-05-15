@@ -164,7 +164,7 @@
             }
             httpSuccessRead.value = true;
             item.value = r.data;
-            itemModifications.value = r.modifications;
+            itemModifications.value = Array.isArray(r.modifications) ? {} : r.modifications;
             permissions.value = r.perms;
             dataState.value.increment(item.value).turnStoredIntoOriginal();
             modificationsDataState.value.increment(itemModifications.value).turnStoredIntoOriginal();
@@ -407,6 +407,10 @@
 
 
     const closeConfirm = computed(() => {
+        if (!computedHasButtons.value) return '';
+        if (computedEditableView.value === ModificationView.Modifications) {
+            return modificationsDataState.value.changed() ? props.modalConfig?.closeConfirm : '';
+        }
         return dataState.value.changed() ? props.modalConfig?.closeConfirm : '';
     });
 
@@ -504,6 +508,10 @@
         if (Object.keys(itemModifications.value).length === 0) return ModificationView.Current;
         return ModificationView.Modifications;
     })
+
+    const computedHasButtons = computed(() => {
+        return createMode.value || canUpdate.value || canDrop.value;
+    })
 </script>
 
 <template>
@@ -512,7 +520,7 @@
         v-bind="computedContainerAttrs"
         class="lkt-item-crud"
     >
-        <template v-if="groupButton !== false && groupButtonAsModalActions" #header-actions>
+        <template v-if="groupButton !== false && groupButtonAsModalActions && computedHasButtons" #header-actions>
             <button-nav
                 ref="buttonNav"
                 v-if="buttonNavPosition === ItemCrudButtonNavPosition.Top"
@@ -576,7 +584,10 @@
 
             <button-nav
                 ref="buttonNav"
-                v-if="buttonNavPosition === ItemCrudButtonNavPosition.Top && (groupButton === false || !groupButtonAsModalActions)"
+                v-if="buttonNavPosition === ItemCrudButtonNavPosition.Top
+                && (groupButton === false || !groupButtonAsModalActions)
+                 && computedHasButtons
+"
                 v-model:loading="isLoading"
                 v-model:editing="editMode"
                 v-model:picked-modification-view="pickedModificationView"
@@ -639,6 +650,7 @@
                             v-model:modifications="itemModifications"
                             v-model:valid="validForm"
                             v-bind="<FormUiConfig>{
+                                ...formUiConfig,
                                 form,
                                 differencesTableConfig,
                                 visibleView: pickedModificationView,
@@ -668,7 +680,7 @@
 
             <button-nav
                 ref="buttonNav"
-                v-if="buttonNavPosition === ItemCrudButtonNavPosition.Bottom && (groupButton === false || !groupButtonAsModalActions)"
+                v-if="buttonNavPosition === ItemCrudButtonNavPosition.Bottom && (groupButton === false || !groupButtonAsModalActions) && computedHasButtons"
                 v-model:loading="isLoading"
                 v-model:editing="editMode"
                 v-model:picked-modification-view="pickedModificationView"

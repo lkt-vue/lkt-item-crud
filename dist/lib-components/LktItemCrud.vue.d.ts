@@ -1,4 +1,4 @@
-import { ButtonConfig, ItemCrudButtonNavPosition, ItemCrudConfig, ItemCrudMode, ItemCrudView, LktObject, ModalConfig, ModificationView, NotificationType } from 'lkt-vue-kernel';
+import { ButtonConfig, FormUiConfig, ItemCrudButtonNavPosition, ItemCrudConfig, ItemCrudMode, ItemCrudView, LktObject, ModalConfig, ModificationView, NotificationType } from 'lkt-vue-kernel';
 declare var __VLS_17: {
     canUpdate: boolean | undefined;
     canDrop: boolean | undefined;
@@ -100,6 +100,7 @@ declare const __VLS_component: import("vue").DefineComponent<ItemCrudConfig, {
     editing: boolean;
     perms: import("lkt-vue-kernel").ValidTablePermission[];
     customData: LktObject;
+    formUiConfig: Partial<FormUiConfig>;
     visibleView: ModificationView;
     modificationViews: boolean | Array<ModificationView>;
     editModeButton: ButtonConfig | false;
