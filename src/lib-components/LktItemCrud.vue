@@ -7,6 +7,7 @@
         ButtonConfig,
         ensureButtonConfig, FormUiConfig,
         getDefaultValues,
+        getFormDataState,
         ItemCrud,
         ItemCrudButtonNavPosition,
         ItemCrudConfig,
@@ -26,7 +27,6 @@
     import ButtonNav from '../components/ButtonNav.vue';
     import { openToast } from 'lkt-toast';
     import { useRouter } from 'vue-router';
-    import { getModificationsDataState } from '../functions/modifications-functions';
 
     // defineOptions({
     //     inheritAttrs: false
@@ -62,6 +62,7 @@
         permissions = ref(props.perms),
         editMode = ref(props.editing),
         validForm = ref(false),
+        changedForm = ref(false),
         httpSuccessRead = ref(false),
         showStoreMessage = ref(false),
         httpStatus = ref(200),
@@ -191,6 +192,10 @@
         }
     };
 
+    watch(itemBeingEdited, (v) => {
+        if (v) nextTick(() => itemBeingEdited.value = false);
+    })
+
 
     watch(() => props.modelValue, v => {
         item.value = v;
@@ -198,7 +203,6 @@
     }, { deep: true });
 
     watch(item, (v) => {
-        itemBeingEdited.value = true;
         debug('item updated ->', item.value);
         if (typeof props.beforeEmitUpdate === 'function') {
             debug('item updated -> has beforeEmitUpdate');
@@ -206,14 +210,16 @@
             debug('item updated -> override with: ', override);
             if (typeof override === 'object') item.value = override;
         }
-        resetFormDifferencesChecker();
+        if (computedHasForm.value) {
+            resetFormDifferencesChecker();
+        }
         emit('update:modelValue', item.value);
         debug('item updated -> update dataState');
         dataState.value.increment(v);
         if (computedEditableView.value === ModificationView.Current) {
             dataChanged.value = dataState.value.changed();
         }
-        nextTick(() => itemBeingEdited.value = false);
+        itemBeingEdited.value = true;
     }, { deep: true });
 
     watch(permissions, () => emit('perms', permissions.value));
@@ -238,7 +244,7 @@
     const formDifferencesChecker = ref(undefined);
     const resetFormDifferencesChecker = () => {
         if (computedHasForm.value) {
-            formDifferencesChecker.value = getModificationsDataState(item.value, itemModifications.value, props.form);
+            formDifferencesChecker.value = getFormDataState(item.value, itemModifications.value, props.form);
         }
     }
 
@@ -408,6 +414,8 @@
 
     const closeConfirm = computed(() => {
         if (!computedHasButtons.value) return '';
+        if (computedHasForm.value) return changedForm.value ? props.modalConfig?.closeConfirm : '';
+
         if (computedEditableView.value === ModificationView.Modifications) {
             return modificationsDataState.value.changed() ? props.modalConfig?.closeConfirm : '';
         }
@@ -584,10 +592,7 @@
 
             <button-nav
                 ref="buttonNav"
-                v-if="buttonNavPosition === ItemCrudButtonNavPosition.Top
-                && (groupButton === false || !groupButtonAsModalActions)
-                 && computedHasButtons
-"
+                v-if="buttonNavPosition === ItemCrudButtonNavPosition.Top && (groupButton === false || !groupButtonAsModalActions) && computedHasButtons"
                 v-model:loading="isLoading"
                 v-model:editing="editMode"
                 v-model:picked-modification-view="pickedModificationView"
@@ -649,6 +654,7 @@
                             v-model="item"
                             v-model:modifications="itemModifications"
                             v-model:valid="validForm"
+                            v-model:changed="changedForm"
                             v-bind="<FormUiConfig>{
                                 ...formUiConfig,
                                 form,
