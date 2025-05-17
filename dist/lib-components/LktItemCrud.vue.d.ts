@@ -21,7 +21,7 @@ declare var __VLS_17: {
     canUpdate: boolean | undefined;
     canDrop: boolean | undefined;
     perms: string[] | undefined;
-}, __VLS_52: {
+}, __VLS_53: string, __VLS_54: {}, __VLS_56: {
     item: LktObject;
     loading: false;
     editMode: boolean;
@@ -30,8 +30,10 @@ declare var __VLS_17: {
     canDrop: boolean;
     itemBeingEdited: boolean;
     perms: string[];
-}, __VLS_73: {}, __VLS_75: {};
+}, __VLS_77: {}, __VLS_79: {};
 type __VLS_Slots = {} & {
+    [K in NonNullable<typeof __VLS_53>]?: (props: typeof __VLS_54) => any;
+} & {
     'prev-buttons-ever'?: (props: typeof __VLS_17) => any;
 } & {
     'prev-buttons'?: (props: typeof __VLS_19) => any;
@@ -44,11 +46,11 @@ type __VLS_Slots = {} & {
 } & {
     'prev-buttons'?: (props: typeof __VLS_38) => any;
 } & {
-    item?: (props: typeof __VLS_52) => any;
+    item?: (props: typeof __VLS_56) => any;
 } & {
-    'prev-buttons-ever'?: (props: typeof __VLS_73) => any;
+    'prev-buttons-ever'?: (props: typeof __VLS_77) => any;
 } & {
-    'prev-buttons'?: (props: typeof __VLS_75) => any;
+    'prev-buttons'?: (props: typeof __VLS_79) => any;
 };
 declare const __VLS_component: import("vue").DefineComponent<ItemCrudConfig, {
     doDrop: () => void;

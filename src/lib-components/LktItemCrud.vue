@@ -7,7 +7,7 @@
         ButtonConfig,
         ensureButtonConfig, FormUiConfig,
         getDefaultValues,
-        getFormDataState,
+        getFormDataState, getFormSlotKeys,
         ItemCrud,
         ItemCrudButtonNavPosition,
         ItemCrudConfig,
@@ -520,6 +520,13 @@
     const computedHasButtons = computed(() => {
         return createMode.value || canUpdate.value || canDrop.value;
     })
+
+    const computedFormSlots = computed(() => {
+        if (computedHasForm.value) {
+            return getFormSlotKeys(props.form);
+        }
+        return [];
+    })
 </script>
 
 <template>
@@ -664,7 +671,11 @@
                                 editableViews: [computedEditableView],
                                 disabled: !editMode,
                             }"
-                        />
+                        >
+                            <template v-for="formSlot in computedFormSlots" v-slot:[formSlot]="{}">
+                                <slot :name="formSlot"/>
+                            </template>
+                        </lkt-form>
                     </template>
 
                     <template v-else>
