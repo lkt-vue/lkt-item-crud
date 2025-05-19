@@ -74,6 +74,7 @@
         itemBeingEdited = ref(false),
         itemCreated = ref(false),
         buttonNav = ref(null),
+        formRef = ref(null),
         canUpdate = computed(() => !createMode.value && Array.isArray(permissions.value) && permissions.value.includes(TablePermission.Update)),
         canDrop = computed(() => !createMode.value && Array.isArray(permissions.value) && permissions.value.includes(TablePermission.Drop)),
         canSwitchEditMode = computed(() => !createMode.value && Array.isArray(permissions.value) && permissions.value.includes(TablePermission.SwitchEditMode));
@@ -174,6 +175,13 @@
 
             if (Object.keys(itemModifications.value).length > 0) {
                 pickedModificationView.value = ModificationView.Modifications;
+            }
+
+            if (computedHasForm.value) {
+                resetFormDifferencesChecker();
+                nextTick(() => {
+                    formRef.value.turnStoredIntoOriginal();
+                })
             }
 
             if (typeof props.events?.httpEnd === 'function') {
@@ -320,6 +328,7 @@
             itemCreated.value = true;
             debug('onCreate -> turn stored data into original');
             dataState.value.increment(item.value).turnStoredIntoOriginal();
+            modificationsDataState.value.turnStoredIntoOriginal();
             if (props.notificationType === NotificationType.Toast) {
                 openToast(<ToastConfig>{
                     text: LktSettings.defaultCreateSuccessText,
@@ -347,6 +356,7 @@
             }
             debug('onUpdate -> turn stored data into original');
             dataState.value.turnStoredIntoOriginal();
+            modificationsDataState.value.turnStoredIntoOriginal();
             if (props.notificationType === NotificationType.Toast) {
                 openToast(<ToastConfig>{
                     text: LktSettings.defaultUpdateSuccessText,
@@ -453,7 +463,7 @@
         ableToUpdate = computed(() => {
             if (props.mode !== ItemCrudMode.Update || !canUpdate.value) return false;
             if (!props.enabledSaveWithoutChanges && !dataChanged.value) return false;
-            if (computedHasForm.value && !validForm.value) return false;
+            if (computedHasForm.value && (!validForm.value || !changedForm.value)) return false;
 
             if (typeof safeUpdateButton.value?.disabled === 'function') return !safeUpdateButton.value.disabled({
                 prop: item.value
@@ -465,7 +475,7 @@
         ableToCreate = computed(() => {
             if (props.mode !== ItemCrudMode.Create) return false;
             if (!props.enabledSaveWithoutChanges && !dataChanged.value) return false;
-            if (computedHasForm.value && !validForm.value) return false;
+            if (computedHasForm.value && !validForm.value && !changedForm.value) return false;
 
             if (typeof safeCreateButton.value?.disabled === 'function') return !safeCreateButton.value.disabled({
                 prop: item.value
@@ -658,6 +668,7 @@
 
                     <template v-if="computedHasForm">
                         <lkt-form
+                            ref="formRef"
                             v-model="item"
                             v-model:modifications="itemModifications"
                             v-model:valid="validForm"
