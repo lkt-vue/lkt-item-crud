@@ -453,7 +453,7 @@ const D = (...A) => {
     "modified-data"
   ],
   setup(A, { expose: ce, emit: ke }) {
-    const o = A, n = pt(), C = He(), f = ke, r = d(!0), l = d(o.modelValue), m = d(o.modifications), E = d(o.customData), b = d(o.perms), B = d(o.editing), _ = d(!1), z = d(!1), L = d(!1), $ = d(!1), J = d(200), I = d(new Re(l.value, o.dataStateConfig)), j = d(new Re(m.value, o.dataStateConfig)), h = d(!1), x = d(new Re(o.readData)), G = d(o.mode === V.Create), F = d(!1), ue = d(!1), t = d(null), T = d(null), y = g(() => !G.value && Array.isArray(b.value) && b.value.includes(Ee.Update)), Q = g(() => !G.value && Array.isArray(b.value) && b.value.includes(Ee.Drop)), ie = g(() => !G.value && Array.isArray(b.value) && b.value.includes(Ee.SwitchEditMode)), N = d(o.visibleView);
+    const o = A, n = pt(), C = He(), f = ke, r = d(!0), l = d(o.modelValue), m = d(o.modifications), E = d(o.customData), b = d(o.perms), B = d(o.editing), _ = d(!1), z = d(!1), L = d(!1), $ = d(!1), J = d(200), I = d(new Re(l.value, o.dataStateConfig)), j = d(new Re(m.value, o.dataStateConfig)), h = d(!1), x = d(new Re(o.readData)), G = d(o.mode === V.Create), F = d(!1), ue = d(!1), t = d(null), T = d(null), y = g(() => !G.value && o.updateButton !== !1 && Array.isArray(b.value) && b.value.includes(Ee.Update)), Q = g(() => !G.value && o.dropButton !== !1 && Array.isArray(b.value) && b.value.includes(Ee.Drop)), ie = g(() => o.editModeButton !== !1 && !G.value && Array.isArray(b.value) && b.value.includes(Ee.SwitchEditMode)), N = d(o.visibleView);
     p(() => o.visibleView, (e) => {
       N.value = e;
     }), p(N, (e) => {

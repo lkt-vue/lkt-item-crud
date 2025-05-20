@@ -75,9 +75,9 @@
         itemCreated = ref(false),
         buttonNav = ref(null),
         formRef = ref(null),
-        canUpdate = computed(() => !createMode.value && Array.isArray(permissions.value) && permissions.value.includes(TablePermission.Update)),
-        canDrop = computed(() => !createMode.value && Array.isArray(permissions.value) && permissions.value.includes(TablePermission.Drop)),
-        canSwitchEditMode = computed(() => !createMode.value && Array.isArray(permissions.value) && permissions.value.includes(TablePermission.SwitchEditMode));
+        canUpdate = computed(() => !createMode.value && props.updateButton !== false && Array.isArray(permissions.value) && permissions.value.includes(TablePermission.Update)),
+        canDrop = computed(() => !createMode.value && props.dropButton !== false && Array.isArray(permissions.value) && permissions.value.includes(TablePermission.Drop)),
+        canSwitchEditMode = computed(() => props.editModeButton !== false && !createMode.value && Array.isArray(permissions.value) && permissions.value.includes(TablePermission.SwitchEditMode));
 
     const pickedModificationView = ref(props.visibleView);
 
