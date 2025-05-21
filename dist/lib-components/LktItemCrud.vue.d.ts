@@ -93,12 +93,12 @@ declare const __VLS_component: import("vue").DefineComponent<ItemCrudConfig, {
     form: import("lkt-vue-kernel").FormConfig;
     title: string;
     mode: ItemCrudMode;
-    modifications: LktObject;
     modelValue: LktObject;
     events: {
         httpStart?: undefined | Function;
         httpEnd?: (data: import("lkt-vue-kernel").ClickEventArgs) => void | undefined;
     };
+    modifications: LktObject;
     editing: boolean;
     perms: import("lkt-vue-kernel").ValidTablePermission[];
     customData: LktObject;
@@ -124,6 +124,10 @@ declare const __VLS_component: import("vue").DefineComponent<ItemCrudConfig, {
     redirectOnCreate: string | ((id: number | string) => string);
     redirectOnDrop: string | (() => string);
     differencesTableConfig: import("lkt-vue-kernel").TableConfig | ((config: import("lkt-vue-kernel").TableConfig) => import("lkt-vue-kernel").TableConfig);
+    navStartButtons: Array<ButtonConfig>;
+    navStartButtonsEditing: Array<ButtonConfig>;
+    navEndButtons: Array<ButtonConfig>;
+    navEndButtonsEditing: Array<ButtonConfig>;
 }, {}, {}, {}, string, import("vue").ComponentProvideOptions, false, {}, any>;
 declare const _default: __VLS_WithSlots<typeof __VLS_component, __VLS_Slots>;
 export default _default;

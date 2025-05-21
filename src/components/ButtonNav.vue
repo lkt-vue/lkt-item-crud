@@ -53,6 +53,11 @@
         modificationView?: boolean | Array<ModificationView>
         pickedModificationView: string
         editableView: ModificationView
+
+        navStartButtons?: Array<ButtonConfig>
+        navStartButtonsEditing?: Array<ButtonConfig>
+        navEndButtons?: Array<ButtonConfig>
+        navEndButtonsEditing?: Array<ButtonConfig>
     }>(), {
         item: () => ({}),
         modifications: () => ({}),
@@ -244,6 +249,7 @@
                 }"
             />
 
+            <lkt-button v-for="btn in navStartButtons" v-bind="btn" v-show="!isLoading"/>
 
             <template v-if="slots['prev-buttons-ever']" v-show="!isLoading">
                 <slot name="prev-buttons-ever"
@@ -252,6 +258,8 @@
                       :perms="perms"
                 />
             </template>
+
+            <lkt-button v-for="btn in navStartButtonsEditing" v-bind="btn" v-show="isEditing && !isLoading"/>
 
             <template v-if="slots['prev-buttons']" v-show="isEditing && !isLoading">
                 <slot name="prev-buttons"
@@ -306,6 +314,10 @@
             <template v-if="slots.buttons" v-show="isEditing && !isLoading">
                 <slot name="buttons" />
             </template>
+
+            <lkt-button v-for="btn in navEndButtons" v-bind="btn" v-show="!isLoading"/>
+
+            <lkt-button v-for="btn in navEndButtonsEditing" v-bind="btn" v-show="isEditing && !isLoading"/>
         </template>
         <template v-else-if="grouped">
             <lkt-button
@@ -333,6 +345,8 @@
                         }"
                     />
 
+                    <lkt-button v-for="btn in navStartButtons" v-bind="btn" v-show="!isLoading"/>
+
                     <template v-if="slots['prev-buttons-ever']" v-show="!isLoading">
                         <slot name="prev-buttons-ever"
                               :can-update="canUpdate"
@@ -340,6 +354,8 @@
                               :perms="perms"
                         />
                     </template>
+
+                    <lkt-button v-for="btn in navStartButtonsEditing" v-bind="btn" v-show="isEditing && !isLoading"/>
 
                     <template v-if="slots['prev-buttons']" v-show="isEditing && !isLoading">
                         <slot name="prev-buttons"
@@ -395,11 +411,17 @@
                     <template v-if="slots.buttons" v-show="isEditing && !isLoading">
                         <slot name="buttons" />
                     </template>
+
+                    <lkt-button v-for="btn in navEndButtons" v-bind="btn" v-show="!isLoading"/>
+
+                    <lkt-button v-for="btn in navEndButtonsEditing" v-bind="btn" v-show="isEditing && !isLoading"/>
                 </template>
             </lkt-button>
         </template>
 
         <template v-else>
+
+            <lkt-button v-for="btn in navStartButtons" v-bind="btn" v-show="!isLoading"/>
 
             <div class="lkt-item-crud-buttons" v-if="slots['prev-buttons-ever']" v-show="!isLoading">
                 <slot name="prev-buttons-ever"
@@ -408,6 +430,8 @@
                       :perms="perms"
                 />
             </div>
+
+            <lkt-button v-for="btn in navStartButtonsEditing" v-bind="btn" v-show="isEditing && !isLoading"/>
 
             <div class="lkt-item-crud-buttons" v-if="slots['prev-buttons']" v-show="isEditing && !isLoading">
                 <slot name="prev-buttons"
@@ -462,6 +486,10 @@
             <div class="lkt-item-crud-buttons" v-if="slots.buttons" v-show="isEditing && !isLoading">
                 <slot name="buttons" />
             </div>
+
+            <lkt-button v-for="btn in navEndButtons" v-bind="btn" v-show="!isLoading"/>
+
+            <lkt-button v-for="btn in navEndButtonsEditing" v-bind="btn" v-show="isEditing && !isLoading"/>
 
             <lkt-button
                 v-if="computedModificationView.length > 0"
