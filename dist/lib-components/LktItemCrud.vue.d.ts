@@ -70,7 +70,7 @@ declare const __VLS_component: import("vue").DefineComponent<ItemCrudConfig, {
     "update:perms": (...args: any[]) => void;
     "update:customData": (...args: any[]) => void;
     "update:modifications": (...args: any[]) => void;
-    "update:modificationView": (...args: any[]) => void;
+    "update:visibleView": (...args: any[]) => void;
     "before-save": (...args: any[]) => void;
     "modified-data": (...args: any[]) => void;
 }, string, import("vue").PublicProps, Readonly<ItemCrudConfig> & Readonly<{
@@ -85,7 +85,7 @@ declare const __VLS_component: import("vue").DefineComponent<ItemCrudConfig, {
     "onUpdate:perms"?: ((...args: any[]) => any) | undefined;
     "onUpdate:customData"?: ((...args: any[]) => any) | undefined;
     "onUpdate:modifications"?: ((...args: any[]) => any) | undefined;
-    "onUpdate:modificationView"?: ((...args: any[]) => any) | undefined;
+    "onUpdate:visibleView"?: ((...args: any[]) => any) | undefined;
     "onBefore-save"?: ((...args: any[]) => any) | undefined;
     "onModified-data"?: ((...args: any[]) => any) | undefined;
 }>, {

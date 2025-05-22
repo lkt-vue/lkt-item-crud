@@ -44,7 +44,7 @@
         'update:perms',
         'update:customData',
         'update:modifications',
-        'update:modificationView',
+        'update:visibleView',
         'read',
         'create',
         'update',
@@ -86,7 +86,7 @@
     });
 
     watch(pickedModificationView, (v) => {
-        emit('update:modificationView', v);
+        emit('update:visibleView', v);
     })
 
     watch(() => props.mode, (v) => {

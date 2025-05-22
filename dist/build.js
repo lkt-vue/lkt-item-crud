@@ -486,7 +486,7 @@ const V = (...N) => {
     "update:perms",
     "update:customData",
     "update:modifications",
-    "update:modificationView",
+    "update:visibleView",
     "read",
     "create",
     "update",
@@ -501,7 +501,7 @@ const V = (...N) => {
     b(() => a.visibleView, (e) => {
       X.value = e;
     }), b(X, (e) => {
-      y("update:modificationView", e);
+      y("update:visibleView", e);
     }), b(() => a.mode, (e) => {
       J.value = e === A.Create;
     }), b(() => a.perms, (e) => {
