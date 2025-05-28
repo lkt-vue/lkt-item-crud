@@ -1,7 +1,7 @@
-declare function Ot(N?: boolean): void;
+declare function Ot($?: boolean): void;
 declare namespace Lt {
-    function install(N: any, me?: {}): void;
+    function install($: any, be?: {}): void;
 }
-declare function $t(N: any): void;
-declare function Nt(N: any): void;
-export { Ot as debugLktItemCrud, Lt as default, $t as setItemCrudDefaultDropIcon, Nt as setItemCrudDefaultSaveIcon };
+declare function Nt($: any): void;
+declare function $t($: any): void;
+export { Ot as debugLktItemCrud, Lt as default, Nt as setItemCrudDefaultDropIcon, $t as setItemCrudDefaultSaveIcon };

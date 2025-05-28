@@ -7,21 +7,21 @@ declare var __VLS_17: {
     canUpdate: boolean | undefined;
     canDrop: boolean | undefined;
     perms: string[] | undefined;
-}, __VLS_21: {
+}, __VLS_25: {
     item: LktObject;
     loading: boolean;
-}, __VLS_23: {
+}, __VLS_27: {
     item: LktObject;
     loading: boolean;
-}, __VLS_36: {
+}, __VLS_40: {
     canUpdate: boolean | undefined;
     canDrop: boolean | undefined;
     perms: string[] | undefined;
-}, __VLS_38: {
+}, __VLS_42: {
     canUpdate: boolean | undefined;
     canDrop: boolean | undefined;
     perms: string[] | undefined;
-}, __VLS_55: string, __VLS_56: {}, __VLS_58: {
+}, __VLS_59: string, __VLS_60: {}, __VLS_62: {
     item: LktObject;
     loading: false;
     editMode: boolean;
@@ -30,27 +30,27 @@ declare var __VLS_17: {
     canDrop: boolean;
     itemBeingEdited: boolean;
     perms: string[];
-}, __VLS_79: {}, __VLS_81: {};
+}, __VLS_83: {}, __VLS_85: {};
 type __VLS_Slots = {} & {
-    [K in NonNullable<typeof __VLS_55>]?: (props: typeof __VLS_56) => any;
+    [K in NonNullable<typeof __VLS_59>]?: (props: typeof __VLS_60) => any;
 } & {
     'prev-buttons-ever'?: (props: typeof __VLS_17) => any;
 } & {
     'prev-buttons'?: (props: typeof __VLS_19) => any;
 } & {
-    'pre-title'?: (props: typeof __VLS_21) => any;
+    'pre-title'?: (props: typeof __VLS_25) => any;
 } & {
-    'post-title'?: (props: typeof __VLS_23) => any;
+    'post-title'?: (props: typeof __VLS_27) => any;
 } & {
-    'prev-buttons-ever'?: (props: typeof __VLS_36) => any;
+    'prev-buttons-ever'?: (props: typeof __VLS_40) => any;
 } & {
-    'prev-buttons'?: (props: typeof __VLS_38) => any;
+    'prev-buttons'?: (props: typeof __VLS_42) => any;
 } & {
-    item?: (props: typeof __VLS_58) => any;
+    item?: (props: typeof __VLS_62) => any;
 } & {
-    'prev-buttons-ever'?: (props: typeof __VLS_79) => any;
+    'prev-buttons-ever'?: (props: typeof __VLS_83) => any;
 } & {
-    'prev-buttons'?: (props: typeof __VLS_81) => any;
+    'prev-buttons'?: (props: typeof __VLS_85) => any;
 };
 declare const __VLS_component: import("vue").DefineComponent<ItemCrudConfig, {
     doDrop: () => void;
@@ -91,6 +91,7 @@ declare const __VLS_component: import("vue").DefineComponent<ItemCrudConfig, {
 }>, {
     view: ItemCrudView;
     form: import("lkt-vue-kernel").FormConfig;
+    header: import("lkt-vue-kernel").HeaderConfig;
     title: string;
     mode: ItemCrudMode;
     modelValue: LktObject;
