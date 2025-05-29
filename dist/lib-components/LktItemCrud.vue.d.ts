@@ -90,7 +90,7 @@ declare const __VLS_component: import("vue").DefineComponent<ItemCrudConfig, {
     "onModified-data"?: ((...args: any[]) => any) | undefined;
 }>, {
     view: ItemCrudView;
-    form: import("lkt-vue-kernel").FormConfig;
+    form: import("lkt-vue-kernel").FormConfig | Function;
     header: import("lkt-vue-kernel").HeaderConfig;
     title: string;
     mode: ItemCrudMode;

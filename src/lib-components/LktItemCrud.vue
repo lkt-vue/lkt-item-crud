@@ -252,7 +252,7 @@
     const formDifferencesChecker = ref(undefined);
     const resetFormDifferencesChecker = () => {
         if (computedHasForm.value) {
-            formDifferencesChecker.value = getFormDataState(item.value, itemModifications.value, props.form);
+            formDifferencesChecker.value = getFormDataState(item.value, itemModifications.value, computedForm.value);
         }
     }
 
@@ -520,7 +520,7 @@
             return {};
         }),
         computedHasForm = computed(() => {
-            return typeof props.form === 'object' && Object.keys(props.form).length > 0;
+            return (typeof computedForm.value === 'object' && Object.keys(computedForm.value).length > 0);
         }),
         computedModificationViews = computed(() => {
             if (Object.keys(itemModifications.value).length === 0) return [];
@@ -537,10 +537,16 @@
     })
 
     const computedFormSlots = computed(() => {
-        if (computedHasForm.value) {
-            return getFormSlotKeys(props.form);
-        }
+        if (computedHasForm.value) return getFormSlotKeys(computedForm.value);
         return [];
+    })
+
+    const computedForm = computed(() => {
+        if (typeof props.form === 'function') return props.form({
+            mode: props.mode,
+            view: pickedModificationView.value,
+        });
+        return props.form;
     })
 </script>
 
@@ -688,7 +694,7 @@
                         v-model:changed="changedForm"
                         v-bind="<FormUiConfig>{
                                 ...formUiConfig,
-                                form,
+                                form: computedForm,
                                 differencesTableConfig,
                                 visibleView: pickedModificationView,
                                 modificationDataState: formDifferencesChecker,
