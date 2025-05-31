@@ -42,6 +42,7 @@
         ableToCreate?: boolean
         ableToUpdate?: boolean
         ableToDrop?: boolean
+        canCreate?: boolean
         canUpdate?: boolean
         canDrop?: boolean
         canSwitchEditMode?: boolean
@@ -129,8 +130,8 @@
                 && props.httpSuccessRead;
         }),
         showSaveButton = computed(() => {
-            if (props.mode === ItemCrudMode.Create && props.createButton === false) return false;
-            if (props.mode === ItemCrudMode.Update && props.updateButton === false) return false;
+            if (props.mode === ItemCrudMode.Create && (props.createButton === false || !props.canCreate)) return false;
+            if (props.mode === ItemCrudMode.Update && (props.updateButton === false || !props.canUpdate)) return false;
             if (isLoading.value) return false;
 
             return props.editing

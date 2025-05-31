@@ -75,6 +75,7 @@
         itemCreated = ref(false),
         buttonNav = ref(null),
         formRef = ref(null),
+        canCreate = computed(() => createMode.value && props.createButton !== false && Array.isArray(permissions.value) && permissions.value.includes(TablePermission.Create)),
         canUpdate = computed(() => !createMode.value && props.updateButton !== false && Array.isArray(permissions.value) && permissions.value.includes(TablePermission.Update)),
         canDrop = computed(() => !createMode.value && props.dropButton !== false && Array.isArray(permissions.value) && permissions.value.includes(TablePermission.Drop)),
         canSwitchEditMode = computed(() => props.editModeButton !== false && !createMode.value && Array.isArray(permissions.value) && permissions.value.includes(TablePermission.SwitchEditMode));
@@ -478,7 +479,7 @@
             return true;
         }),
         ableToCreate = computed(() => {
-            if (props.mode !== ItemCrudMode.Create) return false;
+            if (props.mode !== ItemCrudMode.Create || !canCreate.value) return false;
             if (!props.enabledSaveWithoutChanges && !dataChanged.value) return false;
             if (computedHasForm.value && !validForm.value && !changedForm.value) return false;
 
@@ -533,7 +534,7 @@
     })
 
     const computedHasButtons = computed(() => {
-        return createMode.value || canUpdate.value || canDrop.value;
+        return canCreate.value || canUpdate.value || canDrop.value;
     })
 
     const computedFormSlots = computed(() => {
@@ -576,6 +577,7 @@
                 :group-button="safeGroupButton"
                 :data-changed="dataChanged"
                 :http-success-read="httpSuccessRead"
+                :can-create="canCreate"
                 :can-update="canUpdate"
                 :can-drop="canDrop"
                 :can-switch-edit-mode="canSwitchEditMode"
@@ -641,6 +643,7 @@
             :group-button="safeGroupButton"
             :data-changed="dataChanged"
             :http-success-read="httpSuccessRead"
+            :can-create="canCreate"
             :can-update="canUpdate"
             :can-drop="canDrop"
             :can-switch-edit-mode="canSwitchEditMode"
@@ -744,6 +747,7 @@
             :group-button="safeGroupButton"
             :data-changed="dataChanged"
             :http-success-read="httpSuccessRead"
+            :can-create="canCreate"
             :can-update="canUpdate"
             :can-drop="canDrop"
             :can-switch-edit-mode="canSwitchEditMode"

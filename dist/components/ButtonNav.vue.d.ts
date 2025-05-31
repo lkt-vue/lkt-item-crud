@@ -17,6 +17,7 @@ type __VLS_Props = {
     ableToCreate?: boolean;
     ableToUpdate?: boolean;
     ableToDrop?: boolean;
+    canCreate?: boolean;
     canUpdate?: boolean;
     canDrop?: boolean;
     canSwitchEditMode?: boolean;
