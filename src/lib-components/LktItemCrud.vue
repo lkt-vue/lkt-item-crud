@@ -546,6 +546,8 @@
         if (typeof props.form === 'function') return props.form({
             mode: props.mode,
             view: pickedModificationView.value,
+            item: item.value,
+            modifications: itemModifications.value
         });
         return props.form;
     })
