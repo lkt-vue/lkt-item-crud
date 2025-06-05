@@ -547,7 +547,8 @@
             mode: props.mode,
             view: pickedModificationView.value,
             item: item.value,
-            modifications: itemModifications.value
+            modifications: itemModifications.value,
+            editing: editMode.value
         });
         return props.form;
     })
