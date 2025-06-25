@@ -31,6 +31,7 @@
         mode: ItemCrudMode
 
         createButton?: ButtonConfig | false
+        createAndNewButton?: ButtonConfig | false
         updateButton?: ButtonConfig | false
         dropButton?: ButtonConfig | false
         editModeButton?: ButtonConfig | false
@@ -40,6 +41,7 @@
         dataChanged: boolean
 
         ableToCreate?: boolean
+        ableToCreateAndNew?: boolean
         ableToUpdate?: boolean
         ableToDrop?: boolean
         canCreate?: boolean
@@ -303,6 +305,22 @@
             />
 
             <lkt-button
+                ref="saveButtonRef"
+                v-show="mode === ItemCrudMode.Create && showSaveButton && ableToCreateAndNew"
+                v-bind="{
+                    ...createAndNewButton,
+                    resourceData: {
+                        ...createAndNewButton?.resourceData,
+                        ...computedUpdateData
+                    },
+                    disabled: !ableToCreate
+                }"
+                @loading="onButtonLoading"
+                @loaded="onButtonLoaded"
+                @click="onCreate"
+            />
+
+            <lkt-button
                 ref="dropButtonRef"
                 v-show="showDropButton && mode !== ItemCrudMode.Create"
                 v-bind="dropButton"
@@ -400,6 +418,23 @@
                     />
 
                     <lkt-button
+                        ref="saveButtonRef"
+                        v-show="mode === ItemCrudMode.Create && showSaveButton && ableToCreateAndNew"
+                        v-bind="{
+                            ...createAndNewButton,
+                            resourceData: {
+                                ...createAndNewButton?.resourceData,
+                                ...computedUpdateData
+                            },
+                            disabled: !ableToCreate
+                        }"
+                        :disabled="!ableToCreate"
+                        @loading="onButtonLoading"
+                        @loaded="onButtonLoaded"
+                        @click="onCreate"
+                    />
+
+                    <lkt-button
                         ref="dropButtonRef"
                         v-show="showDropButton && mode !== ItemCrudMode.Create"
                         v-bind="dropButton"
@@ -465,6 +500,22 @@
                     ...createButton,
                     resourceData: {
                         ...createButton?.resourceData,
+                        ...computedUpdateData
+                    },
+                    disabled: !ableToCreate
+                }"
+                @loading="onButtonLoading"
+                @loaded="onButtonLoaded"
+                @click="onCreate"
+            />
+
+            <lkt-button
+                ref="saveButtonRef"
+                v-show="mode === ItemCrudMode.Create && showSaveButton && ableToCreateAndNew"
+                v-bind="{
+                    ...createAndNewButton,
+                    resourceData: {
+                        ...createAndNewButton?.resourceData,
                         ...computedUpdateData
                     },
                     disabled: !ableToCreate

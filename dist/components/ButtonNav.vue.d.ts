@@ -8,6 +8,7 @@ type __VLS_Props = {
     view: ItemCrudView;
     mode: ItemCrudMode;
     createButton?: ButtonConfig | false;
+    createAndNewButton?: ButtonConfig | false;
     updateButton?: ButtonConfig | false;
     dropButton?: ButtonConfig | false;
     editModeButton?: ButtonConfig | false;
@@ -15,6 +16,7 @@ type __VLS_Props = {
     groupButtonAsModalActions?: boolean;
     dataChanged: boolean;
     ableToCreate?: boolean;
+    ableToCreateAndNew?: boolean;
     ableToUpdate?: boolean;
     ableToDrop?: boolean;
     canCreate?: boolean;
@@ -40,41 +42,41 @@ declare var __VLS_13: {
     canUpdate: boolean | undefined;
     canDrop: boolean | undefined;
     perms: string[] | undefined;
-}, __VLS_57: {}, __VLS_85: {
+}, __VLS_69: {}, __VLS_97: {
     canUpdate: boolean | undefined;
     canDrop: boolean | undefined;
     perms: string[] | undefined;
-}, __VLS_91: {
+}, __VLS_103: {
     canUpdate: boolean | undefined;
     canDrop: boolean | undefined;
     perms: string[] | undefined;
-}, __VLS_129: {}, __VLS_143: {
+}, __VLS_153: {}, __VLS_167: {
     canUpdate: boolean | undefined;
     canDrop: boolean | undefined;
     perms: string[] | undefined;
-}, __VLS_149: {
+}, __VLS_173: {
     canUpdate: boolean | undefined;
     canDrop: boolean | undefined;
     perms: string[] | undefined;
-}, __VLS_187: {};
+}, __VLS_223: {};
 type __VLS_Slots = {} & {
     'prev-buttons-ever'?: (props: typeof __VLS_13) => any;
 } & {
     'prev-buttons'?: (props: typeof __VLS_19) => any;
 } & {
-    buttons?: (props: typeof __VLS_57) => any;
+    buttons?: (props: typeof __VLS_69) => any;
 } & {
-    'prev-buttons-ever'?: (props: typeof __VLS_85) => any;
+    'prev-buttons-ever'?: (props: typeof __VLS_97) => any;
 } & {
-    'prev-buttons'?: (props: typeof __VLS_91) => any;
+    'prev-buttons'?: (props: typeof __VLS_103) => any;
 } & {
-    buttons?: (props: typeof __VLS_129) => any;
+    buttons?: (props: typeof __VLS_153) => any;
 } & {
-    'prev-buttons-ever'?: (props: typeof __VLS_143) => any;
+    'prev-buttons-ever'?: (props: typeof __VLS_167) => any;
 } & {
-    'prev-buttons'?: (props: typeof __VLS_149) => any;
+    'prev-buttons'?: (props: typeof __VLS_173) => any;
 } & {
-    buttons?: (props: typeof __VLS_187) => any;
+    buttons?: (props: typeof __VLS_223) => any;
 };
 declare const __VLS_component: import("vue").DefineComponent<__VLS_Props, {
     doSave: () => void;

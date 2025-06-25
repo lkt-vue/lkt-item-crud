@@ -116,6 +116,7 @@
     }, {deep: true});
 
     const safeCreateButton = ref(ensureButtonConfig(props.createButton, LktSettings.defaultCreateButton)),
+        safeCreateAndNewButton = ref(ensureButtonConfig(props.createAndNewButton, props.createButton)),
         safeUpdateButton = ref(ensureButtonConfig(props.updateButton, LktSettings.defaultUpdateButton)),
         safeDropButton = ref(ensureButtonConfig(props.dropButton, LktSettings.defaultDropButton)),
         safeEditModeButton = ref(ensureButtonConfig(props.editModeButton, LktSettings.defaultEditModeButton)),
@@ -490,6 +491,12 @@
 
             return true;
         }),
+        ableToCreateAndNew = computed(() => {
+            return props.createAndNewButton !== false
+                && typeof props.createAndNewButton === 'object'
+                && !Array.isArray(props.createAndNewButton)
+                && Object.keys(props.createAndNewButton).length > 0;
+        }),
         ableToDrop = computed(() => {
 
             if (!canDrop.value) return false;
@@ -574,6 +581,7 @@
                 :grouped="true"
                 :button-nav-visibility="buttonNavVisibility"
                 :create-button="safeCreateButton"
+                :create-and-new-button="safeCreateAndNewButton"
                 :update-button="safeUpdateButton"
                 :drop-button="safeDropButton"
                 :edit-mode-button="safeEditModeButton"
@@ -586,6 +594,7 @@
                 :can-switch-edit-mode="canSwitchEditMode"
                 :group-button-as-modal-actions="groupButtonAsModalActions"
                 :able-to-create="ableToCreate"
+                :able-to-create-and-new="ableToCreateAndNew"
                 :able-to-update="ableToUpdate"
                 :able-to-drop="ableToDrop"
                 :perms="permissions"
@@ -640,6 +649,7 @@
             :grouped="groupButton !== false"
             :button-nav-visibility="buttonNavVisibility"
             :create-button="safeCreateButton"
+            :create-and-new-button="safeCreateAndNewButton"
             :update-button="safeUpdateButton"
             :drop-button="safeDropButton"
             :edit-mode-button="safeEditModeButton"
@@ -652,6 +662,7 @@
             :can-switch-edit-mode="canSwitchEditMode"
             :group-button-as-modal-actions="groupButtonAsModalActions"
             :able-to-create="ableToCreate"
+            :able-to-create-and-new="ableToCreateAndNew"
             :able-to-update="ableToUpdate"
             :able-to-drop="ableToDrop"
             :perms="permissions"
@@ -744,6 +755,7 @@
             :grouped="groupButton !== false"
             :button-nav-visibility="buttonNavVisibility"
             :create-button="safeCreateButton"
+            :create-and-new-button="safeCreateAndNewButton"
             :update-button="safeUpdateButton"
             :drop-button="safeDropButton"
             :edit-mode-button="safeEditModeButton"
@@ -756,6 +768,7 @@
             :can-switch-edit-mode="canSwitchEditMode"
             :group-button-as-modal-actions="groupButtonAsModalActions"
             :able-to-create="ableToCreate"
+            :able-to-create-and-new="ableToCreateAndNew"
             :able-to-update="ableToUpdate"
             :able-to-drop="ableToDrop"
             :perms="permissions"

@@ -95,6 +95,7 @@ declare const __VLS_component: import("vue").DefineComponent<ItemCrudConfig, {
     title: string;
     mode: ItemCrudMode;
     modelValue: LktObject;
+    createButton: ButtonConfig | false;
     events: {
         httpStart?: undefined | Function;
         httpEnd?: (data: import("lkt-vue-kernel").ClickEventArgs) => void | undefined;
@@ -108,7 +109,7 @@ declare const __VLS_component: import("vue").DefineComponent<ItemCrudConfig, {
     modificationViews: boolean | Array<ModificationView>;
     editModeButton: ButtonConfig | false;
     dropButton: ButtonConfig | false;
-    createButton: ButtonConfig | false;
+    createAndNewButton: ButtonConfig | false;
     updateButton: ButtonConfig | false;
     groupButton: ButtonConfig | boolean;
     groupButtonAsModalActions: boolean;
