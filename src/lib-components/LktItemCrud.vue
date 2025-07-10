@@ -470,7 +470,7 @@
         ableToUpdate = computed(() => {
             if (props.mode !== ItemCrudMode.Update || !canUpdate.value) return false;
             if (!props.enabledSaveWithoutChanges && !dataChanged.value) return false;
-            if (computedHasForm.value && (!validForm.value || !changedForm.value)) return false;
+            if (computedHasForm.value && (!validForm.value || (!props.enabledSaveWithoutChanges && !changedForm.value))) return false;
 
             if (typeof safeUpdateButton.value?.disabled === 'function') return !safeUpdateButton.value.disabled({
                 prop: item.value
@@ -482,7 +482,7 @@
         ableToCreate = computed(() => {
             if (props.mode !== ItemCrudMode.Create || !canCreate.value) return false;
             if (!props.enabledSaveWithoutChanges && !dataChanged.value) return false;
-            if (computedHasForm.value && !validForm.value && !changedForm.value) return false;
+            if (computedHasForm.value && (!validForm.value || (!props.enabledSaveWithoutChanges && !changedForm.value))) return false;
 
             if (typeof safeCreateButton.value?.disabled === 'function') return !safeCreateButton.value.disabled({
                 prop: item.value

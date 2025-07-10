@@ -1,4 +1,4 @@
-import { defineComponent as Je, ref as p, watch as C, useSlots as Qe, computed as b, resolveComponent as Be, createElementBlock as S, createCommentVNode as w, openBlock as n, createBlock as g, Fragment as F, renderSlot as I, withDirectives as B, mergeProps as v, normalizeProps as Me, unref as d, renderList as K, vShow as y, createVNode as J, withCtx as _, mergeDefaults as nt, nextTick as Ge, onMounted as ut, resolveDynamicComponent as it, createSlots as ge, toDisplayString as lt } from "vue";
+import { defineComponent as Je, ref as p, watch as C, useSlots as Qe, computed as b, resolveComponent as Be, createElementBlock as S, createCommentVNode as w, openBlock as n, createBlock as g, Fragment as F, renderSlot as I, withDirectives as B, mergeProps as v, normalizeProps as Me, unref as d, renderList as H, vShow as y, createVNode as J, withCtx as _, mergeDefaults as nt, nextTick as Ge, onMounted as ut, resolveDynamicComponent as it, createSlots as ge, toDisplayString as lt } from "vue";
 import { httpCall as rt } from "lkt-http-client";
 import { DataState as je } from "lkt-data-state";
 import { ModificationView as U, ItemCrudMode as V, ItemCrudButtonNavVisibility as qe, ButtonType as Fe, TablePermission as Ue, ensureButtonConfig as Z, LktSettings as k, getFormDataState as dt, ItemCrudView as ze, getFormSlotKeys as st, ItemCrudButtonNavPosition as Pe, NotificationType as ue, getDefaultValues as vt, ItemCrud as pt, ToastPositionX as fe } from "lkt-vue-kernel";
@@ -97,7 +97,7 @@ const T = (...$) => {
         s.value && typeof s.value.click == "function" && s.value.click();
       }
     });
-    const W = b(() => !u.canDrop || u.dropButton === !1 ? !1 : !u.canUpdate && u.canDrop ? !0 : !i.value && u.editing && u.httpSuccessRead), M = b(() => u.mode === V.Create && (u.createButton === !1 || !u.canCreate) || u.mode === V.Update && (u.updateButton === !1 || !u.canUpdate) || i.value ? !1 : u.editing && u.httpSuccessRead), oe = b(() => u.editModeButton === !1 || !u.canSwitchEditMode || !u.canUpdate && !u.canDrop || !u.canUpdate && u.canDrop ? !1 : !i.value && u.mode !== V.Create && u.httpSuccessRead), Y = b(() => u.buttonNavVisibility === qe.Always || h["prev-buttons-ever"] ? !0 : u.buttonNavVisibility === qe.Never ? !1 : M.value || W.value || oe.value), G = b(() => u.modificationView === !1 ? [] : u.modificationView === !0 ? [
+    const K = b(() => !u.canDrop || u.dropButton === !1 ? !1 : !u.canUpdate && u.canDrop ? !0 : !i.value && u.editing && u.httpSuccessRead), M = b(() => u.mode === V.Create && (u.createButton === !1 || !u.canCreate) || u.mode === V.Update && (u.updateButton === !1 || !u.canUpdate) || i.value ? !1 : u.editing && u.httpSuccessRead), oe = b(() => u.editModeButton === !1 || !u.canSwitchEditMode || !u.canUpdate && !u.canDrop || !u.canUpdate && u.canDrop ? !1 : !i.value && u.mode !== V.Create && u.httpSuccessRead), Y = b(() => u.buttonNavVisibility === qe.Always || h["prev-buttons-ever"] ? !0 : u.buttonNavVisibility === qe.Never ? !1 : M.value || K.value || oe.value), G = b(() => u.modificationView === !1 ? [] : u.modificationView === !0 ? [
       U.Current,
       U.Modifications,
       U.SplitView,
@@ -161,7 +161,7 @@ const T = (...$) => {
               contentClass: "lkt-flex-column"
             }
           })), null, 16)) : w("", !0),
-          (n(!0), S(F, null, K(e.navStartButtons, (c) => B((n(), g(l, v({ ref_for: !0 }, c), null, 16)), [
+          (n(!0), S(F, null, H(e.navStartButtons, (c) => B((n(), g(l, v({ ref_for: !0 }, c), null, 16)), [
             [y, !i.value]
           ])), 256)),
           d(h)["prev-buttons-ever"] ? I(e.$slots, "prev-buttons-ever", {
@@ -170,7 +170,7 @@ const T = (...$) => {
             canDrop: e.canDrop,
             perms: e.perms
           }) : w("", !0),
-          (n(!0), S(F, null, K(e.navStartButtonsEditing, (c) => B((n(), g(l, v({ ref_for: !0 }, c), null, 16)), [
+          (n(!0), S(F, null, H(e.navStartButtonsEditing, (c) => B((n(), g(l, v({ ref_for: !0 }, c), null, 16)), [
             [y, A.value && !i.value]
           ])), 256)),
           d(h)["prev-buttons"] ? I(e.$slots, "prev-buttons", {
@@ -239,13 +239,13 @@ const T = (...$) => {
             onLoaded: D,
             onClick: P
           }), null, 16, ["disabled"]), [
-            [y, W.value && e.mode !== d(V).Create]
+            [y, K.value && e.mode !== d(V).Create]
           ]),
           d(h).buttons ? I(e.$slots, "buttons", { key: 4 }) : w("", !0),
-          (n(!0), S(F, null, K(e.navEndButtons, (c) => B((n(), g(l, v({ ref_for: !0 }, c), null, 16)), [
+          (n(!0), S(F, null, H(e.navEndButtons, (c) => B((n(), g(l, v({ ref_for: !0 }, c), null, 16)), [
             [y, !i.value]
           ])), 256)),
-          (n(!0), S(F, null, K(e.navEndButtonsEditing, (c) => B((n(), g(l, v({ ref_for: !0 }, c), null, 16)), [
+          (n(!0), S(F, null, H(e.navEndButtonsEditing, (c) => B((n(), g(l, v({ ref_for: !0 }, c), null, 16)), [
             [y, A.value && !i.value]
           ])), 256))
         ], 64)) : e.grouped ? (n(), g(l, v({
@@ -269,7 +269,7 @@ const T = (...$) => {
                   contentClass: "lkt-flex-column"
                 }
               })), null, 16)) : w("", !0),
-              (n(!0), S(F, null, K(e.navStartButtons, (X) => B((n(), g(l, v({ ref_for: !0 }, X), null, 16)), [
+              (n(!0), S(F, null, H(e.navStartButtons, (X) => B((n(), g(l, v({ ref_for: !0 }, X), null, 16)), [
                 [y, !i.value]
               ])), 256)),
               d(h)["prev-buttons-ever"] ? I(e.$slots, "prev-buttons-ever", {
@@ -278,7 +278,7 @@ const T = (...$) => {
                 canDrop: e.canDrop,
                 perms: e.perms
               }) : w("", !0),
-              (n(!0), S(F, null, K(e.navStartButtonsEditing, (X) => B((n(), g(l, v({ ref_for: !0 }, X), null, 16)), [
+              (n(!0), S(F, null, H(e.navStartButtonsEditing, (X) => B((n(), g(l, v({ ref_for: !0 }, X), null, 16)), [
                 [y, A.value && !i.value]
               ])), 256)),
               d(h)["prev-buttons"] ? I(e.$slots, "prev-buttons", {
@@ -349,20 +349,20 @@ const T = (...$) => {
                 onLoaded: D,
                 onClick: P
               }), null, 16, ["disabled"]), [
-                [y, W.value && e.mode !== d(V).Create]
+                [y, K.value && e.mode !== d(V).Create]
               ]),
               d(h).buttons ? I(e.$slots, "buttons", { key: 4 }) : w("", !0),
-              (n(!0), S(F, null, K(e.navEndButtons, (X) => B((n(), g(l, v({ ref_for: !0 }, X), null, 16)), [
+              (n(!0), S(F, null, H(e.navEndButtons, (X) => B((n(), g(l, v({ ref_for: !0 }, X), null, 16)), [
                 [y, !i.value]
               ])), 256)),
-              (n(!0), S(F, null, K(e.navEndButtonsEditing, (X) => B((n(), g(l, v({ ref_for: !0 }, X), null, 16)), [
+              (n(!0), S(F, null, H(e.navEndButtonsEditing, (X) => B((n(), g(l, v({ ref_for: !0 }, X), null, 16)), [
                 [y, A.value && !i.value]
               ])), 256))
             ];
           }),
           _: 3
         }, 16)) : (n(), S(F, { key: 2 }, [
-          (n(!0), S(F, null, K(e.navStartButtons, (c) => B((n(), g(l, v({ ref_for: !0 }, c), null, 16)), [
+          (n(!0), S(F, null, H(e.navStartButtons, (c) => B((n(), g(l, v({ ref_for: !0 }, c), null, 16)), [
             [y, !i.value]
           ])), 256)),
           d(h)["prev-buttons-ever"] ? B((n(), S("div", Bt, [
@@ -374,7 +374,7 @@ const T = (...$) => {
           ], 512)), [
             [y, !i.value]
           ]) : w("", !0),
-          (n(!0), S(F, null, K(e.navStartButtonsEditing, (c) => B((n(), g(l, v({ ref_for: !0 }, c), null, 16)), [
+          (n(!0), S(F, null, H(e.navStartButtonsEditing, (c) => B((n(), g(l, v({ ref_for: !0 }, c), null, 16)), [
             [y, A.value && !i.value]
           ])), 256)),
           d(h)["prev-buttons"] ? B((n(), S("div", yt, [
@@ -446,17 +446,17 @@ const T = (...$) => {
             onLoaded: D,
             onClick: P
           }), null, 16, ["disabled"]), [
-            [y, W.value && e.mode !== d(V).Create]
+            [y, K.value && e.mode !== d(V).Create]
           ]),
           d(h).buttons ? B((n(), S("div", kt, [
             I(e.$slots, "buttons")
           ], 512)), [
             [y, A.value && !i.value]
           ]) : w("", !0),
-          (n(!0), S(F, null, K(e.navEndButtons, (c) => B((n(), g(l, v({ ref_for: !0 }, c), null, 16)), [
+          (n(!0), S(F, null, H(e.navEndButtons, (c) => B((n(), g(l, v({ ref_for: !0 }, c), null, 16)), [
             [y, !i.value]
           ])), 256)),
-          (n(!0), S(F, null, K(e.navEndButtonsEditing, (c) => B((n(), g(l, v({ ref_for: !0 }, c), null, 16)), [
+          (n(!0), S(F, null, H(e.navEndButtonsEditing, (c) => B((n(), g(l, v({ ref_for: !0 }, c), null, 16)), [
             [y, A.value && !i.value]
           ])), 256)),
           G.value.length > 0 ? (n(), g(l, Me(v({ key: 3 }, {
@@ -554,7 +554,7 @@ const T = (...$) => {
     "modified-data"
   ],
   setup($, { expose: ke, emit: Ee }) {
-    const a = $, u = bt(), E = Qe(), h = Ee, f = p(!0), s = p(a.modelValue), i = p(a.modifications), A = p(a.customData), m = p(a.perms), D = p(a.editing), Q = p(!1), x = p(!1), P = p(!1), N = p(!1), ee = p(200), O = p(new je(s.value, a.dataStateConfig)), W = p(new je(i.value, a.dataStateConfig)), M = p(!1), oe = p(new je(a.readData)), Y = p(a.mode === V.Create), G = p(!1), se = p(!1), e = p(null), L = p(null), l = b(() => Y.value && a.createButton !== !1 && Array.isArray(m.value) && m.value.includes(Ue.Create)), te = b(() => !Y.value && a.updateButton !== !1 && Array.isArray(m.value) && m.value.includes(Ue.Update)), ae = b(() => !Y.value && a.dropButton !== !1 && Array.isArray(m.value) && m.value.includes(Ue.Drop)), ve = b(() => a.editModeButton !== !1 && !Y.value && Array.isArray(m.value) && m.value.includes(Ue.SwitchEditMode)), j = p(a.visibleView);
+    const a = $, u = bt(), E = Qe(), h = Ee, f = p(!0), s = p(a.modelValue), i = p(a.modifications), A = p(a.customData), m = p(a.perms), D = p(a.editing), Q = p(!1), x = p(!1), P = p(!1), N = p(!1), ee = p(200), O = p(new je(s.value, a.dataStateConfig)), K = p(new je(i.value, a.dataStateConfig)), M = p(!1), oe = p(new je(a.readData)), Y = p(a.mode === V.Create), G = p(!1), se = p(!1), e = p(null), L = p(null), l = b(() => Y.value && a.createButton !== !1 && Array.isArray(m.value) && m.value.includes(Ue.Create)), te = b(() => !Y.value && a.updateButton !== !1 && Array.isArray(m.value) && m.value.includes(Ue.Update)), ae = b(() => !Y.value && a.dropButton !== !1 && Array.isArray(m.value) && m.value.includes(Ue.Drop)), ve = b(() => a.editModeButton !== !1 && !Y.value && Array.isArray(m.value) && m.value.includes(Ue.SwitchEditMode)), j = p(a.visibleView);
     C(() => a.visibleView, (t) => {
       j.value = t;
     }), C(j, (t) => {
@@ -570,9 +570,9 @@ const T = (...$) => {
     }), C(A, (t) => {
       h("update:customData", t);
     }), C(() => a.modifications, (t) => {
-      W.value.increment(t), i.value = t;
+      K.value.increment(t), i.value = t;
     }, { deep: !0 }), C(i, (t) => {
-      Ae(), W.value.increment(t), le.value === U.Modifications && (M.value = W.value.changed()), h("update:modifications", t);
+      Ae(), K.value.increment(t), le.value === U.Modifications && (M.value = K.value.changed()), h("update:modifications", t);
     }, { deep: !0 });
     const q = p(Z(a.createButton, k.defaultCreateButton)), pe = p(Z(a.createAndNewButton, a.createButton)), c = p(Z(a.updateButton, k.defaultUpdateButton)), z = p(Z(a.dropButton, k.defaultDropButton)), ie = p(Z(a.editModeButton, k.defaultEditModeButton)), X = p(Z(a.groupButton, k.defaultGroupButton));
     C(() => a.createButton, (t) => {
@@ -585,7 +585,7 @@ const T = (...$) => {
       ie.value = Z(t, k.defaultEditModeButton);
     }, { deep: !0 });
     const Ce = async () => {
-      var t, o, H;
+      var t, o, W;
       T("fetchItem"), f.value = !0, ee.value = -1, N.value = !1, typeof ((t = a.events) == null ? void 0 : t.httpStart) == "function" && a.events.httpStart();
       try {
         const R = await rt(a.readResource, a.readData);
@@ -595,9 +595,9 @@ const T = (...$) => {
           }), h("error", R.httpStatus);
           return;
         }
-        P.value = !0, s.value = R.data, i.value = Array.isArray(R.modifications) ? {} : R.modifications, m.value = R.perms, O.value.increment(s.value).turnStoredIntoOriginal(), W.value.increment(i.value).turnStoredIntoOriginal(), M.value = O.value.changed(), oe.value.turnStoredIntoOriginal(), Object.keys(i.value).length > 0 && (j.value = U.Modifications), ne.value && (Ae(), Ge(() => {
+        P.value = !0, s.value = R.data, i.value = Array.isArray(R.modifications) ? {} : R.modifications, m.value = R.perms, O.value.increment(s.value).turnStoredIntoOriginal(), K.value.increment(i.value).turnStoredIntoOriginal(), M.value = O.value.changed(), oe.value.turnStoredIntoOriginal(), Object.keys(i.value).length > 0 && (j.value = U.Modifications), ne.value && (Ae(), Ge(() => {
           L.value.turnStoredIntoOriginal();
-        })), typeof ((H = a.events) == null ? void 0 : H.httpEnd) == "function" && a.events.httpEnd({
+        })), typeof ((W = a.events) == null ? void 0 : W.httpEnd) == "function" && a.events.httpEnd({
           httpResponse: R
         }), h("read", R);
       } catch {
@@ -625,8 +625,8 @@ const T = (...$) => {
     }), C(D, (t) => {
       T("editMode updated -> emit update", t), h("update:editing", t);
     });
-    const He = p(void 0), Ae = () => {
-      ne.value && (He.value = dt(s.value, i.value, be.value));
+    const We = p(void 0), Ae = () => {
+      ne.value && (We.value = dt(s.value, i.value, be.value));
     };
     ut(() => {
       a.readResource && !Y.value ? Ce() : (Y.value, P.value = !0, D.value = !0, f.value = !1, O.value.increment(s.value).turnStoredIntoOriginal(), M.value = O.value.changed());
@@ -638,11 +638,11 @@ const T = (...$) => {
         N.value = !0;
       }
       return !0;
-    }, Ke = (t, o) => {
+    }, He = (t, o) => {
       if (T("doAutoReloadId -> enter: ", t), typeof t < "u" && t.autoReloadId)
         if (T("doAutoReloadId -> autoReloadId detected: ", t.autoReloadId), typeof o < "u") {
-          let H = o;
-          typeof o == "function" && (H = o(t.autoReloadId)), u.push(H);
+          let W = o;
+          typeof o == "function" && (W = o(t.autoReloadId)), u.push(W);
         } else we.value ? (T("doAutoReloadId -> insideModal: ", a), ct(a.modalConfig.modalName, a.modalConfig.modalKey, t.autoReloadId)) : (T("doAutoReloadId -> outsideModal"), a.readData.id = t.autoReloadId, T("doAutoReloadId -> turning off create mode"), Y.value = !1, Ce());
     }, Ve = (t, o) => {
       if (T("onCreate"), !Te(o, q.value.resource)) {
@@ -654,12 +654,12 @@ const T = (...$) => {
         });
         return;
       }
-      se.value = !0, T("onCreate -> turn stored data into original"), O.value.increment(s.value).turnStoredIntoOriginal(), W.value.turnStoredIntoOriginal(), a.notificationType === ue.Toast && ce({
+      se.value = !0, T("onCreate -> turn stored data into original"), O.value.increment(s.value).turnStoredIntoOriginal(), K.value.turnStoredIntoOriginal(), a.notificationType === ue.Toast && ce({
         text: k.defaultCreateSuccessText,
         details: k.defaultCreateSuccessDetails,
         icon: k.defaultCreateSuccessIcon,
         positionX: fe.Right
-      }), Ke(o, a.redirectOnCreate), T("onCreate -> beforeEmitCreate"), h("create", o);
+      }), He(o, a.redirectOnCreate), T("onCreate -> beforeEmitCreate"), h("create", o);
     }, Ie = (t, o) => {
       if (T("onUpdate"), !Te(o, c.value.resource)) {
         a.notificationType === ue.Toast && ce({
@@ -670,12 +670,12 @@ const T = (...$) => {
         });
         return;
       }
-      T("onUpdate -> turn stored data into original"), O.value.turnStoredIntoOriginal(), W.value.turnStoredIntoOriginal(), a.notificationType === ue.Toast && ce({
+      T("onUpdate -> turn stored data into original"), O.value.turnStoredIntoOriginal(), K.value.turnStoredIntoOriginal(), a.notificationType === ue.Toast && ce({
         text: k.defaultUpdateSuccessText,
         details: k.defaultUpdateSuccessDetails,
         icon: k.defaultUpdateSuccessIcon,
         positionX: fe.Right
-      }), Ke(o), h("update", o);
+      }), He(o), h("update", o);
     }, Re = (t, o) => {
       if (T("onDrop"), !Te(o, z.value.resource)) {
         a.notificationType === ue.Toast && ce({
@@ -692,8 +692,8 @@ const T = (...$) => {
         icon: k.defaultDropSuccessIcon,
         positionX: fe.Right
       }), h("drop", o), a.view === ze.Modal && (T("onDrop -> close modal"), ft(a.modalConfig.modalName, a.modalConfig.modalKey)), typeof a.redirectOnDrop < "u") {
-        let H = a.redirectOnDrop;
-        typeof a.redirectOnDrop == "function" && (H = a.redirectOnDrop()), u.push(H);
+        let W = a.redirectOnDrop;
+        typeof a.redirectOnDrop == "function" && (W = a.redirectOnDrop()), u.push(W);
       }
     };
     ke({
@@ -710,8 +710,8 @@ const T = (...$) => {
       hasModifiedData: () => O.value.changed()
     });
     const Ye = b(() => {
-      var t, o, H;
-      return Se.value ? ne.value ? x.value ? (t = a.modalConfig) == null ? void 0 : t.closeConfirm : "" : le.value === U.Modifications ? W.value.changed() ? (o = a.modalConfig) == null ? void 0 : o.closeConfirm : "" : O.value.changed() ? (H = a.modalConfig) == null ? void 0 : H.closeConfirm : "" : "";
+      var t, o, W;
+      return Se.value ? ne.value ? x.value ? (t = a.modalConfig) == null ? void 0 : t.closeConfirm : "" : le.value === U.Modifications ? K.value.changed() ? (o = a.modalConfig) == null ? void 0 : o.closeConfirm : "" : O.value.changed() ? (W = a.modalConfig) == null ? void 0 : W.closeConfirm : "" : "";
     }), Ze = (t) => {
       var o;
       if (typeof ((o = a.modalConfig) == null ? void 0 : o.beforeClose) == "function")
@@ -719,14 +719,14 @@ const T = (...$) => {
           ...t,
           itemCreated: se.value
         });
-    }, Ne = b(() => a.title.startsWith("__:") ? String(mt(a.title.substring(3))) : a.title), _e = b(() => f.value ? !1 : Ne.value.length > 0 || !!E["post-title"]), xe = b(() => f.value ? !1 : typeof a.header == "object" && Object.keys(a.header).length > 0), we = b(() => a.view === ze.Modal), We = b(() => we.value ? "lkt-modal" : "section"), he = b(() => {
+    }, Ne = b(() => a.title.startsWith("__:") ? String(mt(a.title.substring(3))) : a.title), _e = b(() => f.value ? !1 : Ne.value.length > 0 || !!E["post-title"]), xe = b(() => f.value ? !1 : typeof a.header == "object" && Object.keys(a.header).length > 0), we = b(() => a.view === ze.Modal), Ke = b(() => we.value ? "lkt-modal" : "section"), he = b(() => {
       var t, o;
-      return a.mode !== V.Update || !te.value || !a.enabledSaveWithoutChanges && !M.value || ne.value && (!Q.value || !x.value) ? !1 : typeof ((t = c.value) == null ? void 0 : t.disabled) == "function" ? !c.value.disabled({
+      return a.mode !== V.Update || !te.value || !a.enabledSaveWithoutChanges && !M.value || ne.value && (!Q.value || !a.enabledSaveWithoutChanges && !x.value) ? !1 : typeof ((t = c.value) == null ? void 0 : t.disabled) == "function" ? !c.value.disabled({
         prop: s.value
       }) : typeof ((o = c.value) == null ? void 0 : o.disabled) == "boolean" ? !c.value.disabled : !0;
     }), De = b(() => {
       var t, o;
-      return a.mode !== V.Create || !l.value || !a.enabledSaveWithoutChanges && !M.value || ne.value && !Q.value && !x.value ? !1 : typeof ((t = q.value) == null ? void 0 : t.disabled) == "function" ? !q.value.disabled({
+      return a.mode !== V.Create || !l.value || !a.enabledSaveWithoutChanges && !M.value || ne.value && (!Q.value || !a.enabledSaveWithoutChanges && !x.value) ? !1 : typeof ((t = q.value) == null ? void 0 : t.disabled) == "function" ? !q.value.disabled({
         prop: s.value
       }) : typeof ((o = q.value) == null ? void 0 : o.disabled) == "boolean" ? !q.value.disabled : !0;
     }), Oe = b(() => a.createAndNewButton !== !1 && typeof a.createAndNewButton == "object" && !Array.isArray(a.createAndNewButton) && Object.keys(a.createAndNewButton).length > 0), Le = b(() => {
@@ -734,7 +734,7 @@ const T = (...$) => {
       return ae.value ? typeof ((t = z.value) == null ? void 0 : t.disabled) == "function" ? !z.value.disabled({
         prop: s.value
       }) : typeof ((o = z.value) == null ? void 0 : o.disabled) == "boolean" ? !z.value.disabled : !0 : !1;
-    }), et = b(() => We.value === "lkt-modal" ? {
+    }), et = b(() => Ke.value === "lkt-modal" ? {
       title: a.title,
       item: s.value,
       ...a.modalConfig,
@@ -751,10 +751,10 @@ const T = (...$) => {
       editing: D.value
     }) : a.form);
     return (t, o) => {
-      const H = Be("lkt-header"), R = Be("lkt-http-info"), at = Be("lkt-form"), ot = Be("lkt-loader");
-      return n(), g(it(We.value), v(et.value, { class: "lkt-item-crud" }), ge({
+      const W = Be("lkt-header"), R = Be("lkt-http-info"), at = Be("lkt-form"), ot = Be("lkt-loader");
+      return n(), g(it(Ke.value), v(et.value, { class: "lkt-item-crud" }), ge({
         default: _(() => [
-          !we.value && xe.value ? (n(), g(H, Me(v({ key: 0 }, t.header)), null, 16)) : !we.value && _e.value ? (n(), S("header", Ct, [
+          !we.value && xe.value ? (n(), g(W, Me(v({ key: 0 }, t.header)), null, 16)) : !we.value && _e.value ? (n(), S("header", Ct, [
             d(E)["pre-title"] ? (n(), S("div", wt, [
               I(t.$slots, "pre-title", {
                 item: s.value,
@@ -863,11 +863,11 @@ const T = (...$) => {
                 form: be.value,
                 differencesTableConfig: t.differencesTableConfig,
                 visibleView: j.value,
-                modificationDataState: He.value,
+                modificationDataState: We.value,
                 editableViews: [le.value],
                 disabled: !D.value
               }), ge({ _: 2 }, [
-                K(tt.value, (r) => ({
+                H(tt.value, (r) => ({
                   name: r,
                   fn: _(({}) => [
                     I(t.$slots, r)
