@@ -1,14 +1,4 @@
-import { FormConfig, LktObject } from 'lkt-vue-kernel';
-import { DataState } from 'lkt-data-state';
-
-export const getModificationsDataState = (value: LktObject, modifications: LktObject, form: FormConfig) => {
-    let r = new DataState(JSON.parse(JSON.stringify(value)), {
-        onlyProps: detectFormFieldsKeys(form),
-        recursiveOnlyProps: false,
-    });
-    r.increment(JSON.parse(JSON.stringify(modifications)));
-    return r;
-};
+import { FormConfig } from 'lkt-vue-kernel';
 
 export const detectFormFieldsKeys = (form: FormConfig) => {
     if (form.items === undefined) return [];
