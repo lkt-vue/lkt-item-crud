@@ -5,7 +5,7 @@
     import { debug } from '../functions/debug';
     import {
         ButtonConfig,
-        ensureButtonConfig, FormUiConfig,
+        ensureButtonConfig, extractI18nValue, FormUiConfig,
         getDefaultValues,
         getFormDataState, getFormSlotKeys,
         ItemCrud,
@@ -23,7 +23,6 @@
         ToastPositionX,
     } from 'lkt-vue-kernel';
     import { closeModal, updateModalKey } from 'lkt-modal';
-    import { __ } from 'lkt-i18n';
     import ButtonNav from '../components/ButtonNav.vue';
     import { openToast } from 'lkt-toast';
     import { useRouter } from 'vue-router';
@@ -228,6 +227,7 @@
         dataState.value.increment(v);
         if (computedEditableView.value === ModificationView.Current) {
             dataChanged.value = dataState.value.changed();
+            debug('item updated -> dataState changed');
         }
         itemBeingEdited.value = true;
     }, { deep: true });
@@ -444,12 +444,7 @@
         }
     };
 
-    const computedTitle = computed(() => {
-            if (props.title.startsWith('__:')) {
-                return String(__(props.title.substring(3)));
-            }
-            return props.title;
-        }),
+    const computedTitle = computed(() => extractI18nValue(props.title)),
         displayHeader = computed(() => {
             if (isLoading.value) return false;
 
@@ -469,8 +464,14 @@
         }),
         ableToUpdate = computed(() => {
             if (props.mode !== ItemCrudMode.Update || !canUpdate.value) return false;
-            if (!props.enabledSaveWithoutChanges && !dataChanged.value) return false;
-            if (computedHasForm.value && (!validForm.value || (!props.enabledSaveWithoutChanges && !changedForm.value))) return false;
+            if (!(computedHasForm.value && validForm.value)) return false;
+            if (!props.enabledSaveWithoutChanges) {
+                if (computedHasForm.value) {
+                    if (!changedForm.value) return false;
+                } else if (!dataChanged.value) {
+                    return false;
+                }
+            }
 
             if (typeof safeUpdateButton.value?.disabled === 'function') return !safeUpdateButton.value.disabled({
                 prop: item.value
@@ -481,8 +482,16 @@
         }),
         ableToCreate = computed(() => {
             if (props.mode !== ItemCrudMode.Create || !canCreate.value) return false;
-            if (!props.enabledSaveWithoutChanges && !dataChanged.value) return false;
-            if (computedHasForm.value && (!validForm.value || (!props.enabledSaveWithoutChanges && !changedForm.value))) return false;
+            if (!(computedHasForm.value && validForm.value)) return false;
+            if (!props.enabledSaveWithoutChanges) {
+                if (computedHasForm.value) {
+                    if (!changedForm.value) return false;
+                } else if (!dataChanged.value) {
+                    return false;
+                }
+            }
+            // if (!props.enabledSaveWithoutChanges && !computedHasForm.value && !dataChanged.value) return false;
+            // if (computedHasForm.value && (!validForm.value || (!props.enabledSaveWithoutChanges && !changedForm.value))) return false;
 
             if (typeof safeCreateButton.value?.disabled === 'function') return !safeCreateButton.value.disabled({
                 prop: item.value
