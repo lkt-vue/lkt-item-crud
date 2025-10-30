@@ -1,7 +1,7 @@
-declare function $t($?: boolean): void;
+declare function $t(P?: boolean): void;
 declare namespace jt {
-    function install($: any, ke?: {}): void;
+    function install(P: any, he?: {}): void;
 }
-declare function Pt($: any): void;
-declare function Ft($: any): void;
+declare function Pt(P: any): void;
+declare function Ft(P: any): void;
 export { $t as debugLktItemCrud, jt as default, Pt as setItemCrudDefaultDropIcon, Ft as setItemCrudDefaultSaveIcon };

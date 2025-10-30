@@ -21,7 +21,15 @@ declare var __VLS_17: {
     canUpdate: boolean | undefined;
     canDrop: boolean | undefined;
     perms: string[] | undefined;
-}, __VLS_59: string, __VLS_60: {}, __VLS_62: {
+}, __VLS_55: {
+    canUpdate: boolean | undefined;
+    canDrop: boolean | undefined;
+    perms: string[] | undefined;
+}, __VLS_57: {
+    canUpdate: boolean | undefined;
+    canDrop: boolean | undefined;
+    perms: string[] | undefined;
+}, __VLS_74: string, __VLS_75: {}, __VLS_77: {
     item: LktObject;
     loading: false;
     editMode: boolean;
@@ -30,9 +38,9 @@ declare var __VLS_17: {
     canDrop: boolean;
     itemBeingEdited: boolean;
     perms: string[];
-}, __VLS_83: {}, __VLS_85: {};
+}, __VLS_98: {}, __VLS_100: {};
 type __VLS_Slots = {} & {
-    [K in NonNullable<typeof __VLS_59>]?: (props: typeof __VLS_60) => any;
+    [K in NonNullable<typeof __VLS_74>]?: (props: typeof __VLS_75) => any;
 } & {
     'prev-buttons-ever'?: (props: typeof __VLS_17) => any;
 } & {
@@ -46,11 +54,15 @@ type __VLS_Slots = {} & {
 } & {
     'prev-buttons'?: (props: typeof __VLS_42) => any;
 } & {
-    item?: (props: typeof __VLS_62) => any;
+    'prev-buttons-ever'?: (props: typeof __VLS_55) => any;
 } & {
-    'prev-buttons-ever'?: (props: typeof __VLS_83) => any;
+    'prev-buttons'?: (props: typeof __VLS_57) => any;
 } & {
-    'prev-buttons'?: (props: typeof __VLS_85) => any;
+    item?: (props: typeof __VLS_77) => any;
+} & {
+    'prev-buttons-ever'?: (props: typeof __VLS_98) => any;
+} & {
+    'prev-buttons'?: (props: typeof __VLS_100) => any;
 };
 declare const __VLS_component: import("vue").DefineComponent<ItemCrudConfig, {
     doDrop: () => void;
@@ -94,13 +106,10 @@ declare const __VLS_component: import("vue").DefineComponent<ItemCrudConfig, {
     header: import("lkt-vue-kernel").HeaderConfig;
     title: string;
     mode: ItemCrudMode;
+    modifications: LktObject;
     modelValue: LktObject;
     createButton: ButtonConfig | false;
-    events: {
-        httpStart?: undefined | Function;
-        httpEnd?: (data: import("lkt-vue-kernel").ClickEventArgs) => void | undefined;
-    };
-    modifications: LktObject;
+    events: import("lkt-vue-kernel").ItemCrudEvents;
     editing: boolean;
     perms: import("lkt-vue-kernel").ValidTablePermission[];
     customData: LktObject;
@@ -130,6 +139,7 @@ declare const __VLS_component: import("vue").DefineComponent<ItemCrudConfig, {
     navStartButtonsEditing: Array<ButtonConfig>;
     navEndButtons: Array<ButtonConfig>;
     navEndButtonsEditing: Array<ButtonConfig>;
+    updateConfig: import("lkt-vue-kernel").ItemCrudSaveConfig;
 }, {}, {}, {}, string, import("vue").ComponentProvideOptions, false, {}, any>;
 declare const _default: __VLS_WithSlots<typeof __VLS_component, __VLS_Slots>;
 export default _default;

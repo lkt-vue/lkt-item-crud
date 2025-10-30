@@ -1,4 +1,4 @@
-import { ButtonConfig, ItemCrudButtonNavVisibility, ItemCrudMode, ItemCrudView, LktObject, ModificationView } from 'lkt-vue-kernel';
+import { ButtonConfig, ItemCrudButtonNavVisibility, ItemCrudMode, ItemCrudSaveConfig, ItemCrudView, LktObject, ModificationView } from 'lkt-vue-kernel';
 type __VLS_Props = {
     item: LktObject;
     modifications: LktObject;
@@ -33,6 +33,7 @@ type __VLS_Props = {
     navStartButtonsEditing?: Array<ButtonConfig>;
     navEndButtons?: Array<ButtonConfig>;
     navEndButtonsEditing?: Array<ButtonConfig>;
+    updateConfig: ItemCrudSaveConfig;
 };
 declare var __VLS_13: {
     canUpdate: boolean | undefined;

@@ -4,7 +4,7 @@
         ButtonConfig,
         ButtonType,
         ItemCrudButtonNavVisibility,
-        ItemCrudMode,
+        ItemCrudMode, ItemCrudSaveConfig,
         ItemCrudView,
         LktObject,
         ModificationView,
@@ -61,6 +61,10 @@
         navStartButtonsEditing?: Array<ButtonConfig>
         navEndButtons?: Array<ButtonConfig>
         navEndButtonsEditing?: Array<ButtonConfig>
+
+        updateConfig: ItemCrudSaveConfig
+
+
     }>(), {
         item: () => ({}),
         modifications: () => ({}),
@@ -75,12 +79,18 @@
 
     const slots: SetupContext['slots'] = useSlots();
 
+    const createButtonRef = ref(<HTMLButtonElement | null>null);
+    const createAndNewButtonRef = ref(<HTMLButtonElement | null>null);
     const saveButtonRef = ref(<HTMLButtonElement | null>null);
     const dropButtonRef = ref(<HTMLButtonElement | null>null);
 
     const isLoading = ref(props.loading);
     watch(() => props.loading, v => isLoading.value = v);
-    watch(isLoading, v => emit('update:loading', v));
+    watch(isLoading, v => {
+        if (props.updateConfig.executionMode === 'blocking') {
+            emit('update:loading', v);
+        }
+    });
 
     const isEditing = ref(props.editing);
     watch(() => props.editing, v => isEditing.value = v);
@@ -111,7 +121,17 @@
     })
 
     const doSave = () => {
-            if (saveButtonRef.value && typeof saveButtonRef.value.click === 'function') saveButtonRef.value.click();
+            if (showSaveButton.value) {
+                switch (props.mode) {
+                    case ItemCrudMode.Update:
+                        if (saveButtonRef.value && typeof saveButtonRef.value.click === 'function') saveButtonRef.value.click();
+                        break;
+
+                    case ItemCrudMode.Create:
+                        if (createButtonRef.value && typeof createButtonRef.value.click === 'function') createButtonRef.value.click();
+                        break;
+                }
+            }
         },
         doDrop = () => {
             if (dropButtonRef.value && typeof dropButtonRef.value.click === 'function') dropButtonRef.value.click();
@@ -289,7 +309,7 @@
             />
 
             <lkt-button
-                ref="saveButtonRef"
+                ref="createButtonRef"
                 v-show="mode === ItemCrudMode.Create && showSaveButton"
                 v-bind="{
                     ...createButton,
@@ -305,7 +325,7 @@
             />
 
             <lkt-button
-                ref="saveButtonRef"
+                ref="createAndNewButtonRef"
                 v-show="mode === ItemCrudMode.Create && showSaveButton && ableToCreateAndNew"
                 v-bind="{
                     ...createAndNewButton,
@@ -401,7 +421,7 @@
                     />
 
                     <lkt-button
-                        ref="saveButtonRef"
+                        ref="createButtonRef"
                         v-show="mode === ItemCrudMode.Create && showSaveButton"
                         v-bind="{
                             ...createButton,
@@ -418,7 +438,7 @@
                     />
 
                     <lkt-button
-                        ref="saveButtonRef"
+                        ref="createAndNewButtonRef"
                         v-show="mode === ItemCrudMode.Create && showSaveButton && ableToCreateAndNew"
                         v-bind="{
                             ...createAndNewButton,
@@ -494,7 +514,7 @@
             />
 
             <lkt-button
-                ref="saveButtonRef"
+                ref="createButtonRef"
                 v-show="mode === ItemCrudMode.Create && showSaveButton"
                 v-bind="{
                     ...createButton,
@@ -510,7 +530,7 @@
             />
 
             <lkt-button
-                ref="saveButtonRef"
+                ref="createAndNewButtonRef"
                 v-show="mode === ItemCrudMode.Create && showSaveButton && ableToCreateAndNew"
                 v-bind="{
                     ...createAndNewButton,

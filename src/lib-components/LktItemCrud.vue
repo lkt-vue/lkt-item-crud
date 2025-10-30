@@ -464,7 +464,9 @@
         }),
         ableToUpdate = computed(() => {
             if (props.mode !== ItemCrudMode.Update || !canUpdate.value) return false;
-            if (!(computedHasForm.value && validForm.value)) return false;
+            if (computedHasForm.value) {
+                if (!validForm.value) return false;
+            }
             if (!props.enabledSaveWithoutChanges) {
                 if (computedHasForm.value) {
                     if (!changedForm.value) return false;
@@ -482,7 +484,9 @@
         }),
         ableToCreate = computed(() => {
             if (props.mode !== ItemCrudMode.Create || !canCreate.value) return false;
-            if (!(computedHasForm.value && validForm.value)) return false;
+            if (computedHasForm.value) {
+                if (!validForm.value) return false;
+            }
             if (!props.enabledSaveWithoutChanges) {
                 if (computedHasForm.value) {
                     if (!changedForm.value) return false;
@@ -613,6 +617,7 @@
                 :nav-start-buttons-editing="navStartButtonsEditing"
                 :nav-end-buttons="navEndButtons"
                 :nav-end-buttons-editing="navEndButtonsEditing"
+                :update-config="updateConfig"
                 @create="onCreate"
                 @save="onUpdate"
                 @drop="onDrop"
@@ -681,6 +686,7 @@
             :nav-start-buttons-editing="navStartButtonsEditing"
             :nav-end-buttons="navEndButtons"
             :nav-end-buttons-editing="navEndButtonsEditing"
+            :update-config="updateConfig"
             @create="onCreate"
             @save="onUpdate"
             @drop="onDrop"
@@ -700,6 +706,63 @@
                 />
             </template>
         </button-nav>
+        <template v-else-if="computedHasButtons && buttonNavPosition === ItemCrudButtonNavPosition.Hidden">
+            <button-nav
+                ref="buttonNav"
+                v-show="false"
+                v-model:loading="isLoading"
+                v-model:editing="editMode"
+                v-model:picked-modification-view="pickedModificationView"
+                :item="item"
+                :modifications="itemModifications"
+                :mode="mode"
+                :view="view"
+                :button-nav-visibility="buttonNavVisibility"
+                :create-button="safeCreateButton"
+                :create-and-new-button="safeCreateAndNewButton"
+                :update-button="safeUpdateButton"
+                :drop-button="safeDropButton"
+                :edit-mode-button="safeEditModeButton"
+                :group-button="safeGroupButton"
+                :data-changed="dataChanged"
+                :http-success-read="httpSuccessRead"
+                :can-create="canCreate"
+                :can-update="canUpdate"
+                :can-drop="canDrop"
+                :can-switch-edit-mode="canSwitchEditMode"
+                :group-button-as-modal-actions="groupButtonAsModalActions"
+                :able-to-create="ableToCreate"
+                :able-to-create-and-new="ableToCreateAndNew"
+                :able-to-update="ableToUpdate"
+                :able-to-drop="ableToDrop"
+                :perms="permissions"
+                :modification-view="computedModificationViews"
+                :editable-view="computedEditableView"
+                :nav-start-buttons="navStartButtons"
+                :nav-start-buttons-editing="navStartButtonsEditing"
+                :nav-end-buttons="navEndButtons"
+                :nav-end-buttons-editing="navEndButtonsEditing"
+                :update-config="updateConfig"
+                @create="onCreate"
+                @save="onUpdate"
+                @drop="onDrop"
+            >
+                <template #prev-buttons-ever="{canUpdate, canDrop, perms}" v-if="slots['prev-buttons-ever']">
+                    <slot name="prev-buttons-ever"
+                          :can-update="canUpdate"
+                          :can-drop="canDrop"
+                          :perms="perms"
+                    />
+                </template>
+                <template #prev-buttons="{canUpdate, canDrop, perms}" v-if="slots['prev-buttons']">
+                    <slot name="prev-buttons"
+                          :can-update="canUpdate"
+                          :can-drop="canDrop"
+                          :perms="perms"
+                    />
+                </template>
+            </button-nav>
+        </template>
 
         <div class="lkt-item-crud_content" v-if="!isLoading">
             <div v-if="httpSuccessRead" class="lkt-grid-1">
@@ -787,6 +850,7 @@
             :nav-start-buttons-editing="navStartButtonsEditing"
             :nav-end-buttons="navEndButtons"
             :nav-end-buttons-editing="navEndButtonsEditing"
+            :update-config="updateConfig"
             @create="onCreate"
             @save="onUpdate"
             @drop="onDrop"
