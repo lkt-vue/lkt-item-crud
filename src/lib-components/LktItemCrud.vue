@@ -5,9 +5,12 @@
     import { debug } from '../functions/debug';
     import {
         ButtonConfig,
-        ensureButtonConfig, extractI18nValue, FormUiConfig,
+        ensureButtonConfig,
+        extractI18nValue,
+        FormUiConfig,
         getDefaultValues,
-        getFormDataState, getFormSlotKeys,
+        getFormDataState,
+        getFormSlotKeys,
         ItemCrud,
         ItemCrudButtonNavPosition,
         ItemCrudConfig,
@@ -323,6 +326,7 @@
                         details: LktSettings.defaultCreateErrorDetails,
                         icon: LktSettings.defaultCreateErrorIcon,
                         positionX: ToastPositionX.Right,
+                        ...r.toast,
                     });
                 }
                 return;
@@ -337,6 +341,7 @@
                     details: LktSettings.defaultCreateSuccessDetails,
                     icon: LktSettings.defaultCreateSuccessIcon,
                     positionX: ToastPositionX.Right,
+                    ...r.toast,
                 });
             }
             doAutoReloadId(r, props.redirectOnCreate);
@@ -352,6 +357,7 @@
                         details: LktSettings.defaultUpdateErrorDetails,
                         icon: LktSettings.defaultUpdateErrorIcon,
                         positionX: ToastPositionX.Right,
+                        ...r.toast,
                     });
                 }
                 return;
@@ -365,6 +371,7 @@
                     details: LktSettings.defaultUpdateSuccessDetails,
                     icon: LktSettings.defaultUpdateSuccessIcon,
                     positionX: ToastPositionX.Right,
+                    ...r.toast,
                 });
             }
             doAutoReloadId(r);
@@ -379,6 +386,7 @@
                         details: LktSettings.defaultDropErrorDetails,
                         icon: LktSettings.defaultDropErrorIcon,
                         positionX: ToastPositionX.Right,
+                        ...r.toast,
                     });
                 }
                 return;
@@ -389,6 +397,7 @@
                     details: LktSettings.defaultDropSuccessDetails,
                     icon: LktSettings.defaultDropSuccessIcon,
                     positionX: ToastPositionX.Right,
+                    ...r.toast,
                 });
             }
             emit('drop', r);

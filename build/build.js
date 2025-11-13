@@ -661,7 +661,8 @@ const T = (...P) => {
           text: k.defaultCreateErrorText,
           details: k.defaultCreateErrorDetails,
           icon: k.defaultCreateErrorIcon,
-          positionX: me.Right
+          positionX: me.Right,
+          ...o.toast
         });
         return;
       }
@@ -669,7 +670,8 @@ const T = (...P) => {
         text: k.defaultCreateSuccessText,
         details: k.defaultCreateSuccessDetails,
         icon: k.defaultCreateSuccessIcon,
-        positionX: me.Right
+        positionX: me.Right,
+        ...o.toast
       }), Ke(o, a.redirectOnCreate), T("onCreate -> beforeEmitCreate"), D("create", o);
     }, Ee = (e, o) => {
       if (T("onUpdate"), !Fe(o, W.value.resource)) {
@@ -677,7 +679,8 @@ const T = (...P) => {
           text: k.defaultUpdateErrorText,
           details: k.defaultUpdateErrorDetails,
           icon: k.defaultUpdateErrorIcon,
-          positionX: me.Right
+          positionX: me.Right,
+          ...o.toast
         });
         return;
       }
@@ -685,7 +688,8 @@ const T = (...P) => {
         text: k.defaultUpdateSuccessText,
         details: k.defaultUpdateSuccessDetails,
         icon: k.defaultUpdateSuccessIcon,
-        positionX: me.Right
+        positionX: me.Right,
+        ...o.toast
       }), Ke(o), D("update", o);
     }, Me = (e, o) => {
       if (T("onDrop"), !Fe(o, G.value.resource)) {
@@ -693,7 +697,8 @@ const T = (...P) => {
           text: k.defaultDropErrorText,
           details: k.defaultDropErrorDetails,
           icon: k.defaultDropErrorIcon,
-          positionX: me.Right
+          positionX: me.Right,
+          ...o.toast
         });
         return;
       }
@@ -701,7 +706,8 @@ const T = (...P) => {
         text: k.defaultDropSuccessText,
         details: k.defaultDropSuccessDetails,
         icon: k.defaultDropSuccessIcon,
-        positionX: me.Right
+        positionX: me.Right,
+        ...o.toast
       }), D("drop", o), a.view === ze.Modal && (T("onDrop -> close modal"), ct(a.modalConfig.modalName, a.modalConfig.modalKey)), typeof a.redirectOnDrop < "u") {
         let q = a.redirectOnDrop;
         typeof a.redirectOnDrop == "function" && (q = a.redirectOnDrop()), i.push(q);
