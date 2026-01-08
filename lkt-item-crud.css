@@ -16,6 +16,7 @@
     top: calc(-1 * var(--lkt-item-crud--gap));
     display: var(--lkt-item-crud--buttons--display);
     align-items: var(--lkt-item-crud--buttons--align-items);
+    justify-content: var(--lkt-item-crud--buttons--justify-content);
     gap: var(--lkt-item-crud--buttons--gap);
     transition: var(--lkt-item-crud--buttons--transition);
     background: var(--lkt-item-crud--buttons--background);

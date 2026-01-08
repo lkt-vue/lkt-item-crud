@@ -12,6 +12,7 @@
     /** Element: Buttons */
     --lkt-item-crud--buttons--background: transparent;
     --lkt-item-crud--buttons--align-items: center;
+    --lkt-item-crud--buttons--justify-content: initial;
     --lkt-item-crud--buttons--display: flex;
     --lkt-item-crud--buttons--gap: 15px;
     --lkt-item-crud--buttons--position: sticky;
