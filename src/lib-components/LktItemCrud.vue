@@ -153,15 +153,6 @@
         try {
             const r: HTTPResponse = await httpCall(props.readResource, props.readData);
 
-            r.notifications?.forEach(notification => {
-                if (notification.category === 'toast'){
-                    openToast(<ToastConfig>{
-                        positionX: ToastPositionX.Right,
-                        ...notification.payload,
-                    });
-                }
-            })
-
             debug('fetchItem -> response', r);
             isLoading.value = false;
             httpStatus.value = r.httpStatus;
@@ -329,14 +320,6 @@
         },
         onCreate = ($event: PointerEvent, r: HTTPResponse) => {
             debug('onCreate');
-            r.notifications?.forEach(notification => {
-                if (notification.category === 'toast'){
-                    openToast(<ToastConfig>{
-                        positionX: ToastPositionX.Right,
-                        ...notification.payload,
-                    });
-                }
-            })
 
             if (!ensureValidResourceSave(r, safeCreateButton.value.resource)) {
                 if (props.notificationType === NotificationType.Toast) {
@@ -370,15 +353,6 @@
         onUpdate = ($event: PointerEvent, r: HTTPResponse) => {
             debug('onUpdate');
 
-            r.notifications?.forEach(notification => {
-                if (notification.category === 'toast'){
-                    openToast(<ToastConfig>{
-                        positionX: ToastPositionX.Right,
-                        ...notification.payload,
-                    });
-                }
-            })
-
             if (!ensureValidResourceSave(r, safeUpdateButton.value.resource)) {
                 if (props.notificationType === NotificationType.Toast) {
                     openToast(<ToastConfig>{
@@ -408,14 +382,6 @@
         },
         onDrop = ($event: PointerEvent, r: HTTPResponse) => {
             debug('onDrop');
-            r.notifications?.forEach(notification => {
-                if (notification.category === 'toast'){
-                    openToast(<ToastConfig>{
-                        positionX: ToastPositionX.Right,
-                        ...notification.payload,
-                    });
-                }
-            })
 
             if (!ensureValidResourceSave(r, safeDropButton.value.resource)) {
                 if (props.notificationType === NotificationType.Toast) {
