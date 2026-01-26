@@ -117,23 +117,27 @@
         emit('update:modifications', v)
     }, {deep: true});
 
-    const safeCreateButton = ref(ensureButtonConfig(props.createButton, LktSettings.defaultCreateButton)),
+    const getSafeCreateButton = () => ensureButtonConfig(ensureButtonConfig(props.createButton, LktSettings.defaultCreateButton), {class: 'is-save-button'}, 'combine');
+    const getSafeUpdateButton = () => ensureButtonConfig(ensureButtonConfig(props.updateButton, LktSettings.defaultUpdateButton), {class: 'is-save-button'}, 'combine');
+    const getSafeDropButton = () => ensureButtonConfig(ensureButtonConfig(props.dropButton, LktSettings.defaultDropButton), {class: 'is-drop-button'}, 'combine');
+
+    const safeCreateButton = ref(getSafeCreateButton()),
         safeCreateAndNewButton = ref(ensureButtonConfig(props.createAndNewButton, props.createButton)),
-        safeUpdateButton = ref(ensureButtonConfig(props.updateButton, LktSettings.defaultUpdateButton)),
-        safeDropButton = ref(ensureButtonConfig(props.dropButton, LktSettings.defaultDropButton)),
+        safeUpdateButton = ref(getSafeUpdateButton()),
+        safeDropButton = ref(getSafeDropButton()),
         safeEditModeButton = ref(ensureButtonConfig(props.editModeButton, LktSettings.defaultEditModeButton)),
         safeGroupButton = ref(ensureButtonConfig(props.groupButton, LktSettings.defaultGroupButton));
 
     watch(() => props.createButton, v => {
-        safeCreateButton.value = ensureButtonConfig(v, LktSettings.defaultCreateButton);
+        safeCreateButton.value = getSafeCreateButton();
     }, { deep: true });
 
     watch(() => props.updateButton, v => {
-        safeUpdateButton.value = ensureButtonConfig(v, LktSettings.defaultUpdateButton);
+        safeUpdateButton.value = getSafeUpdateButton();
     }, { deep: true });
 
     watch(() => props.dropButton, v => {
-        safeDropButton.value = ensureButtonConfig(v, LktSettings.defaultDropButton);
+        safeDropButton.value = getSafeDropButton();
     }, { deep: true });
 
     watch(() => props.editModeButton, v => {

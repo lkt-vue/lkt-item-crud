@@ -1,12 +1,12 @@
 import { ButtonConfig, FormUiConfig, ItemCrudButtonNavPosition, ItemCrudConfig, ItemCrudMode, ItemCrudView, LktObject, ModalConfig, ModificationView, NotificationType } from 'lkt-vue-kernel';
 declare var __VLS_17: {
-    canUpdate: any;
-    canDrop: any;
-    perms: any;
+    canUpdate: boolean | undefined;
+    canDrop: boolean | undefined;
+    perms: string[] | undefined;
 }, __VLS_19: {
-    canUpdate: any;
-    canDrop: any;
-    perms: any;
+    canUpdate: boolean | undefined;
+    canDrop: boolean | undefined;
+    perms: string[] | undefined;
 }, __VLS_25: {
     item: LktObject;
     loading: boolean;
@@ -14,21 +14,21 @@ declare var __VLS_17: {
     item: LktObject;
     loading: boolean;
 }, __VLS_40: {
-    canUpdate: any;
-    canDrop: any;
-    perms: any;
+    canUpdate: boolean | undefined;
+    canDrop: boolean | undefined;
+    perms: string[] | undefined;
 }, __VLS_42: {
-    canUpdate: any;
-    canDrop: any;
-    perms: any;
+    canUpdate: boolean | undefined;
+    canDrop: boolean | undefined;
+    perms: string[] | undefined;
 }, __VLS_55: {
-    canUpdate: any;
-    canDrop: any;
-    perms: any;
+    canUpdate: boolean | undefined;
+    canDrop: boolean | undefined;
+    perms: string[] | undefined;
 }, __VLS_57: {
-    canUpdate: any;
-    canDrop: any;
-    perms: any;
+    canUpdate: boolean | undefined;
+    canDrop: boolean | undefined;
+    perms: string[] | undefined;
 }, __VLS_74: string, __VLS_75: {}, __VLS_77: {
     item: LktObject;
     loading: false;
@@ -102,7 +102,7 @@ declare const __VLS_component: import("vue").DefineComponent<ItemCrudConfig, {
     "onModified-data"?: ((...args: any[]) => any) | undefined;
 }>, {
     view: ItemCrudView;
-    form: import("lkt-vue-kernel").FormConfig | Function;
+    form: import("lkt-vue-kernel").FormConfig | import("lkt-vue-kernel").ItemCrudFormConfigGetter;
     header: import("lkt-vue-kernel").HeaderConfig;
     title: string;
     mode: ItemCrudMode;
